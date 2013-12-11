@@ -26,10 +26,10 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Step 1: Prepare your environment.
 
-  Before you begin, ```gcc```, ```flex```, ```bison``` and maven (```mvn```)must be in your system path. This is needed to compile the data generation program and package it for running inside Hadoop. These only need to be installed on one node of your Hadoop cluster.
+  Before you begin, ```gcc```, and maven (```mvn```)must be in your system path. This is needed to compile the data generation program and package it for running inside Hadoop. These only need to be installed on one node of your Hadoop cluster.
 
-  On Ubuntu systems you can install all these via ```sudo apt-get install gcc flex bison maven```.
-  On RHEL / CentOS, most of these are availabile, start with ```sudo yum install gcc flex bison```. Maven must be installed manually.
+  On Ubuntu systems you can install all these via ```sudo apt-get install gcc maven```.
+  On RHEL / CentOS, most of these are availabile, start with ```sudo yum install gcc```. Maven must be installed manually.
 
 - Step 2: Compile and package the data generator.
 
