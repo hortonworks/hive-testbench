@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage {
-	echo "Usage: tpcds-setup.sh scale directory"
+	echo "Usage: tpcds-setup.sh scale [temp directory] [partitioned|unpartitioned]"
 	exit 1
 }
 
@@ -28,7 +28,7 @@ if [ X"$SCALE" = "X" ]; then
 	usage
 fi
 if [ X"$DIR" = "X" ]; then
-	usage
+	DIR=/tmp/tpcds-generate
 fi
 if [ X"$MODE" = "X" ]; then
 	MODE=partitioned
@@ -82,8 +82,8 @@ else
 		do
 			hive -i settings/load.sql -f ddl/bin_flat/${t}.sql \
 			    -d DB=tpcds_bin_flat_${FILE_FORMATS[$i]}_${SCALE} \
-			    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-			    -d FILE="${file}" -d SERDE=${SERDES[$i]} -d SPLIT=${SPLIT}
+			    -d SOURCE=tpcds_text_${SCALE} -d FILE="${file}" \
+			    -d SERDE=${SERDES[$i]}
 		done
 	i=$((i+1))
 	done

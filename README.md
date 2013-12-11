@@ -26,19 +26,11 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Step 1: Prepare your environment.
 
-  Before you begin, ```gcc```, and maven (```mvn```)must be in your system path. This is needed to compile the data generation program and package it for running inside Hadoop. These only need to be installed on one node of your Hadoop cluster.
-
-  On Ubuntu systems you can install all these via ```sudo apt-get install gcc maven```.
-  On RHEL / CentOS, most of these are availabile, start with ```sudo yum install gcc```. Maven must be installed manually.
+  Before you begin ensure ```gcc``` is installed and available on your system path. If you system does not have it, install it using yum or apt-get.
 
 - Step 2: Compile and package the data generator.
 
   ```./build.sh``` builds the data generator. Missing dependencies from step 1 will be detected and reported.
-
-- Step 2: Create a working directory in HDFS.
-
-  ```hadoop fs -mkdir /tmp/tpcds-staging```
-  creates a staging directory. This directory can be removed later to free up space.
 
 - Step 3: Decide how much data you want to generate.
 
@@ -46,17 +38,19 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Step 4: Generate and load the data.
 
+  The ```tpcds-setup.sh``` script generates and loads data for you. General usage is ```tpcds-setup.sh scale [directory] [mode]```. Only the scale is mandatory. The directory argument causes data to be generated in a specific location. Mode can be partitioned or unpartitioned. Partitioned causes data to be partitioned by day. Unpartitioned creates one flat schema and is faster to generate.
+
   - Option 1: Generate data on a Hadoop cluster.
 
     Use this approach if you want to try Hive out at scale. This approach assumes you have multiple physical Hadoop nodes with plenty of RAM. All tables will be created and large tables will be partitioned by date and bucketed which improves performance among queries that take advantage of partition pruning or SMB joins.
 
-    Example: ```./tpcds-setup.sh 200 /tmp/tpcds-staging```
+    Example: ```./tpcds-setup.sh 200```
 
   - Option 2: Generate data on a Sandbox.
 
-    Use this approach if you want to try Hive or Hive/Tez out in a Sandbox environment. This is for experimentation only and you should not generate too much data if you choose this route, 20 GB or less would be appropriate. This approach does not partition data.
+    Use this approach if you want to try Hive or Hive/Tez in a Sandbox environment. This approach creates an unpartitioned schema by default, which is faster to generate. This option is appropriate for smaller data scales, say 20GB or smaller.
 
-    Example: ```./tpcds-setup-sandbox.sh 10 /tmp/tpcds-staging```
+    Example: ```./tpcds-setup-sandbox.sh 10```
 
 - Step 5: Run queries.
 
