@@ -63,10 +63,11 @@ All of these steps should be carried out on your Hadoop cluster.
   More than 50 sample TPC-DS queries are included for you to try out. You can use ```hive```, ```beeline``` or the SQL tool of your choice.
 
   Example:
-      cd sample-queries
-      hive
-      use tpcds_bin_partitioned_orc_200
-      source query12.sql
+
+  	cd sample-queries
+  	hive
+  	use tpcds_bin_partitioned_orc_200
+  	source query12.sql
 
   Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 200, your database will be named tpcds_bin_partitioned_orc_200. At Data Scale 50 it would be named tpcds_bin_partitioned_orc_50.
 
