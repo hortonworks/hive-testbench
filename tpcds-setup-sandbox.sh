@@ -1,10 +1,12 @@
 #!/bin/bash
 
+if [ ! -f tpcds-gen/target/tpcds-gen-1.0-SNAPSHOT.jar ]; then
+	echo "Build the data generator with build.sh first"
+	exit 1
+fi
+
 set -x
 set -e
-
-# Build the data generation program.
-(cd tpcds-gen; make)
 
 # Tables in the TPC-DS schema.
 LIST="date_dim time_dim item customer customer_demographics household_demographics customer_address store promotion warehouse ship_mode reason income_band call_center web_page catalog_page inventory store_sales store_returns web_sales web_returns web_site catalog_sales catalog_returns"
