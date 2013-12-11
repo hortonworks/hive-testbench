@@ -1,0 +1,21 @@
+diff --git print.c print.c
+index 1b64362..5108bd7 100644
+--- print.c
++++ print.c
+@@ -68,6 +68,7 @@ print_close(int tbl)
+ 	fpOutfile = NULL;
+ 	if (pTdef->outfile)
+ 	{
++		fflush(pTdef->outfile);
+ 		fclose(pTdef->outfile);
+ 		pTdef->outfile = NULL;
+ 	}
+@@ -536,7 +538,7 @@ print_end (int tbl)
+    if (add_term)
+       fwrite(term, 1, add_term, fpOutfile);
+    fprintf (fpOutfile, "\n");
+-   fflush(fpOutfile);
++   //fflush(fpOutfile);
+ 
+    return (res);
+ }

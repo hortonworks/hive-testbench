@@ -1,0 +1,22 @@
+diff --git r_params.c r_params.c
+index 4db16e5..9b1a8e6 100644
+--- r_params.c
++++ r_params.c
+@@ -46,7 +46,7 @@
+ #include "tdefs.h"
+ #include "release.h"
+ 
+-#define PARAM_MAX_LEN	80
++#define PARAM_MAX_LEN	PATH_MAX
+ 
+ #ifndef TEST
+ extern option_t options[];
+@@ -275,7 +275,7 @@ set_str(char *var, char *val)
+ 	nParam = fnd_param(var);
+ 	if (nParam >= 0)
+ 	{
+-		strcpy(params[options[nParam].index], val);
++		strncpy(params[options[nParam].index], val, PARAM_MAX_LEN);
+ 		options[nParam].flags |= OPT_SET;
+ 	}
+ 
