@@ -24,14 +24,13 @@ All of these steps should be carried out on your Hadoop cluster.
   If you want to compare and contrast Hive on Map/Reduce versus Hive on Tez, install a version of Hive that works with Tez. For now that means installing the [Stinger Phase 3 Beta](http://www.hortonworks.com). Hive 13 and beyond, when they are released, will include Tez support by default.
 
 - Step 1: Prepare your environment.
-  Before you begin, gcc, flex, bison and maven must be in your system path. This is needed to compile the data generation program and package it for running inside Hadoop. These only need to be installed on one node of your Hadoop cluster.
+  Before you begin, ```gcc```, ```flex```, ```bison``` and maven (```mvn```)must be in your system path. This is needed to compile the data generation program and package it for running inside Hadoop. These only need to be installed on one node of your Hadoop cluster.
 
   On Ubuntu systems you can install all these via "sudo apt-get install gcc flex bison maven".
   On RHEL / CentOS, most of these are availabile, start with "sudo yum install gcc flex bison". Maven must be installed manually.
 
 - Step 2: Compile and package the data generator.
-  ```./build.sh```
-  builds the data generator. Missing dependencies from step 1 will be detected and reported.
+  ```./build.sh``` builds the data generator. Missing dependencies from step 1 will be detected and reported.
 
 - Step 2: Create a working directory in HDFS.
   ```hadoop fs -mkdir /tmp/tpcds-staging```
@@ -55,12 +54,10 @@ All of these steps should be carried out on your Hadoop cluster.
 - Step 5: Run queries.
   More than 50 sample TPC-DS queries are included for you to try out. You can use ```hive```, ```beeline``` or the SQL tool of your choice.
 
-  Example:
-  ```cd sample-queries
+  Example: ```cd sample-queries
   hive
   use tpcds_bin_partitioned_orc_200
-  source query12.sql
-  ```
+  source query12.sql ```
 
   Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 200, your database will be named tpcds_bin_partitioned_orc_200. At Data Scale 50 it would be named tpcds_bin_partitioned_orc_50.
 
