@@ -4,6 +4,11 @@ if [ ! -f tpcds-gen/target/tpcds-gen-1.0-SNAPSHOT.jar ]; then
 	echo "Build the data generator with build.sh first"
 	exit 1
 fi
+which hive > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+	echo "Script must be run where Hive is installed"
+	exit 1
+fi
 
 set -x
 set -e
