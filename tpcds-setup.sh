@@ -50,6 +50,7 @@ SERDES=( "org.apache.hadoop.hive.ql.io.orc.OrcSerde" )
 set -x
 set -e
 
+hadoop dfs -mkdir -p ${DIR}
 hadoop dfs -ls ${DIR}/${SCALE} || (cd tpcds-gen; hadoop jar target/*.jar -d ${DIR}/${SCALE}/ -s ${SCALE})
 hadoop dfs -ls ${DIR}/${SCALE}
 

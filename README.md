@@ -22,7 +22,7 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Optional: Install a Tez capable version of Hive.
 
-  If you want to compare and contrast Hive on Map/Reduce versus Hive on Tez, install a version of Hive that works with Tez. For now that means installing the [Stinger Phase 3 Beta](http://www.hortonworks.com). Hive 13 and beyond, when they are released, will include Tez support by default.
+  If you want to compare and contrast Hive on Map/Reduce versus Hive on Tez, install a version of Hive that works with Tez. For now that means installing the [Stinger Phase 3 Preview](http://www.hortonworks.com). Hive 13 and beyond, when they are released, will include Tez support by default.
 
 - Step 1: Prepare your environment.
 
@@ -30,7 +30,7 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Step 2: Compile and package the data generator.
 
-  ```./build.sh``` builds the data generator. Missing dependencies from step 1 will be detected and reported.
+  ```./build.sh``` downloads, compiles and packages the data generator.
 
 - Step 3: Decide how much data you want to generate.
 
