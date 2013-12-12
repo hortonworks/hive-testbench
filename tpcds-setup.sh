@@ -57,7 +57,7 @@ hadoop dfs -ls ${DIR}/${SCALE}
 # Generate the text/flat tables. These will be later be converted to ORCFile.
 for t in ${LIST}
 do
-	hive -i settings/load.sql -f ddl/text/${t}.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}/${t}
+	hive -i settings/load-flat.sql -f ddl/text/${t}.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}/${t}
 done
 
 # Generate the binary forms of the data.
@@ -67,7 +67,7 @@ if [ $MODE = "partitioned" ]; then
 	do
 		for t in ${LIST}
 		do
-			hive -i settings/load.sql -f ddl/bin_partitioned/${t}.sql \
+			hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
 			    -d DB=tpcds_bin_partitioned_${FILE_FORMATS[$i]}_${SCALE} \
 			    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
 			    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
@@ -81,7 +81,7 @@ else
 	do
 		for t in ${LIST}
 		do
-			hive -i settings/load.sql -f ddl/bin_flat/${t}.sql \
+			hive -i settings/load-flat.sql -f ddl/bin_flat/${t}.sql \
 			    -d DB=tpcds_bin_flat_${FILE_FORMATS[$i]}_${SCALE} \
 			    -d SOURCE=tpcds_text_${SCALE} -d FILE="${file}" \
 			    -d SERDE=${SERDES[$i]}

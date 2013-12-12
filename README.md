@@ -61,8 +61,8 @@ All of these steps should be carried out on your Hadoop cluster.
   	```
   	cd sample-queries
   	hive
-  	hive> use tpcds_bin_partitioned_orc_200
-  	hive> source query12.sql
+  	hive> use tpcds_bin_partitioned_orc_200;
+  	hive> source query12.sql;
   	```
 
   Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 200, your database will be named tpcds_bin_partitioned_orc_200. At Data Scale 50 it would be named tpcds_bin_partitioned_orc_50. You can always ```show databases``` to get a list of available databases.
