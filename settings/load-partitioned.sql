@@ -17,3 +17,4 @@ set mapred.reduce.child.java.opts=-server -Xms1024m -Xmx9000m -Djava.net.preferI
 set mapreduce.map.memory.mb=3072;
 set mapreduce.reduce.memory.mb=12288;
 set io.sort.mb=800;
+set hive.optimize.tez=false;

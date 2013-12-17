@@ -11,3 +11,4 @@ set mapred.min.split.size.per.node=240000000;
 set mapred.min.split.size.per.rack=240000000;
 set hive.exec.parallel=true;
 set hive.stats.autogather=false;
+set hive.optimize.tez=false;
