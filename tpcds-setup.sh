@@ -55,7 +55,7 @@ hadoop dfs -ls ${DIR}/${SCALE} || (cd tpcds-gen; hadoop jar target/*.jar -d ${DI
 hadoop dfs -ls ${DIR}/${SCALE}
 
 # Generate the text/flat tables. These will be later be converted to ORCFile.
-hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}/${t}
+hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
 
 # Generate the binary forms of the data.
 if [ $MODE = "partitioned" ]; then
