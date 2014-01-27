@@ -9,18 +9,21 @@ select i_item_desc
           (partition by i_class) as revenueratio
 from	
 	store_sales
-    	JOIN item ON store_sales.ss_item_sk = item.i_item_sk 
-    	JOIN date_dim ON store_sales.ss_sold_date_sk = date_dim.d_date_sk
+    	,item 
+    	,date_dim
 where 
-  	i_category in ('Jewelry', 'Sports', 'Books')
-	and d_date between '2001-01-12' and '2001-02-11'
+	store_sales.ss_item_sk = item.i_item_sk 
+  	and i_category in ('Jewelry', 'Sports', 'Books')
+  	and store_sales.ss_sold_date_sk = date_dim.d_date_sk
+	and d_date between cast('2001-01-12' as date) 
+				and (cast('2001-02-11' as date))
+	and ss_sold_date between '2001-01-12' and '2001-02-11'
 group by 
 	i_item_id
         ,i_item_desc 
         ,i_category
         ,i_class
         ,i_current_price
-        ,ss_ext_sales_price
 order by 
 	i_category
         ,i_class

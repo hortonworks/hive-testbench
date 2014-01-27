@@ -7,11 +7,12 @@ select  ca_zip, ca_county, sum(ws_sales_price)
     JOIN item ON web_sales.ws_item_sk = item.i_item_sk 
  where
         ( item.i_item_id in (select i_item_id
-                             from item
-                             where i_item_sk in (2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
+                             from item i2
+                             where i2.i_item_sk in (2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
                              )
             )
         and d_qoy = 2 and d_year = 2000
+	and ws_sold_date between '2000-04-01' and '2000-06-30'
  group by ca_zip, ca_county
  order by ca_zip, ca_county
  limit 100;

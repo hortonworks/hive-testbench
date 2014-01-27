@@ -1,4 +1,3 @@
-
 select inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean, inv1.cov
         ,inv2.w_warehouse_sk,inv2.i_item_sk,inv2.d_moy,inv2.mean, inv2.cov
 from
@@ -12,6 +11,7 @@ from
           JOIN date_dim ON inventory.inv_date_sk = date_dim.d_date_sk
       where 
          d_year =2000
+	 and inv_date between '2000-01-01' and '2000-12-31'
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when cast (0 as double) then cast (0 as double) else stdev/mean end > 1) inv1
 JOIN
@@ -25,6 +25,7 @@ JOIN
           JOIN date_dim ON inventory.inv_date_sk = date_dim.d_date_sk
       where 
          d_year =2000
+	 and inv_date between '2000-01-01' and '2000-12-31'
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when cast (0 as double) then cast (0 as double) else stdev/mean end > 1) inv2
 ON
@@ -32,6 +33,6 @@ ON
  and inv1.w_warehouse_sk =  inv2.w_warehouse_sk
 where
       inv1.d_moy=1
-  and inv2.d_moy=2
+  and inv2.d_moy=1+1
 order by inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean,inv1.cov
         ,inv2.d_moy,inv2.mean, inv2.cov;

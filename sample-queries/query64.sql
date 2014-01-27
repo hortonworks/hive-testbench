@@ -1,4 +1,3 @@
-
 select cs1.product_name ,cs1.store_name ,cs1.store_zip ,cs1.b_street_number ,cs1.b_streen_name ,cs1.b_city
      ,cs1.b_zip ,cs1.c_street_number ,cs1.c_street_name ,cs1.c_city ,cs1.c_zip ,cs1.syear ,cs1.cnt
      ,cs1.s1 ,cs1.s2 ,cs1.s3
@@ -41,6 +40,7 @@ ON store_sales.ss_item_sk = cs_ui.cs_item_sk
          i_color in ('maroon','burnished','dim','steel','navajo','chocolate') and
          i_current_price between 35 and 35 + 10 and
          i_current_price between 35 + 1 and 35 + 15
+	 and ss_sold_date between '2000-01-01' and '2000-12-31'
 group by i_product_name ,i_item_sk ,s_store_name ,s_zip ,ad1.ca_street_number
        ,ad1.ca_street_name ,ad1.ca_city ,ad1.ca_zip ,ad2.ca_street_number
        ,ad2.ca_street_name ,ad2.ca_city ,ad2.ca_zip ,d1.d_year ,d2.d_year ,d3.d_year
@@ -83,6 +83,7 @@ ON store_sales.ss_item_sk = cs_ui.cs_item_sk
          i_color in ('maroon','burnished','dim','steel','navajo','chocolate') and
          i_current_price between 35 and 35 + 10 and
          i_current_price between 35 + 1 and 35 + 15
+	 and ss_sold_date between '2001-01-01' and '2001-12-31'
 group by i_product_name ,i_item_sk ,s_store_name ,s_zip ,ad1.ca_street_number
        ,ad1.ca_street_name ,ad1.ca_city ,ad1.ca_zip ,ad2.ca_street_number
        ,ad2.ca_street_name ,ad2.ca_city ,ad2.ca_zip ,d1.d_year ,d2.d_year ,d3.d_year
