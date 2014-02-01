@@ -51,16 +51,6 @@ hadoop dfs -ls ${DIR}/${SCALE}
 # Generate the text/flat tables. These will be later be converted to ORCFile.
 # hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
 
-# Populate the smaller tables.
-#for t in ${LIST}
-#do
-#	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
-#	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
-#	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-#	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
-#	    -d SERDE=org.apache.hadoop.hive.ql.io.orc.OrcSerde -d SPLIT=${SPLIT}
-#done
-
 # Create the partitioned tables.
 for t in ${FACTS}
 do
@@ -68,14 +58,15 @@ do
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
 	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
-	    -d SERDE=org.apache.hadoop.hive.ql.io.orc.OrcSerde -d SPLIT=${SPLIT}
+	    -d SPLIT=${SPLIT}
 done
 
-# Populate the partitioned tables.
-for t in ${FACTS}
+# Populate the smaller tables.
+for t in ${LIST}
 do
-	hadoop jar tpcds-parts-1.0-SNAPSHOT.jar -t ${t}
-	    -i ${DIR}/${t}/
-	    -o /apps/hive/warehouse/tpcds_bin_partitioned_orc_${SCALE}.db/${t}
-	hive -e "msck repair table ${t}"
+	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
+	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
+	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
+	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
+	    -d SPLIT=${SPLIT}
 done
