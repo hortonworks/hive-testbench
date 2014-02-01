@@ -12,7 +12,7 @@ tpcds_kit.zip:
 	curl --output tpcds_kit.zip http://www.tpc.org/tpcds/dsgen/dsgen-download-files.asp?download_key=NaN
 
 target/lib/dsdgen.jar: target/tools/dsdgen
-	cd target/; mkdir -p lib/; ( jar cvf lib/dsdgen.jar tools/ || gjar cvf lib/dsdgen.jar tools/ )
+	cd target/; mkdir -p lib/; gjar cvf lib/dsdgen.jar tools/
 
 target/tools/dsdgen: target/tpcds_kit.zip
 	test -d target/tools/ || (cd target; unzip tpcds_kit.zip; cd tools; cat ../../*.patch | patch -p0 )
