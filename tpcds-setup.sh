@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage {
-	echo "Usage: tpcds-setup.sh scale [temp directory] [partitioned|unpartitioned]"
+	echo "Usage: tpcds-setup.sh scale [temp directory]"
 	exit 1
 }
 
@@ -17,7 +17,7 @@ fi
 
 # Tables in the TPC-DS schema.
 LIST="date_dim time_dim item customer customer_demographics household_demographics customer_address store promotion warehouse ship_mode reason income_band call_center web_page catalog_page web_site"
-FACTS="web_returns store_sales store_returns web_sales catalog_sales catalog_returns inventory"
+FACTS="store_sales store_returns web_sales web_returns catalog_sales catalog_returns inventory"
 
 # Get the parameters.
 SCALE=$1
@@ -57,7 +57,7 @@ do
 	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
+	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=orc \
 	    -d SPLIT=${SPLIT}
 done
 
@@ -67,6 +67,6 @@ do
 	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE="${file}" \
+	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=orc \
 	    -d SPLIT=${SPLIT}
 done
