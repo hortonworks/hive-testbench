@@ -4,6 +4,5 @@ use ${DB};
 drop table if exists catalog_page;
 
 create table catalog_page
-row format serde '${SERDE}'
 stored as ${FILE}
 as select * from ${SOURCE}.catalog_page;

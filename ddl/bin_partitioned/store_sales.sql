@@ -1,5 +1,6 @@
 set hive.enforce.bucketing=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=4096;
 set hive.exec.max.dynamic.partitions.pernode=4096;
 set mapred.job.reduce.input.buffer.percent=0.0;
 
@@ -35,5 +36,34 @@ create table store_sales
     ss_net_profit             float
 )
 partitioned by (ss_sold_date string)
-row format serde '${SERDE}'
 stored as ${FILE};
+
+insert overwrite table store_sales partition (ss_sold_date) 
+select
+        ss.ss_sold_date_sk,
+        ss.ss_sold_time_sk,
+        ss.ss_item_sk,
+        ss.ss_customer_sk,
+        ss.ss_cdemo_sk,
+        ss.ss_hdemo_sk,
+        ss.ss_addr_sk,
+        ss.ss_store_sk,
+        ss.ss_promo_sk,
+        ss.ss_ticket_number,
+        ss.ss_quantity,
+        ss.ss_wholesale_cost,
+        ss.ss_list_price,
+        ss.ss_sales_price,
+        ss.ss_ext_discount_amt,
+        ss.ss_ext_sales_price,
+        ss.ss_ext_wholesale_cost,
+        ss.ss_ext_list_price,
+        ss.ss_ext_tax,
+        ss.ss_coupon_amt,
+        ss.ss_net_paid,
+        ss.ss_net_paid_inc_tax,
+        ss.ss_net_profit,
+        dd.d_date as ss_sold_date
+      from ${SOURCE}.store_sales ss
+      left outer join ${SOURCE}.date_dim dd
+      on (ss.ss_sold_date_sk = dd.d_date_sk);

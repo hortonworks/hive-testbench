@@ -1,5 +1,8 @@
 set hive.enforce.bucketing=true;
-set hive.enforce.sorting=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=4096;
+set hive.exec.max.dynamic.partitions.pernode=4096;
+set mapred.job.reduce.input.buffer.percent=0.0;
 
 create database if not exists ${DB};
 use ${DB};
@@ -31,8 +34,6 @@ create table item
     i_manager_id              int,
     i_product_name            string
 )
-clustered by (i_item_sk) sorted by (i_item_sk) into ${BUCKETS} buckets
-row format serde '${SERDE}'
 stored as ${FILE};
 
 insert overwrite table item

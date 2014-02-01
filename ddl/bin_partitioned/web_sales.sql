@@ -1,5 +1,6 @@
 set hive.enforce.bucketing=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=4096;
 set hive.exec.max.dynamic.partitions.pernode=4096;
 set mapred.job.reduce.input.buffer.percent=0.0;
 
@@ -46,5 +47,45 @@ create table web_sales
     ws_net_profit             float
 )
 partitioned by (ws_sold_date string)
-row format serde '${SERDE}'
 stored as ${FILE};
+
+insert overwrite table web_sales partition (ws_sold_date) 
+select
+        ws.ws_sold_date_sk,
+        ws.ws_sold_time_sk,
+        ws.ws_ship_date_sk,
+        ws.ws_item_sk,
+        ws.ws_bill_customer_sk,
+        ws.ws_bill_cdemo_sk,
+        ws.ws_bill_hdemo_sk,
+        ws.ws_bill_addr_sk,
+        ws.ws_ship_customer_sk,
+        ws.ws_ship_cdemo_sk,
+        ws.ws_ship_hdemo_sk,
+        ws.ws_ship_addr_sk,
+        ws.ws_web_page_sk,
+        ws.ws_web_site_sk,
+        ws.ws_ship_mode_sk,
+        ws.ws_warehouse_sk,
+        ws.ws_promo_sk,
+        ws.ws_order_number,
+        ws.ws_quantity,
+        ws.ws_wholesale_cost,
+        ws.ws_list_price,
+        ws.ws_sales_price,
+        ws.ws_ext_discount_amt,
+        ws.ws_ext_sales_price,
+        ws.ws_ext_wholesale_cost,
+        ws.ws_ext_list_price,
+        ws.ws_ext_tax,
+        ws.ws_coupon_amt,
+        ws.ws_ext_ship_cost,
+        ws.ws_net_paid,
+        ws.ws_net_paid_inc_tax,
+        ws.ws_net_paid_inc_ship,
+        ws.ws_net_paid_inc_ship_tax,
+        ws.ws_net_profit,
+        dd.d_date as ws_sold_date
+      from ${SOURCE}.web_sales ws
+      left outer join ${SOURCE}.date_dim dd
+      on (ws.ws_sold_date_sk = dd.d_date_sk);

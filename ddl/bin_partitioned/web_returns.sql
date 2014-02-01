@@ -1,5 +1,6 @@
 set hive.enforce.bucketing=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=4096;
 set hive.exec.max.dynamic.partitions.pernode=4096;
 set mapred.job.reduce.input.buffer.percent=0.0;
 
@@ -36,5 +37,35 @@ create table web_returns
     wr_net_loss               float
 )
 partitioned by (wr_returned_date string)
-row format serde '${SERDE}'
 stored as ${FILE};
+
+insert overwrite table web_returns partition (wr_returned_date)
+select
+        wr.wr_returned_date_sk,
+        wr.wr_returned_time_sk,
+        wr.wr_item_sk,
+        wr.wr_refunded_customer_sk,
+        wr.wr_refunded_cdemo_sk,
+        wr.wr_refunded_hdemo_sk,
+        wr.wr_refunded_addr_sk,
+        wr.wr_returning_customer_sk,
+        wr.wr_returning_cdemo_sk,
+        wr.wr_returning_hdemo_sk,
+        wr.wr_returning_addr_sk,
+        wr.wr_web_page_sk,
+        wr.wr_reason_sk,
+        wr.wr_order_number,
+        wr.wr_return_quantity,
+        wr.wr_return_amt,
+        wr.wr_return_tax,
+        wr.wr_return_amt_inc_tax,
+        wr.wr_fee,
+        wr.wr_return_ship_cost,
+        wr.wr_refunded_cash,
+        wr.wr_reversed_charge,
+        wr.wr_account_credit,
+        wr.wr_net_loss,
+        dd.d_date as wr_returned_date
+      from ${SOURCE}.web_returns wr
+      left outer join ${SOURCE}.date_dim dd
+      on (wr.wr_returned_date_sk = dd.d_date_sk);

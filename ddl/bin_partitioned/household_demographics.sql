@@ -4,6 +4,5 @@ use ${DB};
 drop table if exists household_demographics;
 
 create table household_demographics
-row format serde '${SERDE}'
 stored as ${FILE}
 as select * from ${SOURCE}.household_demographics;
