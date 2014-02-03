@@ -21,6 +21,7 @@ and store_sales.ss_customer_sk = store_returns.sr_customer_sk
 where
     d2.d_year = 2000
 and d2.d_moy  = 9
+and sr_returned_date between '2000-09-01' and '2000-09-30'
 group by
    s_store_name ,s_company_id ,s_street_number ,s_street_name ,s_street_type ,s_suite_number
   ,s_city ,s_county ,s_state ,s_zip

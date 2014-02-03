@@ -9,6 +9,7 @@ select avg(ss_quantity) ,avg(ss_ext_sales_price) ,avg(ss_ext_wholesale_cost) ,su
      JOIN date_dim ON store_sales.ss_sold_date_sk = date_dim.d_date_sk
  where
  d_year = 2001
+ and ss_sold_date between '2001-01-01' and '2001-12-31'
  and((
   cd_marital_status = 'M'
   and cd_education_status = '4 yr Degree'

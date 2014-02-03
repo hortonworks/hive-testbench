@@ -18,6 +18,7 @@ from (select
          join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
       where 
          i_category in ('Sports', 'Shoes', 'Books') and year(d_date) = 2001 and month(d_date) = 10 
+         and ss_sold_date between '2001-10-01' and '2001-10-31'
       group by 
           i_item_id
          ,i_item_desc 

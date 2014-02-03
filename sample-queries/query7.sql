@@ -15,6 +15,7 @@ select  i_item_id,
        cd_education_status = 'Primary' and
        (p_channel_email = 'N' or p_channel_event = 'N') and
        d_year = 1998 
+       and ss_sold_date between '1998-01-01' and '1998-12-31'
  group by i_item_id
  order by i_item_id
  limit 100;

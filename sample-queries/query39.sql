@@ -12,6 +12,7 @@ from
           JOIN date_dim ON inventory.inv_date_sk = date_dim.d_date_sk
       where 
          d_year =2000
+         and inv_date between '2000-01-01' and '2000-12-31'
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when cast (0 as double) then cast (0 as double) else stdev/mean end > 1) inv1
 JOIN
@@ -25,6 +26,7 @@ JOIN
           JOIN date_dim ON inventory.inv_date_sk = date_dim.d_date_sk
       where 
          d_year =2000
+         and inv_date between '2000-01-01' and '2000-12-31'
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when cast (0 as double) then cast (0 as double) else stdev/mean end > 1) inv2
 ON

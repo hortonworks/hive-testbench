@@ -9,6 +9,13 @@ select  d_year
  where
        item.i_manufact_id = 436
    and dt.d_moy=12
+   and (    
+        ( ss_sold_date between '1998-12-01' and '1998-12-31' ) or
+        ( ss_sold_date between '1999-12-01' and '1999-12-31' ) or
+        ( ss_sold_date between '2000-12-01' and '2000-12-31' ) or
+        ( ss_sold_date between '2001-12-01' and '2001-12-31' ) or
+        ( ss_sold_date between '2002-12-01' and '2002-12-31' )
+   ) 
  group by d_year
       ,item.i_brand
       ,item.i_brand_id

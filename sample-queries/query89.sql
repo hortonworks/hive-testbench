@@ -13,6 +13,7 @@ from item
   JOIN date_dim ON store_sales.ss_sold_date_sk = date_dim.d_date_sk
   JOIN store ON store_sales.ss_store_sk = store.s_store_sk
 where
+      ss_sold_date between '2000-01-01' and '2000-12-31' and
       d_year in (2000) and
         ((i_category in ('Home','Books','Electronics') and
           i_class in ('wallpaper','parenting','musical')

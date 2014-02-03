@@ -11,6 +11,7 @@ select  i_brand_id, i_brand, i_manufact_id, i_manufact,
    i_manager_id=7
    and d_moy=11
    and d_year=1999
+   and ss_sold_date between '1999-11-01' and '1999-11-31'
    and substr(ca_zip,1,5) <> substr(s_zip,1,5) 
  group by i_brand
       ,i_brand_id

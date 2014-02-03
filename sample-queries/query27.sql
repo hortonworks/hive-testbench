@@ -15,7 +15,8 @@ select  i_item_id,
        cd_marital_status = 'W' and
        cd_education_status = 'Primary' and
        d_year = 1998 and
-       s_state = 'TN'
+       s_state = 'TN' and
+       ss_sold_date between '1998-01-01' and '1998-12-31'
  group by i_item_id, s_state
  order by i_item_id
          ,s_state

@@ -13,6 +13,7 @@ LEFT SEMI JOIN (SELECT ws2.ws_order_number as ws_order_number
 ON (ws1.ws_order_number = ws_wh1.ws_order_number)
 LEFT OUTER JOIN web_returns wr1 ON (ws1.ws_order_number = wr1.wr_order_number)
 WHERE d.d_date between '2000-05-01' and '2000-07-01' and
+               ws_sold_date between '2000-05-01' and '2000-07-01' and
                ca.ca_state = 'TX' and
                s.web_company_name = 'pri' and
                wr1.wr_order_number is null

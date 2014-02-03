@@ -63,6 +63,7 @@ select
  	 JOIN ship_mode ON web_sales.ws_ship_mode_sk = ship_mode.sm_ship_mode_sk
      where
             d_year = 2002
+        and ws_sold_date between '2002-01-01' and '2002-12-31'
  	and t_time between 49530 and 49530+28800 
  	and sm_carrier in ('DIAMOND','AIRBORNE')
      group by 
@@ -105,6 +106,7 @@ select
  	 JOIN ship_mode ON catalog_sales.cs_ship_mode_sk = ship_mode.sm_ship_mode_sk
      where
             d_year = 2002
+        and cs_sold_date between '2002-01-01' and '2002-12-31'
  	and t_time between 49530 AND 49530+28800 
  	and sm_carrier in ('DIAMOND','AIRBORNE')
      group by 

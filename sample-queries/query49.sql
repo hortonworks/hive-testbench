@@ -19,6 +19,7 @@ select
  		where 
  			wr.wr_return_amt > 10000 and ws.ws_net_profit > 1 and ws.ws_net_paid > 0
                          and ws.ws_quantity > 0 and d_year = 2000 and d_moy = 12
+                         and ws_sold_date between '2000-12-01' and '2000-12-31'
  		group by ws.ws_item_sk
  	) in_web
  ) web
@@ -42,6 +43,7 @@ select
  		where 
  			cr.cr_return_amount > 10000 and cs.cs_net_profit > 1 and cs.cs_net_paid > 0
                          and cs.cs_quantity > 0 and d_year = 2000 and d_moy = 12
+                         and cs_sold_date between '2000-12-01' and '2000-12-31'
                  group by cs.cs_item_sk
  	) in_cat
  ) catalog
@@ -62,6 +64,7 @@ select
  		where 
  			sr.sr_return_amt > 10000 and sts.ss_net_profit > 1 and sts.ss_net_paid > 0 
                          and sts.ss_quantity > 0 and d_year = 2000 and d_moy = 12
+                         and ss_sold_date between '2000-12-01' and '2000-12-31'
  		group by sts.ss_item_sk
  	) in_store
  ) store

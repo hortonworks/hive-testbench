@@ -15,6 +15,7 @@ from
 where
         d_year                  = 1999 
 and     d_moy                   = 11
+and     cr_returned_date        between '1999-11-01' and '1999-11-31'
 and     ( (cd_marital_status       = 'M' and cd_education_status     = 'Unknown')
         or(cd_marital_status       = 'W' and cd_education_status     = 'Advanced Degree'))
 and     hd_buy_potential like '0-500%'

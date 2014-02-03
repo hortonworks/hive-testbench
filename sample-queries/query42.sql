@@ -10,6 +10,7 @@ select  d_year
  	    item.i_manager_id = 1  	
  	and dt.d_moy=12
  	and dt.d_year=1998
+        and ss_sold_date between '1998-12-01' and '1998-12-31'
  group by 	d_year
  		,item.i_category_id
  		,item.i_category

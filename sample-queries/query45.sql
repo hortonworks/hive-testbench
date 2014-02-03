@@ -12,6 +12,7 @@ select  ca_zip, ca_county, sum(ws_sales_price)
                              )
             )
         and d_qoy = 2 and d_year = 2000
+        and ws_sold_date between '2000-04-01' and '2000-06-30'
  group by ca_zip, ca_county
  order by ca_zip, ca_county
  limit 100;

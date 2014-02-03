@@ -10,6 +10,7 @@ select  substr(r_reason_desc,1,20) as r, avg(ws_quantity) as wq, avg(wr_refunded
  JOIN reason ON reason.r_reason_sk = web_returns.wr_reason_sk
  where
    d_year = 1998
+   and ws_sold_date between '1998-01-01' and '1998-12-31'
    and
    (
     (

@@ -23,8 +23,11 @@ select  i_item_id ,i_item_desc ,s_state
      JOIN store ON store.s_store_sk = store_sales.ss_store_sk
      JOIN item ON item.i_item_sk = store_sales.ss_item_sk
  where d1.d_quarter_name = '2000Q1'
+   and ss_sold_date between '2000-01-01' and '2000-03-31'
    and d2.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
+   and sr_returned_date between '2000-01-01' and '2000-09-01'
    and d3.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
+   and cs_sold_date between '2000-01-01' and '2000-09-31'
  group by i_item_id ,i_item_desc ,s_state
  order by i_item_id ,i_item_desc ,s_state
 limit 100;

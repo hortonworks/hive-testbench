@@ -16,6 +16,7 @@ select
  where
      i_current_price between 0.99 and 1.49
  and d_date between '1998-03-09' and '1998-05-08'
+ and cs_sold_date between '1998-03-09' and '1998-05-08'
  group by
     w_state,i_item_id
  order by w_state,i_item_id

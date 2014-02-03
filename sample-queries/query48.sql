@@ -7,6 +7,7 @@ select sum (ss_quantity)
  JOIN date_dim ON store_sales.ss_sold_date_sk = date_dim.d_date_sk
  where
  d_year = 1998
+ and ss_sold_date between '1998-01-01' and '1998-12-31'
  and  
  (
   (

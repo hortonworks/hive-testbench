@@ -11,6 +11,7 @@ select  ca_zip
  	      or ca_state in ('CA','WA','GA')
  	      or cs_sales_price > 500)
  	and d_qoy = 2 and d_year = 2000
+        and cs_sold_date between '2000-04-01' and '2000-06-30'
  group by ca_zip
  order by ca_zip
  limit 100;

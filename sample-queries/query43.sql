@@ -13,6 +13,7 @@ select  s_store_name, s_store_id,
  where
        s_gmt_offset = -5 and
        d_year = 1998 
+       and ss_sold_date between '1998-01-01' and '1998-12-31'
  group by s_store_name, s_store_id
  order by s_store_name, s_store_id,sun_sales,mon_sales,tue_sales,wed_sales,thu_sales,fri_sales,sat_sales
  limit 100;

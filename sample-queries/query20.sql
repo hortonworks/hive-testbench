@@ -13,6 +13,7 @@ select  i_item_desc
  where
    i_category in ('Jewelry', 'Sports', 'Books')
  and d_date between '2001-01-12' and '2001-02-11'
+ and cs_sold_date between '2001-01-12' and '2001-02-11'
  group by i_item_id
          ,i_item_desc 
          ,i_category
