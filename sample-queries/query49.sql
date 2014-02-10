@@ -28,10 +28,10 @@ select
  			and ws.ws_net_profit > 1
                          and ws.ws_net_paid > 0
                          and ws.ws_quantity > 0
-                         and ws_sold_date_sk = d_date_sk
+                         and ws.ws_sold_date_sk = date_dim.d_date_sk
                          and d_year = 2000
                          and d_moy = 12
-			 and ws_sold_date between '2000-12-01' and '2000-12-31'
+			 and ws.ws_sold_date between '2000-12-01' and '2000-12-31'
  		group by ws.ws_item_sk
  	) in_web
  ) web

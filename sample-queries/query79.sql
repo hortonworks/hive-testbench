@@ -44,7 +44,7 @@ select
         '2000-11-20', '2000-11-27', '2000-12-04', '2000-12-11', '2000-12-18', '2000-12-25'
     )
     group by ss_ticket_number,ss_customer_sk,ss_addr_sk,store.s_city) ms,customer
-    where ss_customer_sk = c_customer_sk
+    where ms.ss_customer_sk = customer.c_customer_sk
  order by c_last_name,c_first_name,sub, profit
 limit 100;
 

@@ -35,7 +35,7 @@ select c_last_name
     )
     and store.s_county in ('Kittitas County','Adams County','Richland County','Furnas County')
     group by ss_ticket_number,ss_customer_sk) dj,customer
-    where ss_customer_sk = c_customer_sk
+    where dj.ss_customer_sk = customer.c_customer_sk
       and cnt between 1 and 5
     order by cnt desc;
 

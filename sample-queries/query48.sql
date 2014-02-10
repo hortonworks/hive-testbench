@@ -1,13 +1,13 @@
 
 select sum (ss_quantity)
  from store_sales, store, customer_demographics, customer_address, date_dim
- where s_store_sk = ss_store_sk
- and  ss_sold_date_sk = d_date_sk and d_year = 1998
+ where store.s_store_sk = store_sales.ss_store_sk
+ and  store_sales.ss_sold_date_sk = date_dim.d_date_sk and d_year = 1998
  and ss_sold_date between '1998-01-01' and '1998-12-31'
  and  
  (
   (
-   cd_demo_sk = ss_cdemo_sk
+   customer_demographics.cd_demo_sk = store_sales.ss_cdemo_sk
    and 
    cd_marital_status = 'M'
    and 
@@ -17,7 +17,7 @@ select sum (ss_quantity)
    )
  or
   (
-  cd_demo_sk = ss_cdemo_sk
+  customer_demographics.cd_demo_sk = store_sales.ss_cdemo_sk
    and 
    cd_marital_status = 'M'
    and 
@@ -27,7 +27,7 @@ select sum (ss_quantity)
   )
  or 
  (
-  cd_demo_sk = ss_cdemo_sk
+  customer_demographics.cd_demo_sk = store_sales.ss_cdemo_sk
   and 
    cd_marital_status = 'M'
    and 
@@ -39,7 +39,7 @@ select sum (ss_quantity)
  and
  (
   (
-  ss_addr_sk = ca_address_sk
+  store_sales.ss_addr_sk = customer_address.ca_address_sk
   and
   ca_country = 'United States'
   and
@@ -47,7 +47,7 @@ select sum (ss_quantity)
   and ss_net_profit between 0 and 2000  
   )
  or
-  (ss_addr_sk = ca_address_sk
+  (store_sales.ss_addr_sk = customer_address.ca_address_sk
   and
   ca_country = 'United States'
   and
@@ -55,7 +55,7 @@ select sum (ss_quantity)
   and ss_net_profit between 150 and 3000 
   )
  or
-  (ss_addr_sk = ca_address_sk
+  (store_sales.ss_addr_sk = customer_address.ca_address_sk
   and
   ca_country = 'United States'
   and

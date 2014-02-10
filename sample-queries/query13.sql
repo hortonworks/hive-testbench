@@ -18,7 +18,7 @@ select avg(ss_quantity)
   and store_sales.ss_sales_price between 100.00 and 150.00
   and household_demographics.hd_dep_count = 3   
      )or
-     (ss_hdemo_sk=hd_demo_sk
+     (store_sales.ss_hdemo_sk=household_demographics.hd_demo_sk
   and customer_demographics.cd_demo_sk = store_sales.ss_cdemo_sk
   and customer_demographics.cd_marital_status = 'D'
   and customer_demographics.cd_education_status = 'Primary'

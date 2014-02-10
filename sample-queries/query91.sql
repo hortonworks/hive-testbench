@@ -13,12 +13,12 @@ from
         customer_demographics,
         household_demographics
 where
-        cr_call_center_sk       = cc_call_center_sk
-and     cr_returned_date_sk     = d_date_sk
-and     cr_returning_customer_sk= c_customer_sk
-and     cd_demo_sk              = c_current_cdemo_sk
-and     hd_demo_sk              = c_current_hdemo_sk
-and     ca_address_sk           = c_current_addr_sk
+        catalog_returns.cr_call_center_sk       = call_center.cc_call_center_sk
+and     catalog_returns.cr_returned_date_sk     = date_dim.d_date_sk
+and     catalog_returns.cr_returning_customer_sk= customer.c_customer_sk
+and     customer_demographics.cd_demo_sk              = customer.c_current_cdemo_sk
+and     household_demographics.hd_demo_sk              = customer.c_current_hdemo_sk
+and     customer_address.ca_address_sk           = customer.c_current_addr_sk
 and     d_year                  = 1999 
 and     d_moy                   = 11
 and	cr_returned_date	between '1999-11-01' and '1999-11-31'

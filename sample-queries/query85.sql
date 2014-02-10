@@ -5,15 +5,15 @@ select  substr(r_reason_desc,1,20) as r
        ,avg(wr_fee) fee
  from web_sales, web_returns, web_page, customer_demographics cd1,
       customer_demographics cd2, customer_address, date_dim, reason 
- where ws_web_page_sk = wp_web_page_sk
-   and ws_item_sk = wr_item_sk
-   and ws_order_number = wr_order_number
-   and ws_sold_date_sk = d_date_sk and d_year = 1998
-   and ws_sold_date between '1998-01-01' and '1998-12-31'
-   and cd1.cd_demo_sk = wr_refunded_cdemo_sk 
-   and cd2.cd_demo_sk = wr_returning_cdemo_sk
-   and ca_address_sk = wr_refunded_addr_sk
-   and r_reason_sk = wr_reason_sk
+ where web_sales.ws_web_page_sk = web_page.wp_web_page_sk
+   and web_sales.ws_item_sk = web_returns.wr_item_sk
+   and web_sales.ws_order_number = web_returns.wr_order_number
+   and web_sales.ws_sold_date_sk = date_dim.d_date_sk and d_year = 1998
+   and web_sales.ws_sold_date between '1998-01-01' and '1998-12-31'
+   and cd1.cd_demo_sk = web_returns.wr_refunded_cdemo_sk 
+   and cd2.cd_demo_sk = web_returns.wr_returning_cdemo_sk
+   and customer_address.ca_address_sk = web_returns.wr_refunded_addr_sk
+   and reason.r_reason_sk = web_returns.wr_reason_sk
    and
    (
     (

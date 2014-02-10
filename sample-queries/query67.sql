@@ -23,9 +23,9 @@ from (select i_category
                 ,date_dim
                 ,store
                 ,item
-       where  ss_sold_date_sk=d_date_sk
-          and ss_item_sk=i_item_sk
-          and ss_store_sk = s_store_sk
+       where  store_sales.ss_sold_date_sk=date_dim.d_date_sk
+          and store_sales.ss_item_sk=item.i_item_sk
+          and store_sales.ss_store_sk = store.s_store_sk
           and d_month_seq between 1193 and 1193+11
           and ss_sold_date between '1999-06-01' and '2000-05-31'
        group by i_category, i_class, i_brand, i_product_name, d_year, d_qoy, d_moy,s_store_id with rollup)dw1) dw2

@@ -28,12 +28,12 @@ where
     d2.d_year = 2000
 and d2.d_moy  = 9
 and sr_returned_date between '2000-09-01' and '2000-09-30'
-and ss_ticket_number = sr_ticket_number
-and ss_item_sk = sr_item_sk
-and ss_sold_date_sk   = d1.d_date_sk
+and store_sales.ss_ticket_number = store_returns.sr_ticket_number
+and store_sales.ss_item_sk = store_returns.sr_item_sk
+and store_sales.ss_sold_date_sk   = d1.d_date_sk
 and sr_returned_date_sk   = d2.d_date_sk
-and ss_customer_sk = sr_customer_sk
-and ss_store_sk = s_store_sk
+and store_sales.ss_customer_sk = store_returns.sr_customer_sk
+and store_sales.ss_store_sk = store.s_store_sk
 group by
    s_store_name
   ,s_company_id

@@ -69,6 +69,6 @@ select c_last_name
     and store.s_county in ('Kittitas County','Adams County','Richland County','Furnas County',
                            'Orange County','Appanoose County','Franklin Parish','Tehama County')
     group by ss_ticket_number,ss_customer_sk) dn,customer
-    where ss_customer_sk = c_customer_sk
+    where dn.ss_customer_sk = customer.c_customer_sk
       and cnt between 15 and 20
     order by c_last_name,c_first_name,c_salutation,c_preferred_cust_flag desc;

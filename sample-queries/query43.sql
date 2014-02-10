@@ -8,8 +8,8 @@ select  s_store_name, s_store_id,
         sum(case when (d_day_name='Friday') then ss_sales_price else null end) fri_sales,
         sum(case when (d_day_name='Saturday') then ss_sales_price else null end) sat_sales
  from date_dim, store_sales, store
- where d_date_sk = ss_sold_date_sk and
-       s_store_sk = ss_store_sk and
+ where date_dim.d_date_sk = store_sales.ss_sold_date_sk and
+       store.s_store_sk = store_sales.ss_store_sk and
        s_gmt_offset = -6 and
        d_year = 1998
        and ss_sold_date between '1998-01-01' and '1998-12-31'
