@@ -1,4 +1,3 @@
-
 use ${DB};
 ADD JAR file://${mysql_jar};
 
@@ -12,7 +11,6 @@ ANALYZE TABLE customer_address COMPUTE STATISTICS;
 ANALYZE TABLE store COMPUTE STATISTICS;
 ANALYZE TABLE promotion COMPUTE STATISTICS;
 ANALYZE TABLE web_site COMPUTE STATISTICS;
-
 
 ANALYZE TABLE inventory partition(inv_date) COMPUTE STATISTICS;
 ANALYZE TABLE store_sales partition(ss_sold_date) COMPUTE STATISTICS;

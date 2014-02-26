@@ -1,9 +1,3 @@
-set hive.enforce.bucketing=true;
-set hive.exec.dynamic.partition.mode=nonstrict;
-set hive.exec.max.dynamic.partitions=4096;
-set hive.exec.max.dynamic.partitions.pernode=4096;
-set mapred.job.reduce.input.buffer.percent=0.0;
-
 create database if not exists ${DB};
 use ${DB};
 

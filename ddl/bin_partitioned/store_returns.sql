@@ -1,9 +1,3 @@
-set hive.enforce.bucketing=true;
-set hive.exec.dynamic.partition.mode=nonstrict;
-set hive.exec.max.dynamic.partitions=4096;
-set hive.exec.max.dynamic.partitions.pernode=4096;
-set mapred.job.reduce.input.buffer.percent=0.0;
-
 create database if not exists ${DB};
 use ${DB};
 
@@ -33,6 +27,7 @@ create table store_returns
     sr_net_loss               float
 )
 partitioned by (sr_returned_date string)
+clustered by (sr_item_sk) sorted by (sr_item_sk) into ${RETURN_BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table store_returns partition (sr_returned_date) 
@@ -59,5 +54,5 @@ select
         sr.sr_net_loss,
         dd.d_date as sr_returned_date
       from ${SOURCE}.store_returns sr
-      left outer join ${SOURCE}.date_dim dd
+      join ${SOURCE}.date_dim dd
       on (sr.sr_returned_date_sk = dd.d_date_sk);

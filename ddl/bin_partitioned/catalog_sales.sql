@@ -1,9 +1,3 @@
-set hive.enforce.bucketing=true;
-set hive.exec.dynamic.partition.mode=nonstrict;
-set hive.exec.max.dynamic.partitions=4096;
-set hive.exec.max.dynamic.partitions.pernode=4096;
-set mapred.job.reduce.input.buffer.percent=0.0;
-
 create database if not exists ${DB};
 use ${DB};
 
@@ -47,6 +41,7 @@ create table catalog_sales
     cs_net_profit             float
 )
 partitioned by (cs_sold_date string)
+clustered by (cs_item_sk) sorted by (cs_item_sk) into ${BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table catalog_sales partition (cs_sold_date) 
@@ -87,5 +82,5 @@ select
         cs.cs_net_profit,
         dd.d_date as cs_sold_date
       from ${SOURCE}.catalog_sales cs
-      left outer join ${SOURCE}.date_dim dd
+      join ${SOURCE}.date_dim dd
       on (cs.cs_sold_date_sk = dd.d_date_sk);
