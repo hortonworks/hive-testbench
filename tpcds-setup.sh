@@ -16,7 +16,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Tables in the TPC-DS schema.
-LIST="date_dim time_dim item customer customer_demographics household_demographics customer_address store promotion warehouse ship_mode reason income_band call_center web_page catalog_page web_site"
+DIMS="date_dim time_dim item customer customer_demographics household_demographics customer_address store promotion warehouse ship_mode reason income_band call_center web_page catalog_page web_site"
 FACTS="store_sales store_returns web_sales web_returns catalog_sales catalog_returns inventory"
 
 # Get the parameters.
@@ -38,18 +38,17 @@ if [ $SCALE -eq 1 ]; then
 fi
 
 BUCKETS=13
-RETURN_BUCKETS=1
-SPLIT=16
 
 set -x
 set -e
 
 hadoop dfs -mkdir -p ${DIR}
 hadoop dfs -ls ${DIR}/${SCALE} || (cd tpcds-gen; hadoop jar target/*.jar -d ${DIR}/${SCALE}/ -s ${SCALE})
+hadoop dfs -ls ${DIR}/${SCALE} || ( echo "No data available" )
 hadoop dfs -ls ${DIR}/${SCALE}
 
 # Generate the text/flat tables. These will be later be converted to ORCFile.
-hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
+# hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
 
 # Create the partitioned tables.
 for t in ${FACTS}
@@ -57,16 +56,13 @@ do
 	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=orc \
-	    -d SPLIT=${SPLIT}
+	    -d FILE=orc
 done
 
 # Populate the smaller tables.
-for t in ${LIST}
+for t in ${DIMS}
 do
 	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
-	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
-	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=orc \
-	    -d SPLIT=${SPLIT}
+	    -d DB=tpcds_bin_partitioned_orc_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
+	    -d FILE=orc
 done
