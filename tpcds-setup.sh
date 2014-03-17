@@ -47,13 +47,13 @@ hadoop dfs -ls ${DIR}/${SCALE} || (cd tpcds-gen; hadoop jar target/*.jar -d ${DI
 hadoop dfs -ls ${DIR}/${SCALE} || ( echo "No data available" )
 hadoop dfs -ls ${DIR}/${SCALE}
 
-# Generate the text/flat tables. These will be later be converted to ORCFile.
-# hive -i settings/load-flat.sql -f ddl/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
+# Create the text/flat tables as external tables. These will be later be converted to ORCFile.
+hive -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}
 
 # Create the partitioned tables.
 for t in ${FACTS}
 do
-	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
+	hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
 	    -d FILE=orc
@@ -62,7 +62,7 @@ done
 # Populate the smaller tables.
 for t in ${DIMS}
 do
-	hive -i settings/load-partitioned.sql -f ddl/bin_partitioned/${t}.sql \
+	hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
 	    -d FILE=orc
 done
