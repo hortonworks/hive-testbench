@@ -12,7 +12,8 @@ Prerequisites
 =============
 
 You will need:
-* A Linux-based HDP cluster (or Sandbox).
+* Hadoop 2.2 or later cluster or Sandbox.
+* Hive 13 or later.
 * Between 15 minutes and 6 hours to generate data (depending on the Scale Factor you choose and available hardware).
 
 Install and Setup
@@ -20,52 +21,55 @@ Install and Setup
 
 All of these steps should be carried out on your Hadoop cluster.
 
-- Optional: Install a Tez capable version of Hive.
-
-  If you want to compare and contrast Hive on Map/Reduce versus Hive on Tez, install a version of Hive that works with Tez. For now that means installing the [Stinger Phase 3 Preview](http://www.hortonworks.com). Hive 13 and beyond, when they are released, will include Tez support by default.
-
 - Step 1: Prepare your environment.
 
-  Before you begin ensure ```gcc``` is installed and available on your system path. If you system does not have it, install it using yum or apt-get.
+  In addition to Hadoop and Hive 13+, before you begin ensure ```gcc``` is installed and available on your system path. If you system does not have it, install it using yum or apt-get.
 
-- Step 2: Compile and package the data generator.
+- Step 2: Decide which test suite(s) you want to use.
 
-  ```./build.sh``` downloads, compiles and packages the data generator.
+  hive-testbench comes with data generators and sample queries based on both the TPC-DS and TPC-H benchmarks. You can choose to use either or both of these benchmarks for experiementation. More information about these benchmarks can be found at the Transaction Processing Council homepage.
 
-- Step 3: Decide how much data you want to generate.
+- Step 3: Compile and package the appropriate data generator.
 
-  You need to decide on a "Scale Factor" which represents how much data you will generate. Scale Factor roughly translates to gigabytes, so a Scale Factor of 100 is about 100 gigabytes. One terabyte is Scale Factor 1000. Decide how much data you want and keep it in mind for the next step. If you have a cluster of 4-10 nodes or just want to experiment at a smaller scale, scale 200 (200GB) of data is a good starting point. If you have a large cluster, you may want to choose Scale 1000 (1TB) or more.
+  For TPC-DS, ```./tpcds-build.sh``` downloads, compiles and packages the TPC-DS data generator.
+  For TPC-H, ```./tpch-build.sh``` downloads, compiles and packages the TPC-H data generator.
 
-- Step 4: Generate and load the data.
+- Step 4: Decide how much data you want to generate.
 
-  The ```tpcds-setup.sh``` script generates and loads data for you. General usage is ```tpcds-setup.sh scale [directory] [mode]```. Only the scale is mandatory. The directory argument causes data to be generated in a specific location. Mode can be partitioned or unpartitioned. Partitioned causes data to be partitioned by day. Unpartitioned creates one flat schema and is faster to generate.
+  You need to decide on a "Scale Factor" which represents how much data you will generate. Scale Factor roughly translates to gigabytes, so a Scale Factor of 100 is about 100 gigabytes and one terabyte is Scale Factor 1000. Decide how much data you want and keep it in mind for the next step. If you have a cluster of 4-10 nodes or just want to experiment at a smaller scale, scale 1000 (1 TB) of data is a good starting point. If you have a large cluster, you may want to choose Scale 10000 (10 TB) or more. The notion of scale factor is similar between TPC-DS and TPC-H.
 
-  - Option 1: Generate data on a Hadoop cluster.
+- Step 5: Generate and load the data.
 
-    Use this approach if you want to try Hive out at scale. This approach assumes you have multiple physical Hadoop nodes with plenty of RAM. All tables will be created and large tables will be partitioned by date and bucketed which improves performance among queries that take advantage of partition pruning or SMB joins.
+  The scripts ```tpcds-setup.sh``` and ```tpch-setup.sh``` generate and load data for TPC-DS and TPC-H, respectively. General usage is ```tpcds-setup.sh scale_factor [directory]``` or ```tpch-setup.sh scale_factor [directory]```
 
-    Example: ```./tpcds-setup.sh 200```
+  Some examples:
+  Build 1 TB of TPC-DS data: ```./tpcds-setup 1000```
+  Build 1 TB of TPC-H data: ```./tpch-setup 1000```
+  Build 100 TB of TPC-DS data: ```./tpcds-setup 100000```
 
-  - Option 2: Generate data on a Sandbox.
+- Step 6: Run queries.
 
-    Use this approach if you want to try Hive or Hive/Tez in a Sandbox environment. This approach creates an unpartitioned schema by default, which is faster to generate. This option is appropriate for smaller data scales, say 20GB or smaller.
+  More than 50 sample TPC-DS queries and all TPC-H queries are included for you to try. You can use ```hive```, ```beeline``` or the SQL tool of your choice. The testbench also includes a set of suggested settings.
 
-    Example: ```./tpcds-setup-sandbox.sh 10```
-
-- Step 5: Run queries.
-
-  More than 50 sample TPC-DS queries are included for you to try out. You can use ```hive```, ```beeline``` or the SQL tool of your choice.
-
-  Example:
+  This example assumes you have generated 1 TB of TPC-DS data during Step 5:
 
   	```
-  	cd sample-queries
-  	hive
-  	hive> use tpcds_bin_partitioned_orc_200;
-  	hive> source query12.sql;
+  	cd sample-queries-tpcds
+  	hive -i testbench.settings
+  	hive> use tpcds_bin_partitioned_orc_1000;
+  	hive> source query55.sql;
   	```
 
-  Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 200, your database will be named tpcds_bin_partitioned_orc_200. At Data Scale 50 it would be named tpcds_bin_partitioned_orc_50. You can always ```show databases``` to get a list of available databases.
+  Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 10000, your database will be named tpcds_bin_partitioned_orc_10000. At Data Scale 1000 it would be named tpcds_bin_partitioned_orc_1000. You can always ```show databases``` to get a list of available databases.
+
+  Similarly, if you generated 1 TB of TPC-H data during Step 5:
+
+  	```
+  	cd sample-queries-tpch
+  	hive -i testbench.settings
+  	hive> use tpch_bin_partitioned_orc_1000;
+  	hive> source tpch_query1.sql;
+  	```
 
 Feedback
 ========
