@@ -65,7 +65,7 @@ echo "${BOLD}TPC-H text data generation complete.${NORMAL}"
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "${BOLD}Loading text data into external tables.${NORMAL}"
-runcommand "hive -i settings/load-flat.sql -f ddl-tpch/text/alltables.sql -d DB=tpch_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
+runcommand "hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql -d DB=tpch_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
 
 # Create the optimized tables.
 i=1
