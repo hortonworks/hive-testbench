@@ -17,7 +17,7 @@ BOLD=`tput bold`
 NORMAL=`tput sgr0`
 
 if [ ! -f tpcds-gen/target/tpcds-gen-1.0-SNAPSHOT.jar ]; then
-	echo "Please build the data generator with ./build-tpcds.sh first"
+	echo "Please build the data generator with ./tpcds-build.sh first"
 	exit 1
 fi
 which hive > /dev/null 2>&1
@@ -72,6 +72,7 @@ runcommand "hive -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql -d DB
 # Create the partitioned and bucketed tables.
 i=1
 total=24
+DATABASE=tpcds_bin_partitioned_orc_${SCALE}
 for t in ${FACTS}
 do
 	echo "${BOLD}Optimizing table $t ($i/$total).${NORMAL}"
@@ -101,3 +102,5 @@ do
 	fi
 	i=`expr $i + 1`
 done
+
+echo "${BOLD}Data loaded into database ${DATABASE}.${NORMAL}"

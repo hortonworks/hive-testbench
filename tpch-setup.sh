@@ -17,7 +17,7 @@ BOLD=`tput bold`
 NORMAL=`tput sgr0`
 
 if [ ! -f tpch-gen/target/tpch-gen-1.0-SNAPSHOT.jar ]; then
-	echo "Please build the data generator with ./build-tpch.sh first"
+	echo "Please build the data generator with ./tpch-build.sh first"
 	exit 1
 fi
 which hive > /dev/null 2>&1
@@ -67,14 +67,15 @@ echo "${BOLD}TPC-H text data generation complete.${NORMAL}"
 echo "${BOLD}Loading text data into external tables.${NORMAL}"
 runcommand "hive -i settings/load-flat.sql -f ddl-tpch/text/alltables.sql -d DB=tpch_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
 
-# Create the partitioned and bucketed tables.
+# Create the optimized tables.
 i=1
 total=8
+DATABASE=tpch_bin_partitioned_orc_${SCALE}
 for t in ${TABLES}
 do
 	echo "${BOLD}Optimizing table $t ($i/$total).${NORMAL}"
 	COMMAND="hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/${t}.sql \
-	    -d DB=tpch_bin_partitioned_orc_${SCALE} \
+	    -d DB=tpch_bin_flat_orc_${SCALE} \
 	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
 	    -d FILE=orc"
 	runcommand "$COMMAND"
@@ -84,3 +85,5 @@ do
 	fi
 	i=`expr $i + 1`
 done
+
+echo "${BOLD}Data loaded into database ${DATABASE}.${NORMAL}"
