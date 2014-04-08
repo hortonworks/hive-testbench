@@ -33,8 +33,13 @@ FACTS="store_sales store_returns web_sales web_returns catalog_sales catalog_ret
 # Get the parameters.
 SCALE=$1
 DIR=$2
-BUCKETS=13
-RETURN_BUCKETS=13
+if [ "X$BUCKET_DATA" != "X" ]; then
+	BUCKETS=13
+	RETURN_BUCKETS=13
+else
+	BUCKETS=1
+	RETURN_BUCKETS=1
+fi
 if [ "X$DEBUG_SCRIPT" != "X" ]; then
 	set -x
 fi
