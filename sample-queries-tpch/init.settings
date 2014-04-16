@@ -19,10 +19,11 @@ set tez.runtime.intermediate-output.compress.codec=org.apache.hadoop.io.compress
 set tez.runtime.intermdiate-input.is-compressed=true;
 set tez.runtime.intermediate-input.compress.codec=org.apache.hadoop.io.compress.SnappyCodec;
 
-set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
-set hive.orc.splits.include.file.footer=true;
-
-set hive.root.logger=ERROR,console;
+-- Hive 13 optimizations.
 set hive.execution.engine=tez;
+set hive.tez.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
+set hive.orc.splits.include.file.footer=true;
 set hive.vectorized.execution.enabled=true;
 set hive.exec.local.cache=true;
+
+set hive.root.logger=ERROR,console;
