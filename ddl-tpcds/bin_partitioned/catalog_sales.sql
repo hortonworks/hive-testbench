@@ -41,7 +41,6 @@ create table catalog_sales
     cs_net_profit             float
 )
 partitioned by (cs_sold_date string)
-clustered by (cs_item_sk) sorted by (cs_item_sk) into ${BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table catalog_sales partition (cs_sold_date) 

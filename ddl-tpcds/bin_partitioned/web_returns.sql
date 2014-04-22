@@ -31,7 +31,6 @@ create table web_returns
     wr_net_loss               float
 )
 partitioned by (wr_returned_date string)
-clustered by (wr_item_sk) sorted by (wr_item_sk) into ${RETURN_BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table web_returns partition (wr_returned_date)

@@ -11,7 +11,6 @@ create table inventory
     inv_quantity_on_hand	int
 )
 partitioned by (inv_date string)
-clustered by (inv_item_sk) sorted by (inv_item_sk) into ${BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table inventory partition (inv_date)

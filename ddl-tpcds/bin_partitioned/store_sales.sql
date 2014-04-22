@@ -30,7 +30,6 @@ create table store_sales
     ss_net_profit             float
 )
 partitioned by (ss_sold_date string)
-clustered by (ss_item_sk) sorted by (ss_item_sk) into ${BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table store_sales partition (ss_sold_date) 

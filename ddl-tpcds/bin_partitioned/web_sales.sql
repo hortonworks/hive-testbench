@@ -41,7 +41,6 @@ create table web_sales
     ws_net_profit             float
 )
 partitioned by (ws_sold_date string)
-clustered by (ws_item_sk) sorted by (ws_item_sk) into ${BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table web_sales partition (ws_sold_date) 

@@ -34,7 +34,6 @@ create table catalog_returns
     cr_net_loss               float
 )
 partitioned by (cr_returned_date string)
-clustered by (cr_item_sk) sorted by (cr_item_sk) into ${RETURN_BUCKETS} buckets
 stored as ${FILE};
 
 insert overwrite table catalog_returns partition (cr_returned_date) 
