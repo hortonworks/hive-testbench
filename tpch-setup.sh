@@ -13,9 +13,6 @@ function runcommand {
 	fi
 }
 
-BOLD=`tput bold`
-NORMAL=`tput sgr0`
-
 if [ ! -f tpch-gen/target/tpch-gen-1.0-SNAPSHOT.jar ]; then
 	echo "Please build the data generator with ./tpch-build.sh first"
 	exit 1
@@ -53,18 +50,18 @@ fi
 hdfs dfs -mkdir -p ${DIR}
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
-	echo "${BOLD}Generating data at scale factor $SCALE.${NORMAL}"
+	echo "Generating data at scale factor $SCALE."
 	(cd tpch-gen; hadoop jar target/*.jar -d ${DIR}/${SCALE}/ -s ${SCALE})
 fi
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
-	echo "${BOLD}Data generation failed, exiting.${NORMAL}"
+	echo "Data generation failed, exiting."
 	exit 1
 fi
-echo "${BOLD}TPC-H text data generation complete.${NORMAL}"
+echo "TPC-H text data generation complete."
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
-echo "${BOLD}Loading text data into external tables.${NORMAL}"
+echo "Loading text data into external tables."
 runcommand "hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql -d DB=tpch_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
 
 # Create the optimized tables.
@@ -73,7 +70,7 @@ total=8
 DATABASE=tpch_bin_partitioned_orc_${SCALE}
 for t in ${TABLES}
 do
-	echo "${BOLD}Optimizing table $t ($i/$total).${NORMAL}"
+	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/${t}.sql \
 	    -d DB=tpch_bin_flat_orc_${SCALE} \
 	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
@@ -86,4 +83,4 @@ do
 	i=`expr $i + 1`
 done
 
-echo "${BOLD}Data loaded into database ${DATABASE}.${NORMAL}"
+echo "Data loaded into database ${DATABASE}."

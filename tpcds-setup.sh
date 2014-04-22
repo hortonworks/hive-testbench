@@ -13,9 +13,6 @@ function runcommand {
 	fi
 }
 
-BOLD=`tput bold`
-NORMAL=`tput sgr0`
-
 if [ ! -f tpcds-gen/target/tpcds-gen-1.0-SNAPSHOT.jar ]; then
 	echo "Please build the data generator with ./tpcds-build.sh first"
 	exit 1
@@ -60,18 +57,18 @@ fi
 hdfs dfs -mkdir -p ${DIR}
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
-	echo "${BOLD}Generating data at scale factor $SCALE.${NORMAL}"
+	echo "Generating data at scale factor $SCALE."
 	(cd tpcds-gen; hadoop jar target/*.jar -d ${DIR}/${SCALE}/ -s ${SCALE})
 fi
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
-	echo "${BOLD}Data generation failed, exiting.${NORMAL}"
+	echo "Data generation failed, exiting."
 	exit 1
 fi
-echo "${BOLD}TPC-DS text data generation complete.${NORMAL}"
+echo "TPC-DS text data generation complete."
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
-echo "${BOLD}Loading text data into external tables.${NORMAL}"
+echo "Loading text data into external tables."
 runcommand "hive -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
 
 # Create the partitioned and bucketed tables.
@@ -80,7 +77,7 @@ total=24
 DATABASE=tpcds_bin_partitioned_orc_${SCALE}
 for t in ${FACTS}
 do
-	echo "${BOLD}Optimizing table $t ($i/$total).${NORMAL}"
+	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
@@ -96,7 +93,7 @@ done
 # Populate the smaller tables.
 for t in ${DIMS}
 do
-	echo "${BOLD}Optimizing table $t ($i/$total).${NORMAL}"
+	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_orc_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
 	    -d FILE=orc"
@@ -108,4 +105,4 @@ do
 	i=`expr $i + 1`
 done
 
-echo "${BOLD}Data loaded into database ${DATABASE}.${NORMAL}"
+echo "Data loaded into database ${DATABASE}."
