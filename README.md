@@ -14,7 +14,7 @@ Prerequisites
 You will need:
 * Hadoop 2.2 or later cluster or Sandbox.
 * Hive 13 or later.
-* Between 15 minutes and 6 hours to generate data (depending on the Scale Factor you choose and available hardware).
+* Between 15 minutes and 2 days to generate data (depending on the Scale Factor you choose and available hardware).
 
 Install and Setup
 =================
