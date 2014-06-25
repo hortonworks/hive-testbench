@@ -24,10 +24,15 @@ if( $suite eq 'tpcds' ) {
 } # end if
 my @queries = glob '*.sql';
 
+my $db = { 
+	'tpcds' => 'tpcds_bin_partitioned_orc_2',
+	'tpch' => 'tpch_flat_orc_2'
+};
+
 print "filename,status,time,rows\n";
 for my $query ( @queries ) {
 	my $logname = "$query.log";
-	my $cmd="echo 'use tpcds_bin_partitioned_orc_2; source $query;' | hive -i testbench.settings 2>&1  | tee $query.log";
+	my $cmd="echo 'use $db->{${suite}}; source $query;' | hive -i testbench.settings 2>&1  | tee $query.log";
 	#print $cmd ; exit;
 	
 	my @hiveoutput=`$cmd`;

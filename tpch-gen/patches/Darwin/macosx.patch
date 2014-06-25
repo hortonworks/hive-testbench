@@ -1,0 +1,11 @@
+--- makefile.suite.orig	2014-06-25 15:40:27.000000000 -0700
++++ makefile.suite	2014-06-25 15:42:03.000000000 -0700
+@@ -110,7 +110,7 @@
+ MACHINE = 
+ WORKLOAD = 
+ #
+-CFLAGS	= -g -DDBNAME=\"dss\" -D$(MACHINE) -D$(DATABASE) -D$(WORKLOAD) -DRNG_TEST -D_FILE_OFFSET_BITS=64 
++CFLAGS	= -g -DDBNAME=\"dss\" -D$(MACHINE) -D$(DATABASE) -D$(WORKLOAD) -DRNG_TEST -D_FILE_OFFSET_BITS=64  -I/usr/include/malloc
+ LDFLAGS = -O
+ # The OBJ,EXE and LIB macros will need to be changed for compilation under
+ #  Windows NT
