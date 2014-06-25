@@ -1,3 +1,4 @@
+MYOS=$(shell uname -s)
 
 all: target/lib/dsdgen.jar target/tpcds-gen-1.0-SNAPSHOT.jar
 
@@ -15,7 +16,10 @@ target/lib/dsdgen.jar: target/tools/dsdgen
 	cd target/; mkdir -p lib/; ( jar cvf lib/dsdgen.jar tools/ || gjar cvf lib/dsdgen.jar tools/ )
 
 target/tools/dsdgen: target/tpcds_kit.zip
-	test -d target/tools/ || (cd target; unzip tpcds_kit.zip; cd tools; cat ../../*.patch | patch -p0 )
+	pwd
+	test -d target/tools/ || (cd target; unzip tpcds_kit.zip; cd tools; cat ../../patches/all/*.patch | patch -p0 )
+	pwd
+	cd target/tools; cat ../../patches/${MYOS}/*.patch | patch -p1
 	cd target/tools; make clean; make dsdgen
 
 clean:
