@@ -1,0 +1,4 @@
+target/
+tpcds_kit.zip
+*.sql.log
+derby.log
