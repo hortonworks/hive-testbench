@@ -42,8 +42,8 @@ with ss as
     and ws1.ca_county = ws3.ca_county
     and ws3.d_qoy = 3
     and ws3.d_year =1998
-    and case when ws1.web_sales > 0 then ws2.web_sales/ws1.web_sales else null end 
-       > case when ss1.store_sales > 0 then ss2.store_sales/ss1.store_sales else null end
-    and case when ws2.web_sales > 0 then ws3.web_sales/ws2.web_sales else null end
-       > case when ss2.store_sales > 0 then ss3.store_sales/ss2.store_sales else null end
- order by web_q1_q2_increase;
+    and (case when (ws1.web_sales > 0) then (ws2.web_sales/ws1.web_sales) else null end )
+       > (case when ss1.store_sales > 0 then ss2.store_sales/ss1.store_sales else null end)
+    and (case when ws2.web_sales > 0 then ws3.web_sales/ws2.web_sales else null end)
+       > (case when ss2.store_sales > 0 then ss3.store_sales/ss2.store_sales else null end)
+ order by web_q1_q2_increase limit 10000000;
