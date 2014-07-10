@@ -12,7 +12,7 @@ select  ca_zip
  	      or catalog_sales.cs_sales_price > 500)
  	and catalog_sales.cs_sold_date_sk = date_dim.d_date_sk
  	and date_dim.d_qoy = 2 and date_dim.d_year = 2000
-	and cs_sold_date_sk between 2450815        and 2450905
+	and cs_sold_date_sk between 2451636        and 2451726
  group by ca_zip
  order by ca_zip
  limit 100;
