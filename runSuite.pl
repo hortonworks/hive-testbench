@@ -33,15 +33,21 @@ print "filename,status,time,rows\n";
 for my $query ( @queries ) {
 	my $logname = "$query.log";
 	my $cmd="echo 'use $db->{${suite}}; source $query;' | hive -i testbench.settings 2>&1  | tee $query.log";
+#	my $cmd="cat $query.log";
 	#print $cmd ; exit;
 	
-	my @hiveoutput=`$cmd`;
+	my $hiveStart = time();
 
+	my @hiveoutput=`$cmd`;
+	die "${SCRIPT_NAME}:: ERROR:  hive command unexpectedly exited \$? = '$?', \$! = '$!'" if $?;
+
+	my $hiveEnd = time();
+	my $hiveTime = $hiveEnd - $hiveStart;
 	foreach my $line ( @hiveoutput ) {
 		if( $line =~ /Time taken:\s+([\d\.]+)\s+seconds,\s+Fetched:\s+(\d+)\s+row/ ) {
-			print "$query,success,$1,$2\n"; 
+			print "$query,success,$hiveTime,$2\n"; 
 		} elsif( 
-			$line =~ /FAILED: Execution Error/
+			$line =~ /^FAILED: /
 			# || /Task failed!/ 
 			) {
 			print "$query,failed\n"; 
