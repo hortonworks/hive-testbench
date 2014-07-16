@@ -72,16 +72,19 @@ echo "Loading text data into external tables."
 runcommand "hive -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql -d DB=tpcds_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
 
 # Create the partitioned and bucketed tables.
+if [ "X$FORMAT" = "X" ]; then
+	FORMAT=orc
+fi
 i=1
 total=24
-DATABASE=tpcds_bin_partitioned_orc_${SCALE}
+DATABASE=tpcds_bin_partitioned_${FORMAT}_${SCALE}
 for t in ${FACTS}
 do
 	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    -d DB=tpcds_bin_partitioned_orc_${SCALE} \
+	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=orc"
+	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=${FORMAT}"
 	runcommand "$COMMAND"
 	if [ $? -ne 0 ]; then
 		echo "Command failed, try 'export DEBUG_SCRIPT=ON' and re-running"
@@ -95,8 +98,8 @@ for t in ${DIMS}
 do
 	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    -d DB=tpcds_bin_partitioned_orc_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
-	    -d FILE=orc"
+	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
+	    -d FILE=${FORMAT}"
 	runcommand "$COMMAND"
 	if [ $? -ne 0 ]; then
 		echo "Command failed, try 'export DEBUG_SCRIPT=ON' and re-running"
