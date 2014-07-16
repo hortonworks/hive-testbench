@@ -50,7 +50,7 @@ for my $query ( @queries ) {
 			$line =~ /^FAILED: /
 			# || /Task failed!/ 
 			) {
-			print "$query,failed\n"; 
+			print "$query,failed,$hiveTime\n"; 
 		} # end if
 	} # end while
 } # end for
