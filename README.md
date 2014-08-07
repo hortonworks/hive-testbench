@@ -13,8 +13,9 @@ Prerequisites
 
 You will need:
 * Hadoop 2.2 or later cluster or Sandbox.
-* Hive 13 or later.
+* Apache Hive.
 * Between 15 minutes and 2 days to generate data (depending on the Scale Factor you choose and available hardware).
+* If you plan to generate 1TB or more of data, using Apache Hive 13+ to generate the data is STRONGLY suggested.
 
 Install and Setup
 =================
@@ -23,7 +24,7 @@ All of these steps should be carried out on your Hadoop cluster.
 
 - Step 1: Prepare your environment.
 
-  In addition to Hadoop and Hive 13+, before you begin ensure ```gcc``` is installed and available on your system path. If you system does not have it, install it using yum or apt-get.
+  In addition to Hadoop and Hive, before you begin ensure ```gcc``` is installed and available on your system path. If you system does not have it, install it using yum or apt-get.
 
 - Step 2: Decide which test suite(s) you want to use.
 
@@ -38,6 +39,8 @@ All of these steps should be carried out on your Hadoop cluster.
 
   You need to decide on a "Scale Factor" which represents how much data you will generate. Scale Factor roughly translates to gigabytes, so a Scale Factor of 100 is about 100 gigabytes and one terabyte is Scale Factor 1000. Decide how much data you want and keep it in mind for the next step. If you have a cluster of 4-10 nodes or just want to experiment at a smaller scale, scale 1000 (1 TB) of data is a good starting point. If you have a large cluster, you may want to choose Scale 10000 (10 TB) or more. The notion of scale factor is similar between TPC-DS and TPC-H.
 
+  If you want to generate a large amount of data, you should use Hive 13 or later. Hive 13 introduced an optimization that allows far more scalable data partitioning. Hive 12 and lower will likely crash if you generate more than a few hundred GB of data and tuning around the problem is difficult. You can generate text or RCFile data in Hive 13 and use it in multiple versions of Hive.
+
 - Step 5: Generate and load the data.
 
   The scripts ```tpcds-setup.sh``` and ```tpch-setup.sh``` generate and load data for TPC-DS and TPC-H, respectively. General usage is ```tpcds-setup.sh scale_factor [directory]``` or ```tpch-setup.sh scale_factor [directory]```
@@ -46,6 +49,8 @@ All of these steps should be carried out on your Hadoop cluster.
   Build 1 TB of TPC-DS data: ```./tpcds-setup 1000```
   Build 1 TB of TPC-H data: ```./tpch-setup 1000```
   Build 100 TB of TPC-DS data: ```./tpcds-setup 100000```
+  Build 30 TB of text formatted TPC-DS data: ```FORMAT=textfile ./tpcds-setup 30000```
+  Build 30 TB of RCFile formatted TPC-DS data: ```FORMAT=rcfile ./tpcds-setup 30000```
 
 - Step 6: Run queries.
 
