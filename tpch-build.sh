@@ -33,6 +33,6 @@ if [ $? -ne 0 ]; then
 	export PATH=$PATH:$MAVEN_HOME/bin
 fi
 
-echo "Building TPC-DS Data Generator"
+echo "Building TPC-H Data Generator"
 (cd tpch-gen; make)
 echo "TPC-H Data Generator built, you can now use tpch-setup.sh to generate data."
