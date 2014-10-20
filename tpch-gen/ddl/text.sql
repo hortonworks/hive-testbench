@@ -1,7 +1,7 @@
 create external table lineitem 
-(L_ORDERKEY INT,
- L_PARTKEY INT,
- L_SUPPKEY INT,
+(L_ORDERKEY BIGINT,
+ L_PARTKEY BIGINT,
+ L_SUPPKEY BIGINT,
  L_LINENUMBER INT,
  L_QUANTITY DOUBLE,
  L_EXTENDEDPRICE DOUBLE,
@@ -18,7 +18,7 @@ create external table lineitem
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/lineitem';
 
-create external table part (P_PARTKEY INT,
+create external table part (P_PARTKEY BIGINT,
  P_NAME STRING,
  P_MFGR STRING,
  P_BRAND STRING,
@@ -30,7 +30,7 @@ create external table part (P_PARTKEY INT,
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/part/';
 
-create external table supplier (S_SUPPKEY INT,
+create external table supplier (S_SUPPKEY BIGINT,
  S_NAME STRING,
  S_ADDRESS STRING,
  S_NATIONKEY INT,
@@ -40,8 +40,8 @@ create external table supplier (S_SUPPKEY INT,
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/supplier/';
 
-create external table partsupp (PS_PARTKEY INT,
- PS_SUPPKEY INT,
+create external table partsupp (PS_PARTKEY BIGINT,
+ PS_SUPPKEY BIGINT,
  PS_AVAILQTY INT,
  PS_SUPPLYCOST DOUBLE,
  PS_COMMENT STRING)
@@ -61,7 +61,7 @@ create external table region (R_REGIONKEY INT,
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/region';
 
-create external table customer (C_CUSTKEY INT,
+create external table customer (C_CUSTKEY BIGINT,
  C_NAME STRING,
  C_ADDRESS STRING,
  C_NATIONKEY INT,
@@ -72,8 +72,8 @@ create external table customer (C_CUSTKEY INT,
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/customer';
 
-create external table orders (O_ORDERKEY INT,
- O_CUSTKEY INT,
+create external table orders (O_ORDERKEY BIGINT,
+ O_CUSTKEY BIGINT,
  O_ORDERSTATUS STRING,
  O_TOTALPRICE DOUBLE,
  O_ORDERDATE STRING,

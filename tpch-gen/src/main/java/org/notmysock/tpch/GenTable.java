@@ -4,13 +4,14 @@ import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.hdfs.*;
 import org.apache.hadoop.io.*;
+import org.apache.hadoop.io.compress.DefaultCodec;
+import org.apache.hadoop.io.compress.SnappyCodec;
 import org.apache.hadoop.util.*;
 import org.apache.hadoop.filecache.*;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.mapreduce.lib.reduce.*;
-
 import org.apache.commons.cli.*;
 import org.apache.commons.*;
 
@@ -65,6 +66,8 @@ public class GenTable extends Configured implements Tool {
         options.addOption("t","table", true, "table");
         options.addOption("d","dir", true, "dir");
         options.addOption("p", "parallel", true, "parallel");
+        options.addOption("text", "text", false, "text");
+        options.addOption("snappy", "snappy", false, "snappy");
         CommandLine line = parser.parse(options, remainingArgs);
 
         if(!(line.hasOption("scale") && line.hasOption("dir"))) {
@@ -121,6 +124,15 @@ public class GenTable extends Configured implements Tool {
         LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
         MultipleOutputs.addNamedOutput(job, "text", 
           TextOutputFormat.class, LongWritable.class, Text.class);
+
+        if (line.hasOption("snappy") || (line.hasOption("text") == false)) {
+          TextOutputFormat.setCompressOutput(job, true);
+          if (line.hasOption("snappy")) {
+             TextOutputFormat.setOutputCompressorClass(job, SnappyCodec.class);
+          } else {
+             TextOutputFormat.setOutputCompressorClass(job, DefaultCodec.class);
+          }
+        }
 
         boolean success = job.waitForCompletion(true);
 
@@ -219,10 +231,11 @@ public class GenTable extends Configured implements Tool {
 
         File cwd = new File(".");
         final String suffix = String.format(".tbl.%s", child);
+        final boolean firstMapper = child.equals("1");
 
         FilenameFilter tables = new FilenameFilter() {
           public boolean accept(File dir, String name) {
-            return name.endsWith(suffix) || name.endsWith(".tbl");
+            return name.endsWith(suffix) || (name.endsWith(".tbl") && firstMapper);
           }
         };
 
