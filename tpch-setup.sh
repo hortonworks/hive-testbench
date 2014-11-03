@@ -67,12 +67,12 @@ runcommand "hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql -d
 # Create the optimized tables.
 i=1
 total=8
-DATABASE=tpch_bin_partitioned_orc_${SCALE}
+DATABASE=tpch_flat_orc_${SCALE}
 for t in ${TABLES}
 do
 	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/${t}.sql \
-	    -d DB=tpch_bin_flat_orc_${SCALE} \
+	    -d DB=${DATABASE} \
 	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
 	    -d FILE=orc"
 	runcommand "$COMMAND"

@@ -1,0 +1,11 @@
+--- w_store_sales.h.orig	2014-06-25 10:58:19.000000000 -0700
++++ w_store_sales.h	2014-06-25 10:58:51.000000000 -0700
+@@ -34,7 +34,7 @@
+  * Gradient Systems
+  */ 
+ #ifndef W_STORE_SALES_H
+-#define W_STORE_SLAES_H
++#define W_STORE_SALES_H
+ 
+ #include "constants.h"
+ #include "pricing.h"
