@@ -16,7 +16,9 @@ target/lib/dsdgen.jar: target/tools/dsdgen
 	cd target/; mkdir -p lib/; ( jar cvf lib/dsdgen.jar tools/ || gjar cvf lib/dsdgen.jar tools/ )
 
 target/tools/dsdgen: target/tpcds_kit.zip
-	test -d target/tools/ || (cd target; unzip tpcds_kit.zip; cd tools; cat ../../patches/all/*.patch | patch -p0 )
+	test -d target/tools/ || (cd target; unzip tpcds_kit.zip)
+	test -d target/tools/ || (cd target; mv "DS Tools/tools" tools)
+	cd target/tools; cat ../../patches/all/*.patch | patch -p0
 	cd target/tools; cat ../../patches/${MYOS}/*.patch | patch -p1
 	cd target/tools; make clean; make dsdgen
 
