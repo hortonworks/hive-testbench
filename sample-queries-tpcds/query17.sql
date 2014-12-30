@@ -22,7 +22,6 @@ select  i_item_id
      ,item
  where d1.d_quarter_name = '2000Q1'
    and d1.d_date_sk = store_sales.ss_sold_date_sk
-   and ss_sold_date between '2000-01-01' and '2000-03-31'
    and item.i_item_sk = store_sales.ss_item_sk
    and store.s_store_sk = store_sales.ss_store_sk
    and store_sales.ss_customer_sk = store_returns.sr_customer_sk
@@ -30,12 +29,10 @@ select  i_item_id
    and store_sales.ss_ticket_number = store_returns.sr_ticket_number
    and store_returns.sr_returned_date_sk = d2.d_date_sk
    and d2.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
-   and sr_returned_date between '2000-01-01' and '2000-09-01'
    and store_returns.sr_customer_sk = catalog_sales.cs_bill_customer_sk
    and store_returns.sr_item_sk = catalog_sales.cs_item_sk
    and catalog_sales.cs_sold_date_sk = d3.d_date_sk
    and d3.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
-   and cs_sold_date between '2000-01-01' and '2000-09-31'
  group by i_item_id
          ,i_item_desc
          ,s_state

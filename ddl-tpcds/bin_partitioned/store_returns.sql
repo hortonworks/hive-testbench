@@ -5,7 +5,6 @@ drop table if exists store_returns;
 
 create table store_returns
 (
-    sr_returned_date_sk       int,
     sr_return_time_sk         int,
     sr_item_sk                int,
     sr_customer_sk            int,
@@ -26,12 +25,11 @@ create table store_returns
     sr_store_credit           float,
     sr_net_loss               float
 )
-partitioned by (sr_returned_date string)
+partitioned by (sr_returned_date_sk int)
 stored as ${FILE};
 
-insert overwrite table store_returns partition (sr_returned_date) 
+insert overwrite table store_returns partition (sr_returned_date_sk) 
 select
-        sr.sr_returned_date_sk,
         sr.sr_return_time_sk,
         sr.sr_item_sk,
         sr.sr_customer_sk,
@@ -51,7 +49,5 @@ select
         sr.sr_reversed_charge,
         sr.sr_store_credit,
         sr.sr_net_loss,
-        dd.d_date as sr_returned_date
-      from ${SOURCE}.store_returns sr
-      join ${SOURCE}.date_dim dd
-      on (sr.sr_returned_date_sk = dd.d_date_sk);
+        sr.sr_returned_date_sk
+      from ${SOURCE}.store_returns sr;

@@ -5,7 +5,6 @@ drop table if exists web_sales;
 
 create table web_sales
 (
-    ws_sold_date_sk           int,
     ws_sold_time_sk           int,
     ws_ship_date_sk           int,
     ws_item_sk                int,
@@ -40,12 +39,11 @@ create table web_sales
     ws_net_paid_inc_ship_tax  float,
     ws_net_profit             float
 )
-partitioned by (ws_sold_date string)
+partitioned by (ws_sold_date_sk           int)
 stored as ${FILE};
 
-insert overwrite table web_sales partition (ws_sold_date) 
+insert overwrite table web_sales partition (ws_sold_date_sk) 
 select
-        ws.ws_sold_date_sk,
         ws.ws_sold_time_sk,
         ws.ws_ship_date_sk,
         ws.ws_item_sk,
@@ -79,7 +77,5 @@ select
         ws.ws_net_paid_inc_ship,
         ws.ws_net_paid_inc_ship_tax,
         ws.ws_net_profit,
-        dd.d_date as ws_sold_date
-      from ${SOURCE}.web_sales ws
-      join ${SOURCE}.date_dim dd
-      on (ws.ws_sold_date_sk = dd.d_date_sk);
+        ws.ws_sold_date_sk
+      from ${SOURCE}.web_sales ws;

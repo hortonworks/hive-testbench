@@ -9,7 +9,6 @@ select  substr(r_reason_desc,1,20) as r
    and web_sales.ws_item_sk = web_returns.wr_item_sk
    and web_sales.ws_order_number = web_returns.wr_order_number
    and web_sales.ws_sold_date_sk = date_dim.d_date_sk and d_year = 1998
-   and web_sales.ws_sold_date between '1998-01-01' and '1998-12-31'
    and cd1.cd_demo_sk = web_returns.wr_refunded_cdemo_sk 
    and cd2.cd_demo_sk = web_returns.wr_returning_cdemo_sk
    and customer_address.ca_address_sk = web_returns.wr_refunded_addr_sk

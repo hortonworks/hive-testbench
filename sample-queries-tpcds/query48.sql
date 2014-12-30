@@ -3,7 +3,6 @@ select sum (ss_quantity)
  from store_sales, store, customer_demographics, customer_address, date_dim
  where store.s_store_sk = store_sales.ss_store_sk
  and  store_sales.ss_sold_date_sk = date_dim.d_date_sk and d_year = 1998
- and ss_sold_date between '1998-01-01' and '1998-12-31'
  and  
  (
   (

@@ -27,7 +27,6 @@ from
 where
     d2.d_year = 2000
 and d2.d_moy  = 9
-and sr_returned_date between '2000-09-01' and '2000-09-30'
 and store_sales.ss_ticket_number = store_returns.sr_ticket_number
 and store_sales.ss_item_sk = store_returns.sr_item_sk
 and store_sales.ss_sold_date_sk   = d1.d_date_sk

@@ -9,8 +9,8 @@ select  i_item_id,
         avg( cast(cs_net_profit as decimal(12,2))) agg5,
         avg( cast(c_birth_year as decimal(12,2))) agg6,
         avg( cast(cd1.cd_dep_count as decimal(12,2))) agg7
- from catalog_sales, customer_demographics cd1, 
-      customer_demographics cd2, customer, customer_address, date_dim, item
+ from catalog_sales, date_dim, customer_demographics cd1, item, customer, customer_address, 
+      customer_demographics cd2
  where catalog_sales.cs_sold_date_sk = date_dim.d_date_sk and
        catalog_sales.cs_item_sk = item.i_item_sk and
        catalog_sales.cs_bill_cdemo_sk = cd1.cd_demo_sk and
@@ -21,7 +21,6 @@ select  i_item_id,
        customer.c_current_addr_sk = customer_address.ca_address_sk and
        c_birth_month in (9,5,12,4,1,10) and
        d_year = 2001 and
-       cs_sold_date between '2001-01-01' and '2001-12-31' and
        ca_state in ('ND','WI','AL'
                    ,'NC','OK','MS','TN')
  group by i_item_id, ca_country, ca_state, ca_county with rollup

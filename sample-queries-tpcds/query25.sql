@@ -32,9 +32,6 @@ select
  and cs_sold_date_sk = d3.d_date_sk
  and d3.d_moy               between 4 and  10
  and d3.d_year              = 1998
- and ss_sold_date between '1998-04-01' and '1998-04-30'
- and sr_returned_date between '1998-04-01' and '1998-10-31'
- and cs_sold_date between '1998-04-01' and '1998-10-31'
  group by
  i_item_id
  ,i_item_desc

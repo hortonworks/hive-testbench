@@ -13,7 +13,6 @@ select  i_item_id,
        customer_demographics.cd_marital_status = 'D' and
        customer_demographics.cd_education_status = 'Unknown' and
        date_dim.d_year = 1998 and
-       ss_sold_date between '1998-01-01' and '1998-12-31' and
        store.s_state in ('KS','AL', 'MN', 'AL', 'SC', 'VT')
  group by i_item_id, s_state
  order by i_item_id

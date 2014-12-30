@@ -16,7 +16,6 @@ select  *
      and inventory.inv_warehouse_sk   = warehouse.w_warehouse_sk
      and inventory.inv_date_sk    = date_dim.d_date_sk
      and d_date between '1998-03-09' and '1998-05-07'
-     and inv_date between '1998-03-09' and '1998-05-07'
    group by w_warehouse_name, i_item_id) x
  where (case when inv_before > 0 
              then inv_after / inv_before 

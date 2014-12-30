@@ -15,7 +15,6 @@ where
   	and item.i_category in ('Jewelry', 'Sports', 'Books')
   	and web_sales.ws_sold_date_sk = date_dim.d_date_sk
 	and date_dim.d_date between '2001-01-12' and '2001-02-11'
-	and ws_sold_date between '2001-01-12' and '2001-02-11'
 group by 
 	i_item_id
         ,i_item_desc 

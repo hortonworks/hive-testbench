@@ -17,7 +17,6 @@ where
   	and store_sales.ss_sold_date_sk = date_dim.d_date_sk
 	and d_date between cast('2001-01-12' as date) 
 				and (cast('2001-02-11' as date))
-	and ss_sold_date between '2001-01-12' and '2001-02-11'
 group by 
 	i_item_id
         ,i_item_desc 

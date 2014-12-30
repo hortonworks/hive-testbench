@@ -5,7 +5,6 @@ drop table if exists web_returns;
 
 create table web_returns
 (
-    wr_returned_date_sk       int,
     wr_returned_time_sk       int,
     wr_item_sk                int,
     wr_refunded_customer_sk   int,
@@ -30,12 +29,11 @@ create table web_returns
     wr_account_credit         float,
     wr_net_loss               float
 )
-partitioned by (wr_returned_date string)
+partitioned by (wr_returned_date_sk       int)
 stored as ${FILE};
 
-insert overwrite table web_returns partition (wr_returned_date)
+insert overwrite table web_returns partition (wr_returned_date_sk)
 select
-        wr.wr_returned_date_sk,
         wr.wr_returned_time_sk,
         wr.wr_item_sk,
         wr.wr_refunded_customer_sk,
@@ -59,7 +57,5 @@ select
         wr.wr_reversed_charge,
         wr.wr_account_credit,
         wr.wr_net_loss,
-        dd.d_date as wr_returned_date
-      from ${SOURCE}.web_returns wr
-      join ${SOURCE}.date_dim dd
-      on (wr.wr_returned_date_sk = dd.d_date_sk);
+		wr.wr_returned_date_sk
+      from ${SOURCE}.web_returns wr;

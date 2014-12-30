@@ -24,8 +24,6 @@ where d1.d_week_seq = d2.d_week_seq
   and hd_buy_potential = '1001-5000'
   and cd_marital_status = 'M'
   and d1.d_year = 2001
-  and inv_date between '2001-01-01' and '2001-12-31'
-  and cs_sold_date between '2001-01-01' and '2002-12-31'
 group by i_item_desc,w_warehouse_name,d1.d_week_seq
 order by total_cnt desc, i_item_desc, w_warehouse_name, d_week_seq
 limit 100;

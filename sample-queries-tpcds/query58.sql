@@ -14,7 +14,6 @@ FROM
      JOIN (select d1.d_date
                  from date_dim d1 JOIN date_dim d2 ON d1.d_week_seq = d2.d_week_seq
                  where d2.d_date = '1998-08-04') sub ON date_dim.d_date = sub.d_date
-     where ss_sold_date between '1998-08-04' and '1998-08-10'
  group by i_item_id ) ss_items
 JOIN
 ( select i_item_id item_id ,sum(cs_ext_sales_price) as cs_item_rev 
@@ -24,7 +23,6 @@ JOIN
      JOIN (select d1.d_date
                  from date_dim d1 JOIN date_dim d2 ON d1.d_week_seq = d2.d_week_seq
                  where d2.d_date = '1998-08-04') sub ON date_dim.d_date = sub.d_date
-     where cs_sold_date between '1998-08-04' and '1998-08-10'
  group by i_item_id ) cs_items
 ON ss_items.item_id=cs_items.item_id
 JOIN
@@ -35,7 +33,6 @@ JOIN
      JOIN (select d1.d_date
                  from date_dim d1 JOIN date_dim d2 ON d1.d_week_seq = d2.d_week_seq
                  where d2.d_date = '1998-08-04') sub ON date_dim.d_date = sub.d_date
-     where ws_sold_date between '1998-08-04' and '1998-08-10'
  group by i_item_id ) ws_items
 ON ss_items.item_id=ws_items.item_id 
  where

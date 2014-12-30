@@ -10,7 +10,6 @@ select avg(ss_quantity)
      ,date_dim
  where store.s_store_sk = store_sales.ss_store_sk
  and  store_sales.ss_sold_date_sk = date_dim.d_date_sk and date_dim.d_year = 2001
- and ss_sold_date between '2001-01-01' and '2001-12-31'
  and((store_sales.ss_hdemo_sk=household_demographics.hd_demo_sk
   and customer_demographics.cd_demo_sk = store_sales.ss_cdemo_sk
   and customer_demographics.cd_marital_status = 'M'

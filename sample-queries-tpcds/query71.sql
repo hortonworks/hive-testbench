@@ -8,7 +8,6 @@ select i_brand_id brand_id, i_brand brand,t_hour,t_minute,
                  where date_dim.d_date_sk = web_sales.ws_sold_date_sk
                    and d_moy=12
                    and d_year=2001
-		   and ws_sold_date between '2001-12-01' and '2001-12-31'
                  union all
                  select cs_ext_sales_price as ext_price,
                         cs_sold_date_sk as sold_date_sk,
@@ -18,7 +17,6 @@ select i_brand_id brand_id, i_brand brand,t_hour,t_minute,
                  where date_dim.d_date_sk = catalog_sales.cs_sold_date_sk
                    and d_moy=12
                    and d_year=2001
-		   and cs_sold_date between '2001-12-01' and '2001-12-31'
                  union all
                  select ss_ext_sales_price as ext_price,
                         ss_sold_date_sk as sold_date_sk,
@@ -28,7 +26,6 @@ select i_brand_id brand_id, i_brand brand,t_hour,t_minute,
                  where date_dim.d_date_sk = store_sales.ss_sold_date_sk
                    and d_moy=12
                    and d_year=2001
-		   and ss_sold_date between '2001-12-01' and '2001-12-31'
                  ) tmp ON tmp.sold_item_sk = item.i_item_sk
  JOIN time_dim ON tmp.time_sk = time_dim.t_time_sk
  where

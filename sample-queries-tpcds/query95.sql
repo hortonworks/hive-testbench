@@ -9,8 +9,6 @@ LEFT SEMI JOIN (SELECT ws2.ws_order_number as ws_order_number
                                FROM web_sales ws2 JOIN web_sales ws3
                                ON (ws2.ws_order_number = ws3.ws_order_number)
                                WHERE ws2.ws_warehouse_sk <> ws3.ws_warehouse_sk
-			       and ws2.ws_sold_date between '2002-5-01' and '2002-6-30'
-			       and ws3.ws_sold_date between '2002-5-01' and '2002-6-30'
 			) ws_wh1
 ON (ws1.ws_order_number = ws_wh1.ws_order_number)
 LEFT SEMI JOIN (SELECT wr_order_number
@@ -19,12 +17,9 @@ LEFT SEMI JOIN (SELECT wr_order_number
                                           FROM web_sales ws4 JOIN web_sales ws5
                                           ON (ws4.ws_order_number = ws5.ws_order_number)
                                          WHERE ws4.ws_warehouse_sk <> ws5.ws_warehouse_sk
-					 and ws4.ws_sold_date between '2002-5-01' and '2002-6-30'
-					 and ws5.ws_sold_date between '2002-5-01' and '2002-6-30'
 				) ws_wh2
                                ON (wr.wr_order_number = ws_wh2.ws_order_number)) tmp1
 ON (ws1.ws_order_number = tmp1.wr_order_number)
-WHERE d.d_date between '2002-5-01' and '2002-6-30' and
-	       ws_sold_date  between '2002-5-01' and '2002-6-30' and
+WHERE d.d_date between '2002-05-01' and '2002-06-30' and
                ca.ca_state = 'GA' and
                s.web_company_name = 'pri';

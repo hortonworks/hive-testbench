@@ -5,7 +5,6 @@ drop table if exists catalog_sales;
 
 create table catalog_sales
 (
-    cs_sold_date_sk           int,
     cs_sold_time_sk           int,
     cs_ship_date_sk           int,
     cs_bill_customer_sk       int,
@@ -40,12 +39,11 @@ create table catalog_sales
     cs_net_paid_inc_ship_tax  float,
     cs_net_profit             float
 )
-partitioned by (cs_sold_date string)
+partitioned by (cs_sold_date_sk int)
 stored as ${FILE};
 
-insert overwrite table catalog_sales partition (cs_sold_date) 
+insert overwrite table catalog_sales partition (cs_sold_date_sk) 
 select
-        cs.cs_sold_date_sk,
         cs.cs_sold_time_sk,
         cs.cs_ship_date_sk,
         cs.cs_bill_customer_sk,
@@ -79,7 +77,5 @@ select
         cs.cs_net_paid_inc_ship,
         cs.cs_net_paid_inc_ship_tax,
         cs.cs_net_profit,
-        dd.d_date as cs_sold_date
-      from ${SOURCE}.catalog_sales cs
-      join ${SOURCE}.date_dim dd
-      on (cs.cs_sold_date_sk = dd.d_date_sk);
+        cs.cs_sold_date_sk
+      from ${SOURCE}.catalog_sales cs;

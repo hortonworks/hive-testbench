@@ -27,7 +27,6 @@ from (select i_category
           and store_sales.ss_item_sk=item.i_item_sk
           and store_sales.ss_store_sk = store.s_store_sk
           and d_month_seq between 1193 and 1193+11
-          and ss_sold_date between '1999-06-01' and '2000-05-31'
        group by i_category, i_class, i_brand, i_product_name, d_year, d_qoy, d_moy,s_store_id with rollup)dw1) dw2
 where rk <= 100
 order by i_category

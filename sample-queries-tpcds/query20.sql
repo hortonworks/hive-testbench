@@ -13,7 +13,6 @@ select  i_item_desc
    and i_category in ('Jewelry', 'Sports', 'Books')
    and catalog_sales.cs_sold_date_sk = date_dim.d_date_sk
  and d_date between '2001-01-12' and '2001-02-11'
- and cs_sold_date between '2001-01-12' and '2001-02-11'
  group by i_item_id
          ,i_item_desc 
          ,i_category

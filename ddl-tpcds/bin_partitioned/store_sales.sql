@@ -5,7 +5,6 @@ drop table if exists store_sales;
 
 create table store_sales
 (
-    ss_sold_date_sk           int,
     ss_sold_time_sk           int,
     ss_item_sk                int,
     ss_customer_sk            int,
@@ -29,12 +28,11 @@ create table store_sales
     ss_net_paid_inc_tax       float,
     ss_net_profit             float
 )
-partitioned by (ss_sold_date string)
+partitioned by (ss_sold_date_sk int)
 stored as ${FILE};
 
-insert overwrite table store_sales partition (ss_sold_date) 
+insert overwrite table store_sales partition (ss_sold_date_sk) 
 select
-        ss.ss_sold_date_sk,
         ss.ss_sold_time_sk,
         ss.ss_item_sk,
         ss.ss_customer_sk,
@@ -57,7 +55,5 @@ select
         ss.ss_net_paid,
         ss.ss_net_paid_inc_tax,
         ss.ss_net_profit,
-        dd.d_date as ss_sold_date
-      from ${SOURCE}.store_sales ss
-      join ${SOURCE}.date_dim dd
-      on (ss.ss_sold_date_sk = dd.d_date_sk);
+        ss.ss_sold_date_sk
+      from ${SOURCE}.store_sales ss;

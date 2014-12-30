@@ -18,7 +18,6 @@ select
  and catalog_sales.cs_warehouse_sk    = warehouse.w_warehouse_sk 
  and catalog_sales.cs_sold_date_sk    = date_dim.d_date_sk
  and date_dim.d_date between '1998-03-09' and '1998-05-08'
- and cs_sold_date between '1998-03-09' and '1998-05-08'
  group by
     w_state,i_item_id
  order by w_state,i_item_id
