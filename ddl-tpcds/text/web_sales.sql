@@ -22,7 +22,7 @@ create external table web_sales
     ws_ship_mode_sk           int,
     ws_warehouse_sk           int,
     ws_promo_sk               int,
-    ws_order_number           int,
+    ws_order_number           bigint,
     ws_quantity               int,
     ws_wholesale_cost         float,
     ws_list_price             float,
