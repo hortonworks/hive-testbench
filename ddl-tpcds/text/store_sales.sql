@@ -14,7 +14,7 @@ create external table store_sales
     ss_addr_sk                int,
     ss_store_sk               int,
     ss_promo_sk               int,
-    ss_ticket_number          int,
+    ss_ticket_number          bigint,
     ss_quantity               int,
     ss_wholesale_cost         float,
     ss_list_price             float,
