@@ -13,7 +13,7 @@ create table store_returns
     sr_addr_sk                int,
     sr_store_sk               int,
     sr_reason_sk              int,
-    sr_ticket_number          int,
+    sr_ticket_number          bigint,
     sr_return_quantity        int,
     sr_return_amt             float,
     sr_return_tax             float,
