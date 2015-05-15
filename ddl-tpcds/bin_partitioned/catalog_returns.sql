@@ -20,7 +20,7 @@ create table catalog_returns
     cr_ship_mode_sk           int,
     cr_warehouse_sk           int,
     cr_reason_sk              int,
-    cr_order_number           int,
+    cr_order_number           bigint,
     cr_return_quantity        int,
     cr_return_amount          float,
     cr_return_tax             float,
