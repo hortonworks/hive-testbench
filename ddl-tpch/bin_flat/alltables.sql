@@ -3,7 +3,7 @@ use ${DB};
 
 drop table if exists lineitem;
 create external table lineitem 
-(L_ORDERKEY INT,
+(L_ORDERKEY BIGINT,
  L_PARTKEY INT,
  L_SUPPKEY INT,
  L_LINENUMBER INT,
@@ -84,7 +84,7 @@ LOCATION '${LOCATION}/customer';
 
 drop table if exists orders;
 create external table orders (O_ORDERKEY INT,
- O_CUSTKEY INT,
+ O_CUSTKEY BIGINT,
  O_ORDERSTATUS STRING,
  O_TOTALPRICE DOUBLE,
  O_ORDERDATE STRING,
