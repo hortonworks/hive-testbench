@@ -21,7 +21,7 @@ create table catalog_sales
     cs_warehouse_sk           int,
     cs_item_sk                int,
     cs_promo_sk               int,
-    cs_order_number           int,
+    cs_order_number           bigint,
     cs_quantity               int,
     cs_wholesale_cost         float,
     cs_list_price             float,
