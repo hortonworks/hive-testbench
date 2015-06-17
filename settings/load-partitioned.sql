@@ -13,6 +13,7 @@ set mapred.job.reduce.input.buffer.percent=0.0;
 set mapreduce.input.fileinputformat.split.minsizee=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.node=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.rack=240000000;
+set hive.optimize.sort.dynamic.partition=true;
 
 -- set mapred.map.child.java.opts=-server -Xmx2800m -Djava.net.preferIPv4Stack=true;
 -- set mapred.reduce.child.java.opts=-server -Xms1024m -Xmx3800m -Djava.net.preferIPv4Stack=true;
