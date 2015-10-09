@@ -70,14 +70,14 @@ All of these steps should be carried out on your Hadoop cluster.
   	hive> source query55.sql;
   	```
 
-  Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 10000, your database will be named tpcds_bin_partitioned_orc_10000. At Data Scale 1000 it would be named tpcds_bin_partitioned_orc_1000. You can always ```show databases``` to get a list of available databases.
+  Note that the database is named based on the Data Scale chosen in step 3. At Data Scale 10000, your database will be named tpcds_bin_partitioned_orc_10000. At Data Scale 1000 it would be named tpch_flat_orc_1000. You can always ```show databases``` to get a list of available databases.
 
   Similarly, if you generated 1 TB of TPC-H data during Step 5:
 
   	```
   	cd sample-queries-tpch
   	hive -i testbench.settings
-  	hive> use tpch_bin_partitioned_orc_1000;
+  	hive> use tpch_flat_orc_1000;
   	hive> source tpch_query1.sql;
   	```
 
