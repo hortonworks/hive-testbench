@@ -1,57 +1,40 @@
-drop view q20_tmp1_cached;
-drop view q20_tmp2_cached;
-drop view q20_tmp3_cached;
-drop view q20_tmp4_cached;
-
-create view q20_tmp1_cached as
-select distinct p_partkey
-from
-	part
-where
-	p_name like 'forest%';
-
-create view q20_tmp2_cached as
+-- explain formatted 
+with tmp1 as (
+    select p_partkey from part where p_name like 'forest%'
+),
+tmp2 as (
+    select s_name, s_address, s_suppkey
+    from supplier, nation
+    where s_nationkey = n_nationkey
+    and n_name = 'CANADA'
+),
+tmp3 as (
+    select l_partkey, 0.5 * sum(l_quantity) as sum_quantity, l_suppkey
+    from lineitem, tmp2
+    where l_shipdate >= '1994-01-01' and l_shipdate <= '1995-01-01'
+    and l_suppkey = s_suppkey 
+    group by l_partkey, l_suppkey
+),
+tmp4 as (
+    select ps_partkey, ps_suppkey, ps_availqty
+    from partsupp 
+    where ps_partkey IN (select p_partkey from tmp1)
+),
+tmp5 as (
 select
-	l_partkey,
-	l_suppkey,
-	0.5 * sum(l_quantity) as sum_quantity
+    ps_suppkey
 from
-	lineitem
+    tmp4, tmp3
 where
-	l_shipdate >= '1994-01-01'
-	and l_shipdate < '1995-01-01'
-group by l_partkey, l_suppkey;
-
-create view q20_tmp3_cached as
+    ps_partkey = l_partkey
+    and ps_suppkey = l_suppkey
+    and ps_availqty > sum_quantity
+)
 select
-	ps_suppkey,
-	ps_availqty,
-	sum_quantity
+    s_name,
+    s_address
 from
-	partsupp, q20_tmp1_cached, q20_tmp2_cached
+    supplier
 where
-	ps_partkey = p_partkey
-	and ps_partkey = l_partkey
-	and ps_suppkey = l_suppkey;
-
-create view q20_tmp4_cached as
-select
-	ps_suppkey
-from
-	q20_tmp3_cached
-where
-	ps_availqty > sum_quantity
-group by ps_suppkey;
-
-select
-	s_name,
-	s_address
-from
-	supplier,
-	nation,
-	q20_tmp4_cached
-where
-	s_nationkey = n_nationkey
-	and n_name = 'CANADA'
-	and s_suppkey = ps_suppkey
+    s_suppkey IN (select ps_suppkey from tmp5)
 order by s_name;
