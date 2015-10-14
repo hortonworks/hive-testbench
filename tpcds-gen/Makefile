@@ -9,7 +9,8 @@ target/tpcds_kit.zip: tpcds_kit.zip
 	cp tpcds_kit.zip target/tpcds_kit.zip
 
 tpcds_kit.zip:
-	curl --output tpcds_kit.zip http://www.tpc.org/tpcds/dsgen/dsgen-download-files.asp?download_key=NaN
+	curl http://dev.hortonworks.com.s3.amazonaws.com/hive-testbench/tpcds/README
+	curl --output tpcds_kit.zip http://dev.hortonworks.com.s3.amazonaws.com/hive-testbench/tpcds/TPCDS_Tools.zip
 
 target/lib/dsdgen.jar: target/tools/dsdgen
 	cd target/; mkdir -p lib/; ( jar cvf lib/dsdgen.jar tools/ || gjar cvf lib/dsdgen.jar tools/ )
