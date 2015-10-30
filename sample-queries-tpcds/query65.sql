@@ -18,7 +18,6 @@ from
     where
         ss_sold_date_sk = d_date_sk
             and d_month_seq between 1212 and 1212 + 11
-            and ss_sold_date between '2001-01-01' and '2001-12-31'
     group by ss_store_sk , ss_item_sk) sa
     group by ss_store_sk) sb,
     (select 
@@ -28,7 +27,6 @@ from
     where
         ss_sold_date_sk = d_date_sk
             and d_month_seq between 1212 and 1212 + 11
-            and ss_sold_date between '2001-01-01' and '2001-12-31'
     group by ss_store_sk , ss_item_sk) sc
 where
     sb.ss_store_sk = sc.ss_store_sk
