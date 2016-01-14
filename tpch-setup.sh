@@ -48,12 +48,12 @@ fi
 
 # Do the actual data load.
 hdfs dfs -mkdir -p ${DIR}
-hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
+hdfs dfs -ls ${DIR}/${SCALE}/lineitem > /dev/null
 if [ $? -ne 0 ]; then
 	echo "Generating data at scale factor $SCALE."
 	(cd tpch-gen; hadoop jar target/*.jar -d ${DIR}/${SCALE}/ -s ${SCALE})
 fi
-hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
+hdfs dfs -ls ${DIR}/${SCALE}/lineitem > /dev/null
 if [ $? -ne 0 ]; then
 	echo "Data generation failed, exiting."
 	exit 1
@@ -67,13 +67,22 @@ runcommand "hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql -d
 # Create the optimized tables.
 i=1
 total=8
-DATABASE=tpch_flat_orc_${SCALE}
+
+if test $SCALE -le 1000; then 
+	SCHEMA_TYPE=flat
+else
+	SCHEMA_TYPE=partitioned
+fi
+
+DATABASE=tpch_${SCHEMA_TYPE}_orc_${SCALE}
+
 for t in ${TABLES}
 do
 	echo "Optimizing table $t ($i/$total)."
-	COMMAND="hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/${t}.sql \
+	COMMAND="hive -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/${t}.sql \
 	    -d DB=${DATABASE} \
 	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
+            -d SCALE=${SCALE} \
 	    -d FILE=orc"
 	runcommand "$COMMAND"
 	if [ $? -ne 0 ]; then
@@ -82,5 +91,7 @@ do
 	fi
 	i=`expr $i + 1`
 done
+
+hive -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/analyze.sql --database ${DATABASE}; 
 
 echo "Data loaded into database ${DATABASE}."

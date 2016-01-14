@@ -1,11 +1,11 @@
-set hive.enforce.bucketing=true;
-set hive.enforce.sorting=true;
+-- set hive.enforce.bucketing=true;
+-- set hive.enforce.sorting=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
 set hive.exec.max.dynamic.partitions.pernode=100000;
 set hive.exec.max.dynamic.partitions=100000;
 set hive.exec.max.created.files=1000000;
 set hive.exec.parallel=true;
-set hive.exec.reducers.max=2000;
+set hive.exec.reducers.max=${SCALE};
 set hive.stats.autogather=true;
 set hive.optimize.sort.dynamic.partition=true;
 
@@ -14,6 +14,7 @@ set mapreduce.input.fileinputformat.split.minsizee=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.node=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.rack=240000000;
 set hive.optimize.sort.dynamic.partition=true;
+set hive.tez.java.opts=-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/;
 
 -- set mapred.map.child.java.opts=-server -Xmx2800m -Djava.net.preferIPv4Stack=true;
 -- set mapred.reduce.child.java.opts=-server -Xms1024m -Xmx3800m -Djava.net.preferIPv4Stack=true;
