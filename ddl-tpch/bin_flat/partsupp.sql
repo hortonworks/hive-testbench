@@ -5,4 +5,6 @@ drop table if exists partsupp;
 
 create table partsupp
 stored as ${FILE}
-as select * from ${SOURCE}.partsupp;
+as select * from ${SOURCE}.partsupp
+cluster by PS_SUPPKEY
+;

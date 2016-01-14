@@ -5,4 +5,4 @@ drop table if exists nation;
 
 create table nation
 stored as ${FILE}
-as select * from ${SOURCE}.nation;
+as select distinct * from ${SOURCE}.nation;

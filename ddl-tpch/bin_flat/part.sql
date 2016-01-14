@@ -5,4 +5,6 @@ drop table if exists part;
 
 create table part
 stored as ${FILE}
-as select * from ${SOURCE}.part;
+as select * from ${SOURCE}.part
+cluster by p_brand
+;
