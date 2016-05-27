@@ -16,6 +16,9 @@ set mapreduce.input.fileinputformat.split.minsize.per.rack=240000000;
 set hive.optimize.sort.dynamic.partition=true;
 set hive.tez.java.opts=-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/;
 
+set tez.runtime.empty.partitions.info-via-events.enabled=true;
+set tez.runtime.report.partition.stats=true;
+
 -- set mapred.map.child.java.opts=-server -Xmx2800m -Djava.net.preferIPv4Stack=true;
 -- set mapred.reduce.child.java.opts=-server -Xms1024m -Xmx3800m -Djava.net.preferIPv4Stack=true;
 -- set mapreduce.map.memory.mb=3072;
