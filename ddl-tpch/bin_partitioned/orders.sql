@@ -3,7 +3,7 @@ use ${DB};
 
 drop table if exists orders;
 
-create table orders (O_ORDERKEY INT,
+create table orders (O_ORDERKEY BIGINT,
  O_CUSTKEY BIGINT,
  O_ORDERSTATUS STRING,
  O_TOTALPRICE DOUBLE,
