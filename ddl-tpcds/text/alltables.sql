@@ -4,12 +4,12 @@ use ${DB};
 drop table if exists call_center;
 
 create external table call_center(
-      cc_call_center_sk         int               
+      cc_call_center_sk         bigint               
 ,     cc_call_center_id         string              
 ,     cc_rec_start_date        string                         
 ,     cc_rec_end_date          string                         
-,     cc_closed_date_sk         int                       
-,     cc_open_date_sk           int                       
+,     cc_closed_date_sk         bigint                       
+,     cc_open_date_sk           bigint                       
 ,     cc_name                   string                   
 ,     cc_class                  string                   
 ,     cc_employees              int                       
@@ -33,8 +33,8 @@ create external table call_center(
 ,     cc_state                  string                       
 ,     cc_zip                    string                      
 ,     cc_country                string                   
-,     cc_gmt_offset             float                  
-,     cc_tax_percentage         float
+,     cc_gmt_offset             double                  
+,     cc_tax_percentage         double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/call_center';
@@ -44,10 +44,10 @@ use ${DB};
 drop table if exists catalog_page;
 
 create external table catalog_page(
-      cp_catalog_page_sk        int               
+      cp_catalog_page_sk        bigint               
 ,     cp_catalog_page_id        string              
-,     cp_start_date_sk          int                       
-,     cp_end_date_sk            int                       
+,     cp_start_date_sk          bigint                       
+,     cp_end_date_sk            bigint                       
 ,     cp_department             string                   
 ,     cp_catalog_number         int                       
 ,     cp_catalog_page_number    int                       
@@ -63,33 +63,33 @@ drop table if exists catalog_returns;
 
 create external table catalog_returns
 (
-    cr_returned_date_sk       int,
-    cr_returned_time_sk       int,
-    cr_item_sk                int,
-    cr_refunded_customer_sk   int,
-    cr_refunded_cdemo_sk      int,
-    cr_refunded_hdemo_sk      int,
-    cr_refunded_addr_sk       int,
-    cr_returning_customer_sk  int,
-    cr_returning_cdemo_sk     int,
-    cr_returning_hdemo_sk     int,
-    cr_returning_addr_sk      int,
-    cr_call_center_sk         int,
-    cr_catalog_page_sk        int,
-    cr_ship_mode_sk           int,
-    cr_warehouse_sk           int,
-    cr_reason_sk              int,
+    cr_returned_date_sk       bigint,
+    cr_returned_time_sk       bigint,
+    cr_item_sk                bigint,
+    cr_refunded_customer_sk   bigint,
+    cr_refunded_cdemo_sk      bigint,
+    cr_refunded_hdemo_sk      bigint,
+    cr_refunded_addr_sk       bigint,
+    cr_returning_customer_sk  bigint,
+    cr_returning_cdemo_sk     bigint,
+    cr_returning_hdemo_sk     bigint,
+    cr_returning_addr_sk      bigint,
+    cr_call_center_sk         bigint,
+    cr_catalog_page_sk        bigint,
+    cr_ship_mode_sk           bigint,
+    cr_warehouse_sk           bigint,
+    cr_reason_sk              bigint,
     cr_order_number           bigint,
     cr_return_quantity        int,
-    cr_return_amount          float,
-    cr_return_tax             float,
-    cr_return_amt_inc_tax     float,
-    cr_fee                    float,
-    cr_return_ship_cost       float,
-    cr_refunded_cash          float,
-    cr_reversed_charge        float,
-    cr_store_credit           float,
-    cr_net_loss               float
+    cr_return_amount          double,
+    cr_return_tax             double,
+    cr_return_amt_inc_tax     double,
+    cr_fee                    double,
+    cr_return_ship_cost       double,
+    cr_refunded_cash          double,
+    cr_reversed_charge        double,
+    cr_store_credit           double,
+    cr_net_loss               double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/catalog_returns';
@@ -100,40 +100,40 @@ drop table if exists catalog_sales;
 
 create external table catalog_sales
 (
-    cs_sold_date_sk           int,
-    cs_sold_time_sk           int,
-    cs_ship_date_sk           int,
-    cs_bill_customer_sk       int,
-    cs_bill_cdemo_sk          int,
-    cs_bill_hdemo_sk          int,
-    cs_bill_addr_sk           int,
-    cs_ship_customer_sk       int,
-    cs_ship_cdemo_sk          int,
-    cs_ship_hdemo_sk          int,
-    cs_ship_addr_sk           int,
-    cs_call_center_sk         int,
-    cs_catalog_page_sk        int,
-    cs_ship_mode_sk           int,
-    cs_warehouse_sk           int,
-    cs_item_sk                int,
-    cs_promo_sk               int,
+    cs_sold_date_sk           bigint,
+    cs_sold_time_sk           bigint,
+    cs_ship_date_sk           bigint,
+    cs_bill_customer_sk       bigint,
+    cs_bill_cdemo_sk          bigint,
+    cs_bill_hdemo_sk          bigint,
+    cs_bill_addr_sk           bigint,
+    cs_ship_customer_sk       bigint,
+    cs_ship_cdemo_sk          bigint,
+    cs_ship_hdemo_sk          bigint,
+    cs_ship_addr_sk           bigint,
+    cs_call_center_sk         bigint,
+    cs_catalog_page_sk        bigint,
+    cs_ship_mode_sk           bigint,
+    cs_warehouse_sk           bigint,
+    cs_item_sk                bigint,
+    cs_promo_sk               bigint,
     cs_order_number           bigint,
     cs_quantity               int,
-    cs_wholesale_cost         float,
-    cs_list_price             float,
-    cs_sales_price            float,
-    cs_ext_discount_amt       float,
-    cs_ext_sales_price        float,
-    cs_ext_wholesale_cost     float,
-    cs_ext_list_price         float,
-    cs_ext_tax                float,
-    cs_coupon_amt             float,
-    cs_ext_ship_cost          float,
-    cs_net_paid               float,
-    cs_net_paid_inc_tax       float,
-    cs_net_paid_inc_ship      float,
-    cs_net_paid_inc_ship_tax  float,
-    cs_net_profit             float
+    cs_wholesale_cost         double,
+    cs_list_price             double,
+    cs_sales_price            double,
+    cs_ext_discount_amt       double,
+    cs_ext_sales_price        double,
+    cs_ext_wholesale_cost     double,
+    cs_ext_list_price         double,
+    cs_ext_tax                double,
+    cs_coupon_amt             double,
+    cs_ext_ship_cost          double,
+    cs_net_paid               double,
+    cs_net_paid_inc_tax       double,
+    cs_net_paid_inc_ship      double,
+    cs_net_paid_inc_ship_tax  double,
+    cs_net_profit             double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/catalog_sales';
@@ -144,7 +144,7 @@ drop table if exists customer_address;
 
 create external table customer_address
 (
-    ca_address_sk             int,
+    ca_address_sk             bigint,
     ca_address_id             string,
     ca_street_number          string,
     ca_street_name            string,
@@ -155,7 +155,7 @@ create external table customer_address
     ca_state                  string,
     ca_zip                    string,
     ca_country                string,
-    ca_gmt_offset             float,
+    ca_gmt_offset             double,
     ca_location_type          string
 )
 row format delimited fields terminated by '|' 
@@ -167,7 +167,7 @@ drop table if exists customer_demographics;
 
 create external table customer_demographics
 (
-    cd_demo_sk                int,
+    cd_demo_sk                bigint,
     cd_gender                 string,
     cd_marital_status         string,
     cd_education_status       string,
@@ -186,13 +186,13 @@ drop table if exists customer;
 
 create external table customer
 (
-    c_customer_sk             int,
+    c_customer_sk             bigint,
     c_customer_id             string,
-    c_current_cdemo_sk        int,
-    c_current_hdemo_sk        int,
-    c_current_addr_sk         int,
-    c_first_shipto_date_sk    int,
-    c_first_sales_date_sk     int,
+    c_current_cdemo_sk        bigint,
+    c_current_hdemo_sk        bigint,
+    c_current_addr_sk         bigint,
+    c_first_shipto_date_sk    bigint,
+    c_first_sales_date_sk     bigint,
     c_salutation              string,
     c_first_name              string,
     c_last_name               string,
@@ -214,7 +214,7 @@ drop table if exists date_dim;
 
 create external table date_dim
 (
-    d_date_sk                 int,
+    d_date_sk                 bigint,
     d_date_id                 string,
     d_date                    string,
     d_month_seq               int,
@@ -252,8 +252,8 @@ drop table if exists household_demographics;
 
 create external table household_demographics
 (
-    hd_demo_sk                int,
-    hd_income_band_sk         int,
+    hd_demo_sk                bigint,
+    hd_income_band_sk         bigint,
     hd_buy_potential          string,
     hd_dep_count              int,
     hd_vehicle_count          int
@@ -266,7 +266,7 @@ use ${DB};
 drop table if exists income_band;
 
 create external table income_band(
-      ib_income_band_sk         int               
+      ib_income_band_sk         bigint               
 ,     ib_lower_bound            int                       
 ,     ib_upper_bound            int
 )
@@ -279,9 +279,9 @@ drop table if exists inventory;
 
 create external table inventory
 (
-    inv_date_sk			int,
-    inv_item_sk			int,
-    inv_warehouse_sk		int,
+    inv_date_sk			bigint,
+    inv_item_sk			bigint,
+    inv_warehouse_sk		bigint,
     inv_quantity_on_hand	int
 )
 row format delimited fields terminated by '|' 
@@ -293,13 +293,13 @@ drop table if exists item;
 
 create external table item
 (
-    i_item_sk                 int,
+    i_item_sk                 bigint,
     i_item_id                 string,
     i_rec_start_date          string,
     i_rec_end_date            string,
     i_item_desc               string,
-    i_current_price           float,
-    i_wholesale_cost          float,
+    i_current_price           double,
+    i_wholesale_cost          double,
     i_brand_id                int,
     i_brand                   string,
     i_class_id                int,
@@ -325,12 +325,12 @@ drop table if exists promotion;
 
 create external table promotion
 (
-    p_promo_sk                int,
+    p_promo_sk                bigint,
     p_promo_id                string,
-    p_start_date_sk           int,
-    p_end_date_sk             int,
-    p_item_sk                 int,
-    p_cost                    float,
+    p_start_date_sk           bigint,
+    p_end_date_sk             bigint,
+    p_item_sk                 bigint,
+    p_cost                    double,
     p_response_target         int,
     p_promo_name              string,
     p_channel_dmail           string,
@@ -353,7 +353,7 @@ use ${DB};
 drop table if exists reason;
 
 create external table reason(
-      r_reason_sk               int               
+      r_reason_sk               bigint               
 ,     r_reason_id               string              
 ,     r_reason_desc             string                
 )
@@ -365,7 +365,7 @@ use ${DB};
 drop table if exists ship_mode;
 
 create external table ship_mode(
-      sm_ship_mode_sk           int               
+      sm_ship_mode_sk           bigint               
 ,     sm_ship_mode_id           string              
 ,     sm_type                   string                      
 ,     sm_code                   string                      
@@ -381,26 +381,26 @@ drop table if exists store_returns;
 
 create external table store_returns
 (
-    sr_returned_date_sk       int,
-    sr_return_time_sk         int,
-    sr_item_sk                int,
-    sr_customer_sk            int,
-    sr_cdemo_sk               int,
-    sr_hdemo_sk               int,
-    sr_addr_sk                int,
-    sr_store_sk               int,
-    sr_reason_sk              int,
+    sr_returned_date_sk       bigint,
+    sr_return_time_sk         bigint,
+    sr_item_sk                bigint,
+    sr_customer_sk            bigint,
+    sr_cdemo_sk               bigint,
+    sr_hdemo_sk               bigint,
+    sr_addr_sk                bigint,
+    sr_store_sk               bigint,
+    sr_reason_sk              bigint,
     sr_ticket_number          bigint,
     sr_return_quantity        int,
-    sr_return_amt             float,
-    sr_return_tax             float,
-    sr_return_amt_inc_tax     float,
-    sr_fee                    float,
-    sr_return_ship_cost       float,
-    sr_refunded_cash          float,
-    sr_reversed_charge        float,
-    sr_store_credit           float,
-    sr_net_loss               float             
+    sr_return_amt             double,
+    sr_return_tax             double,
+    sr_return_amt_inc_tax     double,
+    sr_fee                    double,
+    sr_return_ship_cost       double,
+    sr_refunded_cash          double,
+    sr_reversed_charge        double,
+    sr_store_credit           double,
+    sr_net_loss               double             
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/store_returns';
@@ -411,29 +411,29 @@ drop table if exists store_sales;
 
 create external table store_sales
 (
-    ss_sold_date_sk           int,
-    ss_sold_time_sk           int,
-    ss_item_sk                int,
-    ss_customer_sk            int,
-    ss_cdemo_sk               int,
-    ss_hdemo_sk               int,
-    ss_addr_sk                int,
-    ss_store_sk               int,
-    ss_promo_sk               int,
+    ss_sold_date_sk           bigint,
+    ss_sold_time_sk           bigint,
+    ss_item_sk                bigint,
+    ss_customer_sk            bigint,
+    ss_cdemo_sk               bigint,
+    ss_hdemo_sk               bigint,
+    ss_addr_sk                bigint,
+    ss_store_sk               bigint,
+    ss_promo_sk               bigint,
     ss_ticket_number          bigint,
     ss_quantity               int,
-    ss_wholesale_cost         float,
-    ss_list_price             float,
-    ss_sales_price            float,
-    ss_ext_discount_amt       float,
-    ss_ext_sales_price        float,
-    ss_ext_wholesale_cost     float,
-    ss_ext_list_price         float,
-    ss_ext_tax                float,
-    ss_coupon_amt             float,
-    ss_net_paid               float,
-    ss_net_paid_inc_tax       float,
-    ss_net_profit             float                  
+    ss_wholesale_cost         double,
+    ss_list_price             double,
+    ss_sales_price            double,
+    ss_ext_discount_amt       double,
+    ss_ext_sales_price        double,
+    ss_ext_wholesale_cost     double,
+    ss_ext_list_price         double,
+    ss_ext_tax                double,
+    ss_coupon_amt             double,
+    ss_net_paid               double,
+    ss_net_paid_inc_tax       double,
+    ss_net_profit             double                  
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/store_sales';
@@ -444,11 +444,11 @@ drop table if exists store;
 
 create external table store
 (
-    s_store_sk                int,
+    s_store_sk                bigint,
     s_store_id                string,
     s_rec_start_date          string,
     s_rec_end_date            string,
-    s_closed_date_sk          int,
+    s_closed_date_sk          bigint,
     s_store_name              string,
     s_number_employees        int,
     s_floor_space             int,
@@ -471,8 +471,8 @@ create external table store
     s_state                   string,
     s_zip                     string,
     s_country                 string,
-    s_gmt_offset              float,
-    s_tax_precentage          float                  
+    s_gmt_offset              double,
+    s_tax_precentage          double                  
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/store';
@@ -483,7 +483,7 @@ drop table if exists time_dim;
 
 create external table time_dim
 (
-    t_time_sk                 int,
+    t_time_sk                 bigint,
     t_time_id                 string,
     t_time                    int,
     t_hour                    int,
@@ -502,7 +502,7 @@ use ${DB};
 drop table if exists warehouse;
 
 create external table warehouse(
-      w_warehouse_sk            int               
+      w_warehouse_sk            bigint               
 ,     w_warehouse_id            string              
 ,     w_warehouse_name          string                   
 ,     w_warehouse_sq_ft         int                       
@@ -515,7 +515,7 @@ create external table warehouse(
 ,     w_state                   string                       
 ,     w_zip                     string                      
 ,     w_country                 string                   
-,     w_gmt_offset              float                  
+,     w_gmt_offset              double                  
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/warehouse';
@@ -525,14 +525,14 @@ use ${DB};
 drop table if exists web_page;
 
 create external table web_page(
-      wp_web_page_sk            int               
+      wp_web_page_sk            bigint               
 ,     wp_web_page_id            string              
 ,     wp_rec_start_date        string                         
 ,     wp_rec_end_date          string                         
-,     wp_creation_date_sk       int                       
-,     wp_access_date_sk         int                       
+,     wp_creation_date_sk       bigint                       
+,     wp_access_date_sk         bigint                       
 ,     wp_autogen_flag           string                       
-,     wp_customer_sk            int                       
+,     wp_customer_sk            bigint                       
 ,     wp_url                    string                  
 ,     wp_type                   string                      
 ,     wp_char_count             int                       
@@ -549,30 +549,30 @@ drop table if exists web_returns;
 
 create external table web_returns
 (
-    wr_returned_date_sk       int,
-    wr_returned_time_sk       int,
-    wr_item_sk                int,
-    wr_refunded_customer_sk   int,
-    wr_refunded_cdemo_sk      int,
-    wr_refunded_hdemo_sk      int,
-    wr_refunded_addr_sk       int,
-    wr_returning_customer_sk  int,
-    wr_returning_cdemo_sk     int,
-    wr_returning_hdemo_sk     int,
-    wr_returning_addr_sk      int,
-    wr_web_page_sk            int,
-    wr_reason_sk              int,
+    wr_returned_date_sk       bigint,
+    wr_returned_time_sk       bigint,
+    wr_item_sk                bigint,
+    wr_refunded_customer_sk   bigint,
+    wr_refunded_cdemo_sk      bigint,
+    wr_refunded_hdemo_sk      bigint,
+    wr_refunded_addr_sk       bigint,
+    wr_returning_customer_sk  bigint,
+    wr_returning_cdemo_sk     bigint,
+    wr_returning_hdemo_sk     bigint,
+    wr_returning_addr_sk      bigint,
+    wr_web_page_sk            bigint,
+    wr_reason_sk              bigint,
     wr_order_number           bigint,
     wr_return_quantity        int,
-    wr_return_amt             float,
-    wr_return_tax             float,
-    wr_return_amt_inc_tax     float,
-    wr_fee                    float,
-    wr_return_ship_cost       float,
-    wr_refunded_cash          float,
-    wr_reversed_charge        float,
-    wr_account_credit         float,
-    wr_net_loss               float
+    wr_return_amt             double,
+    wr_return_tax             double,
+    wr_return_amt_inc_tax     double,
+    wr_fee                    double,
+    wr_return_ship_cost       double,
+    wr_refunded_cash          double,
+    wr_reversed_charge        double,
+    wr_account_credit         double,
+    wr_net_loss               double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/web_returns';
@@ -583,40 +583,40 @@ drop table if exists web_sales;
 
 create external table web_sales
 (
-    ws_sold_date_sk           int,
-    ws_sold_time_sk           int,
-    ws_ship_date_sk           int,
-    ws_item_sk                int,
-    ws_bill_customer_sk       int,
-    ws_bill_cdemo_sk          int,
-    ws_bill_hdemo_sk          int,
-    ws_bill_addr_sk           int,
-    ws_ship_customer_sk       int,
-    ws_ship_cdemo_sk          int,
-    ws_ship_hdemo_sk          int,
-    ws_ship_addr_sk           int,
-    ws_web_page_sk            int,
-    ws_web_site_sk            int,
-    ws_ship_mode_sk           int,
-    ws_warehouse_sk           int,
-    ws_promo_sk               int,
+    ws_sold_date_sk           bigint,
+    ws_sold_time_sk           bigint,
+    ws_ship_date_sk           bigint,
+    ws_item_sk                bigint,
+    ws_bill_customer_sk       bigint,
+    ws_bill_cdemo_sk          bigint,
+    ws_bill_hdemo_sk          bigint,
+    ws_bill_addr_sk           bigint,
+    ws_ship_customer_sk       bigint,
+    ws_ship_cdemo_sk          bigint,
+    ws_ship_hdemo_sk          bigint,
+    ws_ship_addr_sk           bigint,
+    ws_web_page_sk            bigint,
+    ws_web_site_sk            bigint,
+    ws_ship_mode_sk           bigint,
+    ws_warehouse_sk           bigint,
+    ws_promo_sk               bigint,
     ws_order_number           bigint,
     ws_quantity               int,
-    ws_wholesale_cost         float,
-    ws_list_price             float,
-    ws_sales_price            float,
-    ws_ext_discount_amt       float,
-    ws_ext_sales_price        float,
-    ws_ext_wholesale_cost     float,
-    ws_ext_list_price         float,
-    ws_ext_tax                float,
-    ws_coupon_amt             float,
-    ws_ext_ship_cost          float,
-    ws_net_paid               float,
-    ws_net_paid_inc_tax       float,
-    ws_net_paid_inc_ship      float,
-    ws_net_paid_inc_ship_tax  float,
-    ws_net_profit             float
+    ws_wholesale_cost         double,
+    ws_list_price             double,
+    ws_sales_price            double,
+    ws_ext_discount_amt       double,
+    ws_ext_sales_price        double,
+    ws_ext_wholesale_cost     double,
+    ws_ext_list_price         double,
+    ws_ext_tax                double,
+    ws_coupon_amt             double,
+    ws_ext_ship_cost          double,
+    ws_net_paid               double,
+    ws_net_paid_inc_tax       double,
+    ws_net_paid_inc_ship      double,
+    ws_net_paid_inc_ship_tax  double,
+    ws_net_profit             double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/web_sales';
@@ -627,13 +627,13 @@ drop table if exists web_site;
 
 create external table web_site
 (
-    web_site_sk           int,
+    web_site_sk           bigint,
     web_site_id           string,
     web_rec_start_date    string,
     web_rec_end_date      string,
     web_name              string,
-    web_open_date_sk      int,
-    web_close_date_sk     int,
+    web_open_date_sk      bigint,
+    web_close_date_sk     bigint,
     web_class             string,
     web_manager           string,
     web_mkt_id            int,
@@ -651,8 +651,8 @@ create external table web_site
     web_state             string,
     web_zip               string,
     web_country           string,
-    web_gmt_offset        float,
-    web_tax_percentage    float
+    web_gmt_offset        double,
+    web_tax_percentage    double
 )
 row format delimited fields terminated by '|' 
 location '${LOCATION}/web_site';

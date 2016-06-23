@@ -5,34 +5,34 @@ drop table if exists catalog_returns;
 
 create table catalog_returns
 (
-    cr_returned_time_sk       int,
-    cr_item_sk                int,
-    cr_refunded_customer_sk   int,
-    cr_refunded_cdemo_sk      int,
-    cr_refunded_hdemo_sk      int,
-    cr_refunded_addr_sk       int,
-    cr_returning_customer_sk  int,
-    cr_returning_cdemo_sk     int,
-    cr_returning_hdemo_sk     int,
-    cr_returning_addr_sk      int,
-    cr_call_center_sk         int,
-    cr_catalog_page_sk        int,
-    cr_ship_mode_sk           int,
-    cr_warehouse_sk           int,
-    cr_reason_sk              int,
+    cr_returned_time_sk       bigint,
+    cr_item_sk                bigint,
+    cr_refunded_customer_sk   bigint,
+    cr_refunded_cdemo_sk      bigint,
+    cr_refunded_hdemo_sk      bigint,
+    cr_refunded_addr_sk       bigint,
+    cr_returning_customer_sk  bigint,
+    cr_returning_cdemo_sk     bigint,
+    cr_returning_hdemo_sk     bigint,
+    cr_returning_addr_sk      bigint,
+    cr_call_center_sk         bigint,
+    cr_catalog_page_sk        bigint,
+    cr_ship_mode_sk           bigint,
+    cr_warehouse_sk           bigint,
+    cr_reason_sk              bigint,
     cr_order_number           bigint,
     cr_return_quantity        int,
-    cr_return_amount          float,
-    cr_return_tax             float,
-    cr_return_amt_inc_tax     float,
-    cr_fee                    float,
-    cr_return_ship_cost       float,
-    cr_refunded_cash          float,
-    cr_reversed_charge        float,
-    cr_store_credit           float,
-    cr_net_loss               float
+    cr_return_amount          double,
+    cr_return_tax             double,
+    cr_return_amt_inc_tax     double,
+    cr_fee                    double,
+    cr_return_ship_cost       double,
+    cr_refunded_cash          double,
+    cr_reversed_charge        double,
+    cr_store_credit           double,
+    cr_net_loss               double
 )
-partitioned by (cr_returned_date_sk int)
+partitioned by (cr_returned_date_sk bigint)
 stored as ${FILE};
 
 insert overwrite table catalog_returns partition (cr_returned_date_sk) 
