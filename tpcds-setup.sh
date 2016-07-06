@@ -75,39 +75,41 @@ runcommand "hive -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql -d DB
 if [ "X$FORMAT" = "X" ]; then
 	FORMAT=orc
 fi
+
+LOAD_FILE="load_${FORMAT}_${SCALE}.mk"
+SILENCE="2> /dev/null 1> /dev/null" 
+if [ "X$DEBUG_SCRIPT" != "X" ]; then
+	SILENCE=""
+fi
+
+echo -e "all: ${DIMS} ${FACTS}" > $LOAD_FILE
+
 i=1
 total=24
 DATABASE=tpcds_bin_partitioned_${FORMAT}_${SCALE}
+
+# Populate the smaller tables.
+for t in ${DIMS}
+do
+	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
+	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
+            -d SCALE=${SCALE} \
+	    -d FILE=${FORMAT}"
+	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
+	i=`expr $i + 1`
+done
+
 for t in ${FACTS}
 do
-	echo "Optimizing table $t ($i/$total)."
 	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} \
             -d SCALE=${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
 	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=${FORMAT}"
-	runcommand "$COMMAND"
-	if [ $? -ne 0 ]; then
-		echo "Command failed, try 'export DEBUG_SCRIPT=ON' and re-running"
-		exit 1
-	fi
+	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
 done
 
-# Populate the smaller tables.
-for t in ${DIMS}
-do
-	echo "Optimizing table $t ($i/$total)."
-	COMMAND="hive -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} -d SOURCE=tpcds_text_${SCALE} \
-            -d SCALE=${SCALE} \
-	    -d FILE=${FORMAT}"
-	runcommand "$COMMAND"
-	if [ $? -ne 0 ]; then
-		echo "Command failed, try 'export DEBUG_SCRIPT=ON' and re-running"
-		exit 1
-	fi
-	i=`expr $i + 1`
-done
+make -j 2 -f $LOAD_FILE
 
 echo "Data loaded into database ${DATABASE}."
