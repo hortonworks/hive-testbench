@@ -18,6 +18,9 @@ set hive.tez.java.opts=-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -X
 
 set tez.runtime.empty.partitions.info-via-events.enabled=true;
 set tez.runtime.report.partition.stats=true;
+-- fewer files for the NULL partition
+set hive.tez.auto.reducer.parallelism=true;
+set hive.tez.min.partition.factor=0.01; 
 
 -- set mapred.map.child.java.opts=-server -Xmx2800m -Djava.net.preferIPv4Stack=true;
 -- set mapred.reduce.child.java.opts=-server -Xms1024m -Xmx3800m -Djava.net.preferIPv4Stack=true;
