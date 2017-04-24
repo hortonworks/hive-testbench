@@ -75,8 +75,8 @@ else
 fi
 
 DATABASE=tpch_${SCHEMA_TYPE}_orc_${SCALE}
-MAX_REDUCERS=2500
-REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS} || echo ${SCALE}))
+MAX_REDUCERS=2600 # ~7 years of data
+REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo ${SCALE})
 
 for t in ${TABLES}
 do
