@@ -75,6 +75,8 @@ else
 fi
 
 DATABASE=tpch_${SCHEMA_TYPE}_orc_${SCALE}
+MAX_REDUCERS=2500
+REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS} || echo ${SCALE}))
 
 for t in ${TABLES}
 do
@@ -82,7 +84,7 @@ do
 	COMMAND="hive -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/${t}.sql \
 	    -d DB=${DATABASE} \
 	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
-            -d SCALE=${SCALE} \
+            -d SCALE=${SCALE} -d REDUCERS=${REDUCERS} \
 	    -d FILE=orc"
 	runcommand "$COMMAND"
 	if [ $? -ne 0 ]; then

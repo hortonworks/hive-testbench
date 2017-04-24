@@ -87,6 +87,8 @@ echo -e "all: ${DIMS} ${FACTS}" > $LOAD_FILE
 i=1
 total=24
 DATABASE=tpcds_bin_partitioned_${FORMAT}_${SCALE}
+MAX_REDUCERS=2500
+REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS} || echo ${SCALE}))
 
 # Populate the smaller tables.
 for t in ${DIMS}
@@ -105,7 +107,7 @@ do
 	    -d DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} \
             -d SCALE=${SCALE} \
 	    -d SOURCE=tpcds_text_${SCALE} -d BUCKETS=${BUCKETS} \
-	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=${FORMAT}"
+	    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d REDUCERS=${REDUCERS} -d FILE=${FORMAT}"
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
 done

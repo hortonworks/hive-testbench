@@ -5,7 +5,7 @@ set hive.exec.max.dynamic.partitions.pernode=100000;
 set hive.exec.max.dynamic.partitions=100000;
 set hive.exec.max.created.files=1000000;
 set hive.exec.parallel=true;
-set hive.exec.reducers.max=${SCALE};
+set hive.exec.reducers.max=${REDUCERS};
 set hive.stats.autogather=true;
 set hive.optimize.sort.dynamic.partition=true;
 
