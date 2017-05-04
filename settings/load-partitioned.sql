@@ -14,7 +14,7 @@ set mapreduce.input.fileinputformat.split.minsizee=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.node=240000000;
 set mapreduce.input.fileinputformat.split.minsize.per.rack=240000000;
 set hive.optimize.sort.dynamic.partition=true;
-set hive.tez.java.opts=-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/;
+-- set hive.tez.java.opts=-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/;
 
 set tez.runtime.empty.partitions.info-via-events.enabled=true;
 set tez.runtime.report.partition.stats=true;
