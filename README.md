@@ -47,11 +47,11 @@ All of these steps should be carried out on your Hadoop cluster.
 
   Some examples:
 
-  Build 1 TB of TPC-DS data: ```./tpcds-setup 1000```
+  Build 1 TB of TPC-DS data: ```./tpcds-setup.sh 1000```
 
-  Build 1 TB of TPC-H data: ```./tpch-setup 1000```
+  Build 1 TB of TPC-H data: ```./tpch-setup.sh 1000```
 
-  Build 100 TB of TPC-DS data: ```./tpcds-setup 100000```
+  Build 100 TB of TPC-DS data: ```./tpcds-setup.sh 100000```
 
   Build 30 TB of text formatted TPC-DS data: ```FORMAT=textfile ./tpcds-setup 30000```
 
