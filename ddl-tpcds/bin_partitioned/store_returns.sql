@@ -14,16 +14,16 @@ create table store_returns
     sr_store_sk               bigint,
     sr_reason_sk              bigint,
     sr_ticket_number          bigint,
-    sr_return_quantity        int,
-    sr_return_amt             double,
-    sr_return_tax             double,
-    sr_return_amt_inc_tax     double,
-    sr_fee                    double,
-    sr_return_ship_cost       double,
-    sr_refunded_cash          double,
-    sr_reversed_charge        double,
-    sr_store_credit           double,
-    sr_net_loss               double
+    sr_return_quantity        bigint,
+    sr_return_amt             decimal(7,2),
+    sr_return_tax             decimal(7,2),
+    sr_return_amt_inc_tax     decimal(7,2),
+    sr_fee                    decimal(7,2),
+    sr_return_ship_cost       decimal(7,2),
+    sr_refunded_cash          decimal(7,2),
+    sr_reversed_charge        decimal(7,2),
+    sr_store_credit           decimal(7,2),
+    sr_net_loss               decimal(7,2)
 )
 partitioned by (sr_returned_date_sk bigint)
 stored as ${FILE};

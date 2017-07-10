@@ -7,7 +7,7 @@ create table inventory
 (
     inv_item_sk          bigint,
     inv_warehouse_sk		bigint,
-    inv_quantity_on_hand	int
+    inv_quantity_on_hand	bigint
 )
 partitioned by (inv_date_sk bigint)
 stored as ${FILE};
