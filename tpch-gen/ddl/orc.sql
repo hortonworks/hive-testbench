@@ -1,97 +1,105 @@
-set hive.stats.autogather=true;
-set hive.stats.dbclass=fs;
+SET hive.stats.autogather=true;
+SET hive.stats.dbclass=fs;
 
-create table if not exists lineitem 
-(L_ORDERKEY BIGINT,
- L_PARTKEY BIGINT,
- L_SUPPKEY BIGINT,
- L_LINENUMBER INT,
- L_QUANTITY DOUBLE,
- L_EXTENDEDPRICE DOUBLE,
- L_DISCOUNT DOUBLE,
- L_TAX DOUBLE,
- L_RETURNFLAG STRING,
- L_LINESTATUS STRING,
- L_SHIPDATE STRING,
- L_COMMITDATE STRING,
- L_RECEIPTDATE STRING,
- L_SHIPINSTRUCT STRING,
- L_SHIPMODE STRING,
- L_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS lineitem (
+  l_orderkey BIGINT,
+  l_partkey BIGINT,
+  l_suppkey BIGINT,
+  l_linenumber INT,
+  l_quantity DECIMAL(12,2),
+  l_extendedprice DECIMAL(12,2),
+  l_discount DECIMAL(12,2),
+  l_tax DECIMAL(12,2),
+  l_returnflag STRING,
+  l_linestatus STRING,
+  l_shipdate DATE,
+  l_commitdate DATE,
+  l_receiptdate DATE,
+  l_shipinstruct STRING,
+  l_shipmode STRING,
+  l_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists part (P_PARTKEY INT,
- P_NAME STRING,
- P_MFGR STRING,
- P_BRAND STRING,
- P_TYPE STRING,
- P_SIZE INT,
- P_CONTAINER STRING,
- P_RETAILPRICE DOUBLE,
- P_COMMENT STRING) 
+CREATE TABLE IF NOT EXISTS part (
+  p_partkey BIGINT,
+  p_name STRING,
+  p_mfgr STRING,
+  p_brand STRING,
+  p_type STRING,
+  p_size INT,
+  p_container STRING,
+  p_retailprice DECIMAL(12,2),
+  p_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists supplier (S_SUPPKEY BIGINT,
- S_NAME STRING,
- S_ADDRESS STRING,
- S_NATIONKEY INT,
- S_PHONE STRING,
- S_ACCTBAL DOUBLE,
- S_COMMENT STRING) 
+CREATE TABLE IF NOT EXISTS supplier (
+  s_suppkey BIGINT,
+  s_name STRING,
+  s_address STRING,
+  s_nationkey BIGINT,
+  s_phone STRING,
+  s_acctbal DECIMAL(12,2),
+  s_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists partsupp (PS_PARTKEY BIGINT,
- PS_SUPPKEY BIGINT,
- PS_AVAILQTY INT,
- PS_SUPPLYCOST DOUBLE,
- PS_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS partsupp (
+  ps_partkey BIGINT,
+  ps_suppkey BIGINT,
+  ps_availqty INT,
+  ps_supplycost DECIMAL(12,2),
+  ps_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists nation (N_NATIONKEY INT,
- N_NAME STRING,
- N_REGIONKEY INT,
- N_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS nation (
+  n_nationkey BIGINT,
+  n_name STRING,
+  n_regionkey BIGINT,
+  n_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists region (R_REGIONKEY INT,
- R_NAME STRING,
- R_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS region (
+  r_regionkey BIGINT,
+  r_name STRING,
+  r_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists customer (C_CUSTKEY BIGINT,
- C_NAME STRING,
- C_ADDRESS STRING,
- C_NATIONKEY INT,
- C_PHONE STRING,
- C_ACCTBAL DOUBLE,
- C_MKTSEGMENT STRING,
- C_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS customer (
+  c_custkey BIGINT,
+  c_name STRING,
+  c_address STRING,
+  c_nationkey BIGINT,
+  c_phone STRING,
+  c_acctbal DECIMAL(12,2),
+  c_mktsegment STRING,
+  c_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-create table if not exists orders (O_ORDERKEY BIGINT,
- O_CUSTKEY BIGINT,
- O_ORDERSTATUS STRING,
- O_TOTALPRICE DOUBLE,
- O_ORDERDATE STRING,
- O_ORDERPRIORITY STRING,
- O_CLERK STRING,
- O_SHIPPRIORITY INT,
- O_COMMENT STRING)
+CREATE TABLE IF NOT EXISTS orders (
+  o_orderkey BIGINT,
+  o_custkey BIGINT,
+  o_orderstatus STRING,
+  o_totalprice DECIMAL(12,2),
+  o_orderdate DATE,
+  o_orderpriority STRING,
+  o_clerk STRING,
+  o_shippriority INT,
+  o_comment STRING)
 STORED AS ORC TBLPROPERTIES ("orc.compress"="SNAPPY")
 ;
 
-insert overwrite table nation select * from ${SOURCE}.nation;
-insert overwrite table region select * from ${SOURCE}.region;
-insert overwrite table part select * from ${SOURCE}.part;
-insert overwrite table supplier select * from ${SOURCE}.supplier;
-insert overwrite table partsupp select * from ${SOURCE}.partsupp;
-insert overwrite table customer select * from ${SOURCE}.customer;
-insert overwrite table lineitem select * from ${SOURCE}.lineitem;
-insert overwrite table orders select * from ${SOURCE}.orders;
+INSERT OVERWRITE TABLE nation SELECT * FROM ${SOURCE}.nation;
+INSERT OVERWRITE TABLE region SELECT * FROM ${SOURCE}.region;
+INSERT OVERWRITE TABLE part SELECT * FROM ${SOURCE}.part;
+INSERT OVERWRITE TABLE supplier SELECT * FROM ${SOURCE}.supplier;
+INSERT OVERWRITE TABLE partsupp SELECT * FROM ${SOURCE}.partsupp;
+INSERT OVERWRITE TABLE customer SELECT * FROM ${SOURCE}.customer;
+INSERT OVERWRITE TABLE lineitem SELECT * FROM ${SOURCE}.lineitem;
+INSERT OVERWRITE TABLE orders SELECT * FROM ${SOURCE}.orders;
+
