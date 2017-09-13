@@ -1,16 +1,17 @@
+-- start query 1 in stream 0 using template query60.tpl and seed 1930872976
 with ss as (
  select
           i_item_id,sum(ss_ext_sales_price) total_sales
  from
-        store_sales,
-        date_dim,
+ 	store_sales,
+ 	date_dim,
          customer_address,
          item
  where
-         item.i_item_id in (select
-  i.i_item_id
+         i_item_id in (select
+  i_item_id
 from
- item i
+ item
 where i_category in ('Children'))
  and     ss_item_sk              = i_item_sk
  and     ss_sold_date_sk         = d_date_sk
@@ -23,15 +24,15 @@ where i_category in ('Children'))
  select
           i_item_id,sum(cs_ext_sales_price) total_sales
  from
-        catalog_sales,
-        date_dim,
+ 	catalog_sales,
+ 	date_dim,
          customer_address,
          item
  where
-         item.i_item_id               in (select
-  i.i_item_id
+         i_item_id               in (select
+  i_item_id
 from
- item i
+ item
 where i_category in ('Children'))
  and     cs_item_sk              = i_item_sk
  and     cs_sold_date_sk         = d_date_sk
@@ -44,15 +45,15 @@ where i_category in ('Children'))
  select
           i_item_id,sum(ws_ext_sales_price) total_sales
  from
-        web_sales,
-        date_dim,
+ 	web_sales,
+ 	date_dim,
          customer_address,
          item
  where
-         item.i_item_id               in (select
-  i.i_item_id
+         i_item_id               in (select
+  i_item_id
 from
- item i
+ item
 where i_category in ('Children'))
  and     ws_item_sk              = i_item_sk
  and     ws_sold_date_sk         = d_date_sk
@@ -73,3 +74,5 @@ where i_category in ('Children'))
  order by i_item_id
       ,total_sales
  limit 100;
+
+-- end query 1 in stream 0 using template query60.tpl

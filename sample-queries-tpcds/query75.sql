@@ -1,3 +1,4 @@
+-- start query 1 in stream 0 using template query75.tpl and seed 1819994127
 WITH all_sales AS (
  SELECT d_year
        ,i_brand_id
@@ -18,7 +19,7 @@ WITH all_sales AS (
                           LEFT JOIN catalog_returns ON (cs_order_number=cr_order_number 
                                                     AND cs_item_sk=cr_item_sk)
        WHERE i_category='Sports'
-       UNION ALL
+       UNION
        SELECT d_year
              ,i_brand_id
              ,i_class_id
@@ -31,7 +32,7 @@ WITH all_sales AS (
                         LEFT JOIN store_returns ON (ss_ticket_number=sr_ticket_number 
                                                 AND ss_item_sk=sr_item_sk)
        WHERE i_category='Sports'
-       UNION ALL
+       UNION
        SELECT d_year
              ,i_brand_id
              ,i_class_id
@@ -65,3 +66,5 @@ WITH all_sales AS (
    AND CAST(curr_yr.sales_cnt AS DECIMAL(17,2))/CAST(prev_yr.sales_cnt AS DECIMAL(17,2))<0.9
  ORDER BY sales_cnt_diff
  limit 100;
+
+-- end query 1 in stream 0 using template query75.tpl

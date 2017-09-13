@@ -1,4 +1,4 @@
-
+-- start query 1 in stream 0 using template query89.tpl and seed 1719819282
 select  *
 from(
 select i_category, i_class, i_brand,
@@ -9,9 +9,9 @@ select i_category, i_class, i_brand,
          (partition by i_category, i_brand, s_store_name, s_company_name)
          avg_monthly_sales
 from item, store_sales, date_dim, store
-where store_sales.ss_item_sk = item.i_item_sk and
-      store_sales.ss_sold_date_sk = date_dim.d_date_sk and
-      store_sales.ss_store_sk = store.s_store_sk and
+where ss_item_sk = i_item_sk and
+      ss_sold_date_sk = d_date_sk and
+      ss_store_sk = s_store_sk and
       d_year in (2000) and
         ((i_category in ('Home','Books','Electronics') and
           i_class in ('wallpaper','parenting','musical')
@@ -25,4 +25,4 @@ where case when (avg_monthly_sales <> 0) then (abs(sum_sales - avg_monthly_sales
 order by sum_sales - avg_monthly_sales, s_store_name
 limit 100;
 
-
+-- end query 1 in stream 0 using template query89.tpl

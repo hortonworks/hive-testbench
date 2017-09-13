@@ -1,3 +1,4 @@
+-- start query 1 in stream 0 using template query31.tpl and seed 1819994127
 with ss as
  (select ca_county,d_qoy, d_year,sum(ss_ext_sales_price) as store_sales
  from store_sales,date_dim,customer_address
@@ -26,24 +27,26 @@ with ss as
        ,ws ws3
  where
     ss1.d_qoy = 1
-    and ss1.d_year = 1998
+    and ss1.d_year = 2000
     and ss1.ca_county = ss2.ca_county
     and ss2.d_qoy = 2
-    and ss2.d_year = 1998
+    and ss2.d_year = 2000
  and ss2.ca_county = ss3.ca_county
     and ss3.d_qoy = 3
-    and ss3.d_year = 1998
+    and ss3.d_year = 2000
     and ss1.ca_county = ws1.ca_county
     and ws1.d_qoy = 1
-    and ws1.d_year = 1998
+    and ws1.d_year = 2000
     and ws1.ca_county = ws2.ca_county
     and ws2.d_qoy = 2
-    and ws2.d_year = 1998
+    and ws2.d_year = 2000
     and ws1.ca_county = ws3.ca_county
     and ws3.d_qoy = 3
-    and ws3.d_year =1998
+    and ws3.d_year =2000
     and case when ws1.web_sales > 0 then ws2.web_sales/ws1.web_sales else null end 
        > case when ss1.store_sales > 0 then ss2.store_sales/ss1.store_sales else null end
     and case when ws2.web_sales > 0 then ws3.web_sales/ws2.web_sales else null end
        > case when ss2.store_sales > 0 then ss3.store_sales/ss2.store_sales else null end
- order by web_q1_q2_increase;
+ order by ss1.d_year;
+
+-- end query 1 in stream 0 using template query31.tpl

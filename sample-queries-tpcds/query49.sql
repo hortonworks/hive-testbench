@@ -1,4 +1,4 @@
-
+-- start query 1 in stream 0 using template query49.tpl and seed 1819994127
 select  
  'web' as channel
  ,web.item
@@ -28,7 +28,7 @@ select
  			and ws.ws_net_profit > 1
                          and ws.ws_net_paid > 0
                          and ws.ws_quantity > 0
-                         and ws.ws_sold_date_sk = date_dim.d_date_sk
+                         and ws_sold_date_sk = d_date_sk
                          and d_year = 2000
                          and d_moy = 12
  		group by ws.ws_item_sk
@@ -40,7 +40,7 @@ select
  or
  web.currency_rank <= 10
  )
- union all
+ union
  select 
  'catalog' as channel
  ,catalog.item
@@ -83,7 +83,7 @@ select
  or
  catalog.currency_rank <=10
  )
- union all
+ union
  select 
  'store' as channel
  ,store.item
@@ -124,4 +124,4 @@ select
  order by 1,4,5
  limit 100;
 
-
+-- end query 1 in stream 0 using template query49.tpl

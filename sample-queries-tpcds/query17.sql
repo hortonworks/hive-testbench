@@ -1,3 +1,4 @@
+-- start query 1 in stream 0 using template query17.tpl and seed 1819994127
 select  i_item_id
        ,i_item_desc
        ,s_state
@@ -21,17 +22,17 @@ select  i_item_id
      ,store
      ,item
  where d1.d_quarter_name = '2000Q1'
-   and d1.d_date_sk = store_sales.ss_sold_date_sk
-   and item.i_item_sk = store_sales.ss_item_sk
-   and store.s_store_sk = store_sales.ss_store_sk
-   and store_sales.ss_customer_sk = store_returns.sr_customer_sk
-   and store_sales.ss_item_sk = store_returns.sr_item_sk
-   and store_sales.ss_ticket_number = store_returns.sr_ticket_number
-   and store_returns.sr_returned_date_sk = d2.d_date_sk
+   and d1.d_date_sk = ss_sold_date_sk
+   and i_item_sk = ss_item_sk
+   and s_store_sk = ss_store_sk
+   and ss_customer_sk = sr_customer_sk
+   and ss_item_sk = sr_item_sk
+   and ss_ticket_number = sr_ticket_number
+   and sr_returned_date_sk = d2.d_date_sk
    and d2.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
-   and store_returns.sr_customer_sk = catalog_sales.cs_bill_customer_sk
-   and store_returns.sr_item_sk = catalog_sales.cs_item_sk
-   and catalog_sales.cs_sold_date_sk = d3.d_date_sk
+   and sr_customer_sk = cs_bill_customer_sk
+   and sr_item_sk = cs_item_sk
+   and cs_sold_date_sk = d3.d_date_sk
    and d3.d_quarter_name in ('2000Q1','2000Q2','2000Q3')
  group by i_item_id
          ,i_item_desc
@@ -40,3 +41,5 @@ select  i_item_id
          ,i_item_desc
          ,s_state
 limit 100;
+
+-- end query 1 in stream 0 using template query17.tpl
