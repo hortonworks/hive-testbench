@@ -1,3 +1,4 @@
+-- start query 1 in stream 0 using template query63.tpl and seed 1819994127
 select  * 
 from (select i_manager_id
              ,sum(ss_sales_price) sum_sales
@@ -25,3 +26,4 @@ order by i_manager_id
         ,sum_sales
 limit 100;
 
+-- end query 1 in stream 0 using template query63.tpl

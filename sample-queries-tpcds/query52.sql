@@ -1,4 +1,4 @@
-
+-- start query 1 in stream 0 using template query52.tpl and seed 1819994127
 select  dt.d_year
  	,item.i_brand_id brand_id
  	,item.i_brand brand
@@ -11,7 +11,7 @@ select  dt.d_year
     and item.i_manager_id = 1
     and dt.d_moy=12
     and dt.d_year=1998
-	 group by dt.d_year
+ group by dt.d_year
  	,item.i_brand
  	,item.i_brand_id
  order by dt.d_year
@@ -19,4 +19,4 @@ select  dt.d_year
  	,brand_id
 limit 100 ;
 
-
+-- end query 1 in stream 0 using template query52.tpl
