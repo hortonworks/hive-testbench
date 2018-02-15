@@ -1,85 +1,96 @@
-create external table lineitem 
-(L_ORDERKEY BIGINT,
- L_PARTKEY BIGINT,
- L_SUPPKEY BIGINT,
- L_LINENUMBER INT,
- L_QUANTITY DOUBLE,
- L_EXTENDEDPRICE DOUBLE,
- L_DISCOUNT DOUBLE,
- L_TAX DOUBLE,
- L_RETURNFLAG STRING,
- L_LINESTATUS STRING,
- L_SHIPDATE STRING,
- L_COMMITDATE STRING,
- L_RECEIPTDATE STRING,
- L_SHIPINSTRUCT STRING,
- L_SHIPMODE STRING,
- L_COMMENT STRING)
+-- http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-h_v2.17.2.pdf
+-- See 1.3.1 Datatype Definitions.
+-- BIGINT for Identifier, DECIMAL -> DECIMAL(12,2)
+
+CREATE EXTERNAL TABLE lineitem (
+  l_orderkey BIGINT,
+  l_partkey BIGINT,
+  l_suppkey BIGINT,
+  l_linenumber INT,
+  l_quantity DECIMAL(12,2),
+  l_extendedprice DECIMAL(12,2),
+  l_discount DECIMAL(12,2),
+  l_tax DECIMAL(12,2),
+  l_returnflag STRING,
+  l_linestatus STRING,
+  l_shipdate DATE,
+  l_commitdate DATE,
+  l_receiptdate DATE,
+  l_shipinstruct STRING,
+  l_shipmode STRING,
+  l_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/lineitem';
 
-create external table part (P_PARTKEY BIGINT,
- P_NAME STRING,
- P_MFGR STRING,
- P_BRAND STRING,
- P_TYPE STRING,
- P_SIZE INT,
- P_CONTAINER STRING,
- P_RETAILPRICE DOUBLE,
- P_COMMENT STRING) 
+CREATE EXTERNAL TABLE part (
+  p_partkey BIGINT,
+  p_name STRING,
+  p_mfgr STRING,
+  p_brand STRING,
+  p_type STRING,
+  p_size INT,
+  p_container STRING,
+  p_retailprice DECIMAL(12,2),
+  p_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/part/';
 
-create external table supplier (S_SUPPKEY BIGINT,
- S_NAME STRING,
- S_ADDRESS STRING,
- S_NATIONKEY INT,
- S_PHONE STRING,
- S_ACCTBAL DOUBLE,
- S_COMMENT STRING) 
+CREATE EXTERNAL TABLE supplier (
+  s_suppkey BIGINT,
+  s_name STRING,
+  s_address STRING,
+  s_nationkey BIGINT,
+  s_phone STRING,
+  s_acctbal DECIMAL(12,2),
+  s_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE 
 LOCATION '${LOCATION}/supplier/';
 
-create external table partsupp (PS_PARTKEY BIGINT,
- PS_SUPPKEY BIGINT,
- PS_AVAILQTY INT,
- PS_SUPPLYCOST DOUBLE,
- PS_COMMENT STRING)
+CREATE EXTERNAL TABLE partsupp (
+  ps_partkey BIGINT,
+  ps_suppkey BIGINT,
+  ps_availqty INT,
+  ps_supplycost DECIMAL(12,2),
+  ps_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION'${LOCATION}/partsupp';
 
-create external table nation (N_NATIONKEY INT,
- N_NAME STRING,
- N_REGIONKEY INT,
- N_COMMENT STRING)
+CREATE EXTERNAL TABLE nation (
+  n_nationkey BIGINT,
+  n_name STRING,
+  n_regionkey BIGINT,
+  n_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/nation';
 
-create external table region (R_REGIONKEY INT,
- R_NAME STRING,
- R_COMMENT STRING)
+CREATE EXTERNAL TABLE region (
+  r_regionkey BIGINT,
+  r_name STRING,
+  r_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/region';
 
-create external table customer (C_CUSTKEY BIGINT,
- C_NAME STRING,
- C_ADDRESS STRING,
- C_NATIONKEY INT,
- C_PHONE STRING,
- C_ACCTBAL DOUBLE,
- C_MKTSEGMENT STRING,
- C_COMMENT STRING)
+CREATE EXTERNAL TABLE customer (
+  c_custkey BIGINT,
+  c_name STRING,
+  c_address STRING,
+  c_nationkey BIGINT,
+  c_phone STRING,
+  c_acctbal DECIMAL(12,2),
+  c_mktsegment STRING,
+  c_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/customer';
 
-create external table orders (O_ORDERKEY BIGINT,
- O_CUSTKEY BIGINT,
- O_ORDERSTATUS STRING,
- O_TOTALPRICE DOUBLE,
- O_ORDERDATE STRING,
- O_ORDERPRIORITY STRING,
- O_CLERK STRING,
- O_SHIPPRIORITY INT,
- O_COMMENT STRING)
+CREATE EXTERNAL TABLE orders (
+  o_orderkey BIGINT,
+  o_custkey BIGINT,
+  o_orderstatus STRING,
+  o_totalprice DECIMAL(12,2),
+  o_orderdate DATE,
+  o_orderpriority STRING,
+  o_clerk STRING,
+  o_shippriority INT,
+  o_comment STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE
 LOCATION '${LOCATION}/orders';

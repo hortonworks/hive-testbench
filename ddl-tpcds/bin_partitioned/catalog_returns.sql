@@ -21,16 +21,16 @@ create table catalog_returns
     cr_warehouse_sk           bigint,
     cr_reason_sk              bigint,
     cr_order_number           bigint,
-    cr_return_quantity        int,
-    cr_return_amount          double,
-    cr_return_tax             double,
-    cr_return_amt_inc_tax     double,
-    cr_fee                    double,
-    cr_return_ship_cost       double,
-    cr_refunded_cash          double,
-    cr_reversed_charge        double,
-    cr_store_credit           double,
-    cr_net_loss               double
+    cr_return_quantity        bigint,
+    cr_return_amount          decimal(7,2),
+    cr_return_tax             decimal(7,2),
+    cr_return_amt_inc_tax     decimal(7,2),
+    cr_fee                    decimal(7,2),
+    cr_return_ship_cost       decimal(7,2),
+    cr_refunded_cash          decimal(7,2),
+    cr_reversed_charge        decimal(7,2),
+    cr_store_credit           decimal(7,2),
+    cr_net_loss               decimal(7,2)
 )
 partitioned by (cr_returned_date_sk bigint)
 stored as ${FILE};
