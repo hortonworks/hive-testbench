@@ -5,4 +5,6 @@ drop table if exists item;
 
 create table item
 stored as ${FILE}
-as select * from ${SOURCE}.item;
+as select * from ${SOURCE}.item
+CLUSTER BY i_item_sk
+;
