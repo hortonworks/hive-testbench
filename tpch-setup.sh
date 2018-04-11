@@ -60,6 +60,8 @@ if [ $? -ne 0 ]; then
 fi
 echo "TPC-H text data generation complete."
 
+HIVE="beeline -n hive -u 'jdbc:hive2://localhost:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2?tez.queue.name=default' "
+
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "Loading text data into external tables."
 runcommand "$HIVE -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql --hivevar DB=tpch_text_${SCALE} --hivevar LOCATION=${DIR}/${SCALE}"
@@ -77,7 +79,7 @@ fi
 DATABASE=tpch_${SCHEMA_TYPE}_orc_${SCALE}
 MAX_REDUCERS=2600 # ~7 years of data
 REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo ${SCALE})
-HIVE="beeline -n hive -u 'jdbc:hive2://localhost:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2?tez.queue.name=default' "
+
 
 for t in ${TABLES}
 do
