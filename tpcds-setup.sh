@@ -120,6 +120,5 @@ else
     done
 
     make -j 2 -f $LOAD_FILE
-
     echo "Data loaded into database ${DATABASE}."
 fi
