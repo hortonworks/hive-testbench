@@ -97,6 +97,6 @@ do
 	i=`expr $i + 1`
 done
 
-$HIVE -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/analyze.sql --database ${DATABASE};
+$HIVE -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/analyze.sql --hivevar DB=${DATABASE};
 
 echo "Data loaded into database ${DATABASE}."

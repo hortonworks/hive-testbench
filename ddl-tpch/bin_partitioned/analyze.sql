@@ -1,3 +1,4 @@
+use ${DB};
 analyze table nation compute statistics for columns;
 analyze table region compute statistics for columns;
 analyze table supplier compute statistics for columns;
