@@ -14,10 +14,10 @@ select
  	,rank() over (order by currency_ratio) as currency_rank
  	from
  	(	select ws.ws_item_sk as item
- 		,(cast(sum(coalesce(wr.wr_return_quantity,0)) as decimal(15,4))/
- 		cast(sum(coalesce(ws.ws_quantity,0)) as decimal(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(wr.wr_return_amt,0)) as decimal(15,4))/
- 		cast(sum(coalesce(ws.ws_net_paid,0)) as decimal(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(wr.wr_return_quantity,0)) as dec(15,4))/
+ 		cast(sum(coalesce(ws.ws_quantity,0)) as dec(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(wr.wr_return_amt,0)) as dec(15,4))/
+ 		cast(sum(coalesce(ws.ws_net_paid,0)) as dec(15,4) )) as currency_ratio
  		from 
  		 web_sales ws left outer join web_returns wr 
  			on (ws.ws_order_number = wr.wr_order_number and 
@@ -57,10 +57,10 @@ select
  	from
  	(	select 
  		cs.cs_item_sk as item
- 		,(cast(sum(coalesce(cr.cr_return_quantity,0)) as decimal(15,4))/
- 		cast(sum(coalesce(cs.cs_quantity,0)) as decimal(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(cr.cr_return_amount,0)) as decimal(15,4))/
- 		cast(sum(coalesce(cs.cs_net_paid,0)) as decimal(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(cr.cr_return_quantity,0)) as dec(15,4))/
+ 		cast(sum(coalesce(cs.cs_quantity,0)) as dec(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(cr.cr_return_amount,0)) as dec(15,4))/
+ 		cast(sum(coalesce(cs.cs_net_paid,0)) as dec(15,4) )) as currency_ratio
  		from 
  		catalog_sales cs left outer join catalog_returns cr
  			on (cs.cs_order_number = cr.cr_order_number and 
@@ -99,8 +99,8 @@ select
  	,rank() over (order by currency_ratio) as currency_rank
  	from
  	(	select sts.ss_item_sk as item
- 		,(cast(sum(coalesce(sr.sr_return_quantity,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_quantity,0)) as decimal(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(sr.sr_return_amt,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_net_paid,0)) as decimal(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(sr.sr_return_quantity,0)) as dec(15,4))/cast(sum(coalesce(sts.ss_quantity,0)) as dec(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(sr.sr_return_amt,0)) as dec(15,4))/cast(sum(coalesce(sts.ss_net_paid,0)) as dec(15,4) )) as currency_ratio
  		from 
  		store_sales sts left outer join store_returns sr
  			on (sts.ss_ticket_number = sr.sr_ticket_number and sts.ss_item_sk = sr.sr_item_sk)

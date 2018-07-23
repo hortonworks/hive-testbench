@@ -1,4 +1,6 @@
-select  distinct(i_product_name) from item i1
+-- start query 1 in stream 0 using template query41.tpl and seed 1581015815
+select  distinct(i_product_name)
+ from item i1
  where i_manufact_id between 742 and 742+40 
    and (select count(*) as item_cnt
         from item
@@ -22,10 +24,8 @@ select  distinct(i_product_name) from item i1
         (i_color = 'chocolate' or i_color = 'cornflower') and
         (i_units = 'Bunch' or i_units = 'Gross') and
         (i_size = 'petite' or i_size = 'medium')
-        )))) > 0
-   or (select count(*) as item_cnt
-       from item
-       where (i_manufact = i1.i_manufact and
+        ))) or
+       (i_manufact = i1.i_manufact and
         ((i_category = 'Women' and 
         (i_color = 'salmon' or i_color = 'midnight') and 
         (i_units = 'Oz' or i_units = 'Box') and
@@ -46,4 +46,7 @@ select  distinct(i_product_name) from item i1
         (i_units = 'Gram' or i_units = 'Ounce') and
         (i_size = 'petite' or i_size = 'medium')
         )))) > 0
- order by i_product_name limit 100;
+ order by i_product_name
+ limit 100;
+
+-- end query 1 in stream 0 using template query41.tpl

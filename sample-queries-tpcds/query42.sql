@@ -2,7 +2,7 @@
 select  dt.d_year
  	,item.i_category_id
  	,item.i_category
- 	,sum(ss_ext_sales_price) sp
+ 	,sum(ss_ext_sales_price)
  from 	date_dim dt
  	,store_sales
  	,item
@@ -14,7 +14,7 @@ select  dt.d_year
  group by 	dt.d_year
  		,item.i_category_id
  		,item.i_category
- order by       sp desc,dt.d_year
+ order by       sum(ss_ext_sales_price) desc,dt.d_year
  		,item.i_category_id
  		,item.i_category
 limit 100 ;

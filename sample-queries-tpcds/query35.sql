@@ -3,7 +3,6 @@ select
   ca_state,
   cd_gender,
   cd_marital_status,
-  cd_dep_count,
   count(*) cnt1,
   avg(cd_dep_count),
   max(cd_dep_count),

@@ -1,6 +1,6 @@
 -- start query 1 in stream 0 using template query79.tpl and seed 2031708268
 select 
-  c_last_name,c_first_name,substr(s_city,1,30) ss,ss_ticket_number,amt,profit
+  c_last_name,c_first_name,substr(s_city,1,30),ss_ticket_number,amt,profit
   from
    (select ss_ticket_number
           ,ss_customer_sk
@@ -17,7 +17,7 @@ select
     and store.s_number_employees between 200 and 295
     group by ss_ticket_number,ss_customer_sk,ss_addr_sk,store.s_city) ms,customer
     where ss_customer_sk = c_customer_sk
- order by c_last_name,c_first_name,ss, profit
+ order by c_last_name,c_first_name,substr(s_city,1,30), profit
 limit 100;
 
 -- end query 1 in stream 0 using template query79.tpl

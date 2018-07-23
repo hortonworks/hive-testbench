@@ -1,6 +1,6 @@
 -- start query 1 in stream 0 using template query99.tpl and seed 1819994127
 select  
-   substr(w_warehouse_name,1,20) ss
+   substr(w_warehouse_name,1,20) 
   ,sm_type
   ,cc_name
   ,sum(case when (cs_ship_date_sk - cs_sold_date_sk <= 30 ) then 1 else 0 end)  as `30 days`
@@ -27,7 +27,7 @@ group by
    substr(w_warehouse_name,1,20)
   ,sm_type
   ,cc_name
-order by ss
+order by substr(w_warehouse_name,1,20)
         ,sm_type
         ,cc_name
 limit 100;

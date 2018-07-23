@@ -37,7 +37,7 @@ with v1 as(
        v1. cc_name = v1_lead. cc_name and
        v1.rn = v1_lag.rn + 1 and
        v1.rn = v1_lead.rn - 1)
-  select  i_category, i_brand, d_year, d_moy, avg_monthly_sales, sum_sales, psum, nsum
+  select  *
  from v2
  where  d_year = 2000 and
         avg_monthly_sales > 0 and
