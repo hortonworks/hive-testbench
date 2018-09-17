@@ -1,8 +1,8 @@
-Hive-Test Bench Debug Notes:
+# Hive-Test Bench Debug Runbook:
 
 See https://github.com/hortonworks/hive-testbench/blob/hdp3/tpcds-setup.sh for full script. NOTE: There were issues on lines 57 and 69. See forked commit for details and changes.
 
-Debug Steps for User Replication:
+## Debug Steps for User Replication:
 #-------------------------------------------------------------------------------
 
 1. Ran TPCDS build locally to make sure gcc and maven were compliant with script --Validated
