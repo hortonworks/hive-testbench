@@ -1,6 +1,6 @@
 Hive-Test Bench Debug Notes:
 
-See https://github.com/hortonworks/hive-testbench/blob/hdp3/tpcds-setup.sh for full script. NOTE: There were issues on lines 57 and 69. See commit XXX for details and changes.
+See https://github.com/hortonworks/hive-testbench/blob/hdp3/tpcds-setup.sh for full script. NOTE: There were issues on lines 57 and 69. See forked commit for details and changes.
 
 Debug Steps for User Replication:
 #-------------------------------------------------------------------------------
@@ -47,4 +47,4 @@ Error on line 69 was confirmed during script launch via stderr --> chmod: No Fil
 
 Error in make file after line 90 during generation of LOAD_FILE macro. make: *** [date_dim] Error 2; which suggests there is an error during ddl script for dims tables. This may be permission related, as I was able to create the tables manually after opening up HDFS dirs for reading data to tables.
 
-Tested the creation of date_dim manually to verify the error. Worked for text data and orc generation. Error seems like it was indeed permission related as a result of line 69 and mal-formed entry for hdfs dfs -chmod paramter.
+Tested the creation of date_dim manually to verify the error. Worked for text data and orc generation. Error seems like it was indeed permission related as a result of line 69 and mal-formed entry for hdfs dfs -chmod parameter.
