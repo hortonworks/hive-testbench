@@ -1,0 +1,50 @@
+Hive-Test Bench Debug Notes:
+
+See https://github.com/hortonworks/hive-testbench/blob/hdp3/tpcds-setup.sh for full script. NOTE: There were issues on lines 57 and 69. See commit XXX for details and changes.
+
+Debug Steps for User Replication:
+#-------------------------------------------------------------------------------
+
+1. Ran TPCDS build locally to make sure gcc and maven were compliant with script --Validated
+
+#-------------------------------------------------------------------------------
+
+2. manaully generated the data with make for TPCDS C files and mapreduce job in /hive-testbench/tpcds-gen/ -- Validated
+
+#-------------------------------------------------------------------------------
+
+3. Manually created text based Hive tables with raw data and sql script -- Validated with Potential Bug
+
+  export HIVE="beeline -n hive -u 'jdbc:hive2://magellan-1.field.hortonworks.com:2181,magellan-2.field.hortonworks.com:2181,magellan-3.field.hortonworks.com:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2?tez.queue.name=default' "
+
+  $HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --hivevar DB=tpcds_text_2 --hivevar LOCATION=/tmp/tpcds-generate/2
+
+Issues:
+    1. Line 69 will work with ${DIR} macro as opposed to /${DIR}, as DIR defaults to /tmp/tpcds-generate, line 69 seems to create two slashed in front of the Dir, which explains failure and stderr entry: chmod: No FileSystem for scheme "null"
+
+#-------------------------------------------------------------------------------
+
+4. Manually created ORC files with provided sql script. Needed to test two dimensions, small tables and large fact tables. --Validated at SCALE=2
+
+--Smaller Tables
+$HIVE -i settings/load-bin_partitioned.sql -f ddl-tpcds/bin_partitioned/date_dim.sql --hivevar DB=tpcds_bin_partitioned_orc_2 --hivevar SOURCE=tpcds_text_2 --hivevar SCALE=2 --hivevar REDUCERS=2 --hivevar FILE=orc
+
+
+--Larger Tables
+$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/store_sales.sql --hivevar DB=tpcds_bin_partitioned_orc_2 --hivevar SCALE=2 --hivevar SOURCE=tpcds_text_2 --hivevar BUCKETS=1 --hivevar RETURN_BUCKETS=1 --hivevar REDUCERS=2 --hivevar FILE=orc
+
+
+#-------------------------------------------------------------------------------
+
+5.Run tpcds-setup.sh script runs with default static MACROS e.g. DIR=/tmp/tpcds-generate and SCALE= 2
+
+The command to generate the data and tables was ./tpcds-gen.sh 2;
+which defaults to the above MACROS
+
+Errors as a results of lines 57 and 58; no MACRO for scale on line 57, resulting in an error for line 58. Line 57 isn't neccesary as line 59 takes care of the data and directory creation, so it was were deleted from the script for clarity.
+
+Error on line 69 was confirmed during script launch via stderr --> chmod: No FileSystem for scheme "null"
+
+Error in make file after line 90 during generation of LOAD_FILE macro. make: *** [date_dim] Error 2; which suggests there is an error during ddl script for dims tables. This may be permission related, as I was able to create the tables manually after opening up HDFS dirs for reading data to tables.
+
+Tested the creation of date_dim manually to verify the error. Worked for text data and orc generation. Error seems like it was indeed permission related as a result of line 69 and mal-formed entry for hdfs dfs -chmod paramter.
