@@ -32,6 +32,7 @@ alter table catalog_page add constraint ${DB}_cp_d1 foreign key  (cp_end_date_sk
 alter table catalog_page add constraint ${DB}_cp_d2 foreign key  (cp_start_date_sk) references date_dim (d_date_sk) disable novalidate rely;
 alter table catalog_returns add constraint ${DB}_cr_cc foreign key  (cr_call_center_sk) references call_center (cc_call_center_sk) disable novalidate rely;
 alter table catalog_returns add constraint ${DB}_cr_cp foreign key  (cr_catalog_page_sk) references catalog_page (cp_catalog_page_sk) disable novalidate rely;
+alter table catalog_returns add constraint ${DB}_cr_cs foreign key  (cr_item_sk, cr_order_number) references catalog_sales (cs_item_sk, cs_order_number) disable novalidate rely;
 alter table catalog_returns add constraint ${DB}_cr_i foreign key  (cr_item_sk) references item (i_item_sk) disable novalidate rely;
 alter table catalog_returns add constraint ${DB}_cr_r foreign key  (cr_reason_sk) references reason (r_reason_sk) disable novalidate rely;
 alter table catalog_returns add constraint ${DB}_cr_a1 foreign key  (cr_refunded_addr_sk) references customer_address (ca_address_sk) disable novalidate rely;
@@ -90,6 +91,7 @@ alter table store_returns add constraint ${DB}_sr_r foreign key  (sr_reason_sk) 
 alter table store_returns add constraint ${DB}_sr_ret_d foreign key  (sr_returned_date_sk) references date_dim (d_date_sk) disable novalidate rely;
 alter table store_returns add constraint ${DB}_sr_t foreign key  (sr_return_time_sk) references time_dim (t_time_sk) disable novalidate rely;
 alter table store_returns add constraint ${DB}_sr_s foreign key  (sr_store_sk) references store (s_store_sk) disable novalidate rely;
+alter table store_returns add constraint ${DB}_sr_ss foreign key  (sr_item_sk, sr_ticket_number) references store_sales (ss_item_sk, ss_ticket_number) disable novalidate rely;
 alter table store_sales add constraint ${DB}_ss_a foreign key  (ss_addr_sk) references customer_address (ca_address_sk) disable novalidate rely;
 alter table store_sales add constraint ${DB}_ss_cd foreign key  (ss_cdemo_sk) references customer_demographics (cd_demo_sk) disable novalidate rely;
 alter table store_sales add constraint ${DB}_ss_c foreign key  (ss_customer_sk) references customer (c_customer_sk) disable novalidate rely;
@@ -115,6 +117,7 @@ alter table web_returns add constraint ${DB}_wr_ret_a foreign key  (wr_returning
 alter table web_returns add constraint ${DB}_wr_ret_cd foreign key  (wr_returning_cdemo_sk) references customer_demographics (cd_demo_sk) disable novalidate rely;
 alter table web_returns add constraint ${DB}_wr_ret_c foreign key  (wr_returning_customer_sk) references customer (c_customer_sk) disable novalidate rely;
 alter table web_returns add constraint ${DB}_wr_ret_hd foreign key  (wr_returning_hdemo_sk) references household_demographics (hd_demo_sk) disable novalidate rely;
+alter table web_returns add constraint ${DB}_wr_ws foreign key  (wr_item_sk, wr_order_number) references web_sales (ws_item_sk, ws_order_number) disable novalidate rely;
 alter table web_returns add constraint ${DB}_wr_wp foreign key  (wr_web_page_sk) references web_page (wp_web_page_sk) disable novalidate rely;
 alter table web_sales add constraint ${DB}_ws_b_a foreign key  (ws_bill_addr_sk) references customer_address (ca_address_sk) disable novalidate rely;
 alter table web_sales add constraint ${DB}_ws_b_cd foreign key  (ws_bill_cdemo_sk) references customer_demographics (cd_demo_sk) disable novalidate rely;
