@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 function usage {
 	echo "Usage: tpcds-setup.sh scale_factor [temp_directory]"
@@ -54,7 +54,7 @@ if [ $SCALE -eq 1 ]; then
 fi
 
 # Do the actual data load.
-hdfs dfs -mkdir -p ${DIR}
+
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
 	echo "Generating data at scale factor $SCALE."
@@ -62,11 +62,15 @@ if [ $? -ne 0 ]; then
 fi
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
-	echo "Data generation failed, exiting."
+	echo "Data generation failed, exiting. Check to see if you've generated the MapReduce jar in /tpcds-gen directory"
 	exit 1
 fi
 
-hadoop fs -chmod -R 777  /${DIR}/${SCALE}
+hadoop fs -chmod -R 777 ${DIR}/${SCALE} > /dev/null
+if [ $? -ne 0 ]; then
+	echo "Data generation failed, exiting. Check your HDFS permissions on the directory you wish to create"
+	exit 1
+fi
 
 echo "TPC-DS text data generation complete."
 
@@ -82,7 +86,7 @@ if [ "X$FORMAT" = "X" ]; then
 fi
 
 LOAD_FILE="load_${FORMAT}_${SCALE}.mk"
-SILENCE="2> /dev/null 1> /dev/null" 
+SILENCE="2> /dev/null 1> /dev/null"
 if [ "X$DEBUG_SCRIPT" != "X" ]; then
 	SILENCE=""
 fi
@@ -92,7 +96,7 @@ echo -e "all: ${DIMS} ${FACTS}" > $LOAD_FILE
 i=1
 total=24
 DATABASE=tpcds_bin_partitioned_${FORMAT}_${SCALE}
-MAX_REDUCERS=2500 # maximum number of useful reducers for any scale 
+MAX_REDUCERS=2500 # maximum number of useful reducers for any scale
 REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo ${SCALE})
 
 # Populate the smaller tables.
