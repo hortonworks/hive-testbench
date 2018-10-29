@@ -66,7 +66,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-hadoop fs -chmod -R 777  /${DIR}/${SCALE}
+hadoop fs -chmod -R 777  ${DIR}/${SCALE}
 
 echo "TPC-DS text data generation complete."
 
