@@ -155,3 +155,5 @@ alter table reason change column r_reason_id r_reason_id string constraint ${DB}
 alter table ship_mode change column sm_ship_mode_id sm_ship_mode_id string constraint ${DB}_smid_nn not null disable novalidate rely;
 alter table time_dim change column t_time_id t_time_id string constraint ${DB}_tid_nn not null disable novalidate rely;
 
+alter table customer change column c_customer_id c_customer_id string constraint ${DB}_cid_uq unique disable novalidate rely;
+

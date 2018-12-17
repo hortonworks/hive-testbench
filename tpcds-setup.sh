@@ -120,4 +120,8 @@ done
 
 make -j 1 -f $LOAD_FILE
 
+
+echo "Loading constraints"
+runcommand "$HIVE  ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE}"
+
 echo "Data loaded into database ${DATABASE}."
