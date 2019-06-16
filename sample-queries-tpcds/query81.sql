@@ -21,7 +21,7 @@ with customer_total_return as
  			  from customer_total_return ctr2 
                   	  where ctr1.ctr_state = ctr2.ctr_state)
        and ca_address_sk = c_current_addr_sk
-       and ca_state = 'IL'
+       and ca_state = 'TX'
        and ctr1.ctr_customer_sk = c_customer_sk
  order by c_customer_id,c_salutation,c_first_name,c_last_name,ca_street_number,ca_street_name
                    ,ca_street_type,ca_suite_number,ca_city,ca_county,ca_state,ca_zip,ca_country,ca_gmt_offset

@@ -1,10 +1,11 @@
 -- start query 1 in stream 0 using template query49.tpl and seed 1819994127
-select  
+select  channel, item, return_ratio, return_rank, currency_rank from
+ (select
  'web' as channel
- ,web.item
- ,web.return_ratio
- ,web.return_rank
- ,web.currency_rank
+ ,web.item as item
+ ,web.return_ratio as return_ratio
+ ,web.return_rank as return_rank
+ ,web.currency_rank as currency_rank
  from (
  	select 
  	 item
@@ -14,10 +15,10 @@ select
  	,rank() over (order by currency_ratio) as currency_rank
  	from
  	(	select ws.ws_item_sk as item
- 		,(cast(sum(coalesce(wr.wr_return_quantity,0)) as dec(15,4))/
- 		cast(sum(coalesce(ws.ws_quantity,0)) as dec(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(wr.wr_return_amt,0)) as dec(15,4))/
- 		cast(sum(coalesce(ws.ws_net_paid,0)) as dec(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(wr.wr_return_quantity,0)) as decimal(15,4))/
+ 		cast(sum(coalesce(ws.ws_quantity,0)) as decimal(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(wr.wr_return_amt,0)) as decimal(15,4))/
+ 		cast(sum(coalesce(ws.ws_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
  		 web_sales ws left outer join web_returns wr 
  			on (ws.ws_order_number = wr.wr_order_number and 
@@ -43,10 +44,10 @@ select
  union
  select 
  'catalog' as channel
- ,catalog.item
- ,catalog.return_ratio
- ,catalog.return_rank
- ,catalog.currency_rank
+ ,catalog.item as item
+ ,catalog.return_ratio as return_ratio
+ ,catalog.return_rank as return_rank
+ ,catalog.currency_rank as currency_rank
  from (
  	select 
  	 item
@@ -57,10 +58,10 @@ select
  	from
  	(	select 
  		cs.cs_item_sk as item
- 		,(cast(sum(coalesce(cr.cr_return_quantity,0)) as dec(15,4))/
- 		cast(sum(coalesce(cs.cs_quantity,0)) as dec(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(cr.cr_return_amount,0)) as dec(15,4))/
- 		cast(sum(coalesce(cs.cs_net_paid,0)) as dec(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(cr.cr_return_quantity,0)) as decimal(15,4))/
+ 		cast(sum(coalesce(cs.cs_quantity,0)) as decimal(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(cr.cr_return_amount,0)) as decimal(15,4))/
+ 		cast(sum(coalesce(cs.cs_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
  		catalog_sales cs left outer join catalog_returns cr
  			on (cs.cs_order_number = cr.cr_order_number and 
@@ -86,10 +87,10 @@ select
  union
  select 
  'store' as channel
- ,store.item
- ,store.return_ratio
- ,store.return_rank
- ,store.currency_rank
+ ,store.item as item
+ ,store.return_ratio as return_ratio
+ ,store.return_rank as return_rank
+ ,store.currency_rank as currency_rank
  from (
  	select 
  	 item
@@ -99,8 +100,8 @@ select
  	,rank() over (order by currency_ratio) as currency_rank
  	from
  	(	select sts.ss_item_sk as item
- 		,(cast(sum(coalesce(sr.sr_return_quantity,0)) as dec(15,4))/cast(sum(coalesce(sts.ss_quantity,0)) as dec(15,4) )) as return_ratio
- 		,(cast(sum(coalesce(sr.sr_return_amt,0)) as dec(15,4))/cast(sum(coalesce(sts.ss_net_paid,0)) as dec(15,4) )) as currency_ratio
+ 		,(cast(sum(coalesce(sr.sr_return_quantity,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_quantity,0)) as decimal(15,4) )) as return_ratio
+ 		,(cast(sum(coalesce(sr.sr_return_amt,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
  		store_sales sts left outer join store_returns sr
  			on (sts.ss_ticket_number = sr.sr_ticket_number and sts.ss_item_sk = sr.sr_item_sk)
@@ -121,7 +122,8 @@ select
  or 
  store.currency_rank <= 10
  )
- order by 1,4,5
+ ) y
+ order by 1,4,5,2
  limit 100;
 
 -- end query 1 in stream 0 using template query49.tpl

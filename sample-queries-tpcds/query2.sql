@@ -4,9 +4,9 @@ with wscs as
         ,sales_price
   from (select ws_sold_date_sk sold_date_sk
               ,ws_ext_sales_price sales_price
-        from web_sales) x
+        from web_sales) x 
         union all
-       (select cs_sold_date_sk sold_date_sk
+        (select cs_sold_date_sk sold_date_sk
               ,cs_ext_sales_price sales_price
         from catalog_sales)),
  wswscs as 
@@ -41,7 +41,7 @@ with wscs as
         ,sat_sales sat_sales1
   from wswscs,date_dim 
   where date_dim.d_week_seq = wswscs.d_week_seq and
-        d_year = 2001) y,
+        d_year = 1998) y,
  (select wswscs.d_week_seq d_week_seq2
         ,sun_sales sun_sales2
         ,mon_sales mon_sales2
@@ -53,7 +53,7 @@ with wscs as
   from wswscs
       ,date_dim 
   where date_dim.d_week_seq = wswscs.d_week_seq and
-        d_year = 2001+1) z
+        d_year = 1998+1) z
  where d_week_seq1=d_week_seq2-53
  order by d_week_seq1;
 

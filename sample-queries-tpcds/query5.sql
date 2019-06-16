@@ -25,8 +25,8 @@ with ssr as
      date_dim,
      store
  where date_sk = d_date_sk
-       and d_date between cast('1998-08-04' as date) 
-                  and (cast('1998-08-04' as date) +  14 days)
+       and d_date between cast('2000-08-19' as date) 
+                  and (cast('2000-08-19' as date) +  14 days)
        and store_sk = s_store_sk
  group by s_store_id)
  ,
@@ -56,8 +56,8 @@ with ssr as
      date_dim,
      catalog_page
  where date_sk = d_date_sk
-       and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) +  14 days)
+       and d_date between cast('2000-08-19' as date)
+                  and (cast('2000-08-19' as date) +  14 days)
        and page_sk = cp_catalog_page_sk
  group by cp_catalog_page_id)
  ,
@@ -89,8 +89,8 @@ with ssr as
      date_dim,
      web_site
  where date_sk = d_date_sk
-       and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) +  14 days)
+       and d_date between cast('2000-08-19' as date)
+                  and (cast('2000-08-19' as date) +  14 days)
        and wsr_web_site_sk = web_site_sk
  group by web_site_id)
   select  channel

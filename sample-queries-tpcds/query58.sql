@@ -10,7 +10,7 @@ with ss_items as
                   from date_dim
                   where d_week_seq = (select d_week_seq 
                                       from date_dim
-                                      where d_date = '1998-02-19'))
+                                      where d_date = '1998-02-21'))
    and ss_sold_date_sk   = d_date_sk
  group by i_item_id),
  cs_items as
@@ -24,7 +24,7 @@ with ss_items as
                   from date_dim
                   where d_week_seq = (select d_week_seq 
                                       from date_dim
-                                      where d_date = '1998-02-19'))
+                                      where d_date = '1998-02-21'))
   and  cs_sold_date_sk = d_date_sk
  group by i_item_id),
  ws_items as
@@ -38,16 +38,16 @@ with ss_items as
                   from date_dim
                   where d_week_seq =(select d_week_seq 
                                      from date_dim
-                                     where d_date = '1998-02-19'))
+                                     where d_date = '1998-02-21'))
   and ws_sold_date_sk   = d_date_sk
  group by i_item_id)
   select  ss_items.item_id
        ,ss_item_rev
-       ,ss_item_rev/(ss_item_rev+cs_item_rev+ws_item_rev)/3 * 100 ss_dev
+       ,ss_item_rev/((ss_item_rev+cs_item_rev+ws_item_rev)/3) * 100 ss_dev
        ,cs_item_rev
-       ,cs_item_rev/(ss_item_rev+cs_item_rev+ws_item_rev)/3 * 100 cs_dev
+       ,cs_item_rev/((ss_item_rev+cs_item_rev+ws_item_rev)/3) * 100 cs_dev
        ,ws_item_rev
-       ,ws_item_rev/(ss_item_rev+cs_item_rev+ws_item_rev)/3 * 100 ws_dev
+       ,ws_item_rev/((ss_item_rev+cs_item_rev+ws_item_rev)/3) * 100 ws_dev
        ,(ss_item_rev+cs_item_rev+ws_item_rev)/3 average
  from ss_items,cs_items,ws_items
  where ss_items.item_id=cs_items.item_id

@@ -14,7 +14,7 @@ cross_sales as
      ,s_store_name store_name
      ,s_zip store_zip
      ,ad1.ca_street_number b_street_number
-     ,ad1.ca_street_name b_streen_name
+     ,ad1.ca_street_name b_street_name
      ,ad1.ca_city b_city
      ,ad1.ca_zip b_zip
      ,ad2.ca_street_number c_street_number
@@ -65,9 +65,9 @@ cross_sales as
          hd1.hd_income_band_sk = ib1.ib_income_band_sk and
          hd2.hd_income_band_sk = ib2.ib_income_band_sk and
          cd1.cd_marital_status <> cd2.cd_marital_status and
-         i_color in ('maroon','burnished','dim','steel','navajo','chocolate') and
-         i_current_price between 35 and 35 + 10 and
-         i_current_price between 35 + 1 and 35 + 15
+         i_color in ('azure','gainsboro','misty','blush','hot','lemon') and
+         i_current_price between 80 and 80 + 10 and
+         i_current_price between 80 + 1 and 80 + 15
 group by i_product_name
        ,i_item_sk
        ,s_store_name
@@ -88,7 +88,7 @@ select cs1.product_name
      ,cs1.store_name
      ,cs1.store_zip
      ,cs1.b_street_number
-     ,cs1.b_streen_name
+     ,cs1.b_street_name
      ,cs1.b_city
      ,cs1.b_zip
      ,cs1.c_street_number
@@ -97,23 +97,25 @@ select cs1.product_name
      ,cs1.c_zip
      ,cs1.syear
      ,cs1.cnt
-     ,cs1.s1
-     ,cs1.s2
-     ,cs1.s3
-     ,cs2.s1
-     ,cs2.s2
-     ,cs2.s3
+     ,cs1.s1 as s11
+     ,cs1.s2 as s21
+     ,cs1.s3 as s31
+     ,cs2.s1 as s12
+     ,cs2.s2 as s22
+     ,cs2.s3 as s32
      ,cs2.syear
      ,cs2.cnt
 from cross_sales cs1,cross_sales cs2
 where cs1.item_sk=cs2.item_sk and
-     cs1.syear = 2000 and
-     cs2.syear = 2000 + 1 and
+     cs1.syear = 1999 and
+     cs2.syear = 1999 + 1 and
      cs2.cnt <= cs1.cnt and
      cs1.store_name = cs2.store_name and
      cs1.store_zip = cs2.store_zip
 order by cs1.product_name
        ,cs1.store_name
-       ,cs2.cnt;
+       ,cs2.cnt
+       ,cs1.s1
+       ,cs2.s1;
 
 -- end query 1 in stream 0 using template query64.tpl

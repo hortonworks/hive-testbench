@@ -25,7 +25,7 @@ from
   ,date_dim d1
   ,date_dim d2
 where
-    d2.d_year = 2000
+    d2.d_year = 1998
 and d2.d_moy  = 9
 and ss_ticket_number = sr_ticket_number
 and ss_item_sk = sr_item_sk

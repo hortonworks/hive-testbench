@@ -9,14 +9,14 @@ from
   ,customer_address
   ,call_center
 where
-    d_date between '2001-4-01' and 
-           (cast('2001-4-01' as date) + 60 days)
+    d_date between '1999-4-01' and 
+           (cast('1999-4-01' as date) + 60 days)
 and cs1.cs_ship_date_sk = d_date_sk
 and cs1.cs_ship_addr_sk = ca_address_sk
-and ca_state = 'NY'
+and ca_state = 'IL'
 and cs1.cs_call_center_sk = cc_call_center_sk
-and cc_county in ('Ziebach County','Levy County','Huron County','Franklin Parish',
-                  'Daviess County'
+and cc_county in ('Richland County','Bronx County','Maverick County','Mesa County',
+                  'Raleigh County'
 )
 and exists (select *
             from catalog_sales cs2

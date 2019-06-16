@@ -12,15 +12,15 @@ select  a.ca_state state, count(*) cnt
  	and d.d_month_seq = 
  	     (select distinct (d_month_seq)
  	      from date_dim
-               where d_year = 2000
- 	        and d_moy = 2 )
+               where d_year = 2002
+ 	        and d_moy = 3 )
  	and i.i_current_price > 1.2 * 
              (select avg(j.i_current_price) 
  	     from item j 
  	     where j.i_category = i.i_category)
  group by a.ca_state
  having count(*) >= 10
- order by cnt 
+ order by cnt, a.ca_state 
  limit 100;
 
 -- end query 1 in stream 0 using template query6.tpl

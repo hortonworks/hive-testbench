@@ -17,9 +17,9 @@ with v1 as(
        cs_sold_date_sk = d_date_sk and
        cc_call_center_sk= cs_call_center_sk and
        (
-         d_year = 2000 or
-         ( d_year = 2000-1 and d_moy =12) or
-         ( d_year = 2000+1 and d_moy =1)
+         d_year = 1999 or
+         ( d_year = 1999-1 and d_moy =12) or
+         ( d_year = 1999+1 and d_moy =1)
        )
  group by i_category, i_brand,
           cc_name , d_year, d_moy),
@@ -39,10 +39,10 @@ with v1 as(
        v1.rn = v1_lead.rn - 1)
   select  *
  from v2
- where  d_year = 2000 and
+ where  d_year = 1999 and
         avg_monthly_sales > 0 and
         case when avg_monthly_sales > 0 then abs(sum_sales - avg_monthly_sales) / avg_monthly_sales else null end > 0.1
- order by sum_sales - avg_monthly_sales, 3
+ order by sum_sales - avg_monthly_sales, avg_monthly_sales
  limit 100;
 
 -- end query 1 in stream 0 using template query57.tpl

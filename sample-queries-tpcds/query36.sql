@@ -18,8 +18,8 @@ select
  and d1.d_date_sk = ss_sold_date_sk
  and i_item_sk  = ss_item_sk 
  and s_store_sk  = ss_store_sk
- and s_state in ('SD','FL','MI','LA',
-                 'MO','SC','AL','GA')
+ and s_state in ('IN','AL','MI','MN',
+                 'TN','LA','FL','NM')
  group by rollup(i_category,i_class)
  order by
    lochierarchy desc
