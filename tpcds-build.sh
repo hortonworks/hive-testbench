@@ -21,7 +21,7 @@ if [ $? -ne 0 ]; then
 	fi
 	if [ $SKIP -ne 1 ]; then
 		echo "Maven not found, automatically installing it."
-		curl -O http://www.us.apache.org/dist/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz 2> /dev/null
+		curl -O https://downloads.apache.org/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz 2> /dev/null
 		if [ $? -ne 0 ]; then
 			echo "Failed to download Maven, check Internet connectivity and try again."
 			exit 1
