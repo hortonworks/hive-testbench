@@ -263,7 +263,8 @@ create external table if not exists store(
 ,     s_tax_percentage decimal(5,2)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/store';
+location '${LOCATION}/store'
+tblproperties ('serialization.null.format'='');
 
 -- Table<call_center (31 cols)>
 
@@ -302,7 +303,8 @@ create external table if not exists call_center(
 ,     cc_tax_percentage decimal(5,2)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/call_center';
+location '${LOCATION}/call_center'
+tblproperties ('serialization.null.format'='');
 
 -- Table<catalog_page (9 cols)>
 
@@ -319,7 +321,8 @@ create external table if not exists catalog_page(
 ,     cp_type varchar(100)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/catalog_page';
+location '${LOCATION}/catalog_page'
+tblproperties ('serialization.null.format'='');
 
 -- Table<web_site (26 cols)>
 
@@ -353,7 +356,8 @@ create external table if not exists web_site(
 ,     web_tax_percentage decimal(5,2)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/web_site';
+location '${LOCATION}/web_site'
+tblproperties ('serialization.null.format'='');
 
 -- Table<web_page (14 cols)>
 
@@ -375,7 +379,8 @@ create external table if not exists web_page(
 ,     wp_max_ad_count int
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/web_page';
+location '${LOCATION}/web_page'
+tblproperties ('serialization.null.format'='');
 
 -- Table<warehouse (14 cols)>
 
@@ -397,7 +402,8 @@ create external table if not exists warehouse(
 ,     w_gmt_offset decimal(5,2)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/warehouse';
+location '${LOCATION}/warehouse'
+tblproperties ('serialization.null.format'='');
 
 -- Table<customer (18 cols)>
 
@@ -423,7 +429,8 @@ create external table if not exists customer(
 ,     c_last_review_date_sk bigint
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/customer';
+location '${LOCATION}/customer'
+tblproperties ('serialization.null.format'='');
 
 -- Table<customer_address (13 cols)>
 
@@ -444,7 +451,8 @@ create external table if not exists customer_address(
 ,     ca_location_type char(20)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/customer_address';
+location '${LOCATION}/customer_address'
+tblproperties ('serialization.null.format'='');
 
 -- Table<customer_demographics (9 cols)>
 
@@ -461,7 +469,8 @@ create external table if not exists customer_demographics(
 ,     cd_dep_college_count int
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/customer_demographics';
+location '${LOCATION}/customer_demographics'
+tblproperties ('serialization.null.format'='');
 
 -- Table<date_dim (28 cols)>
 
@@ -497,7 +506,8 @@ create external table if not exists date_dim(
 ,     d_current_year char(1)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/date_dim';
+location '${LOCATION}/date_dim'
+tblproperties ('serialization.null.format'='');
 
 -- Table<household_demographics (5 cols)>
 
@@ -510,7 +520,8 @@ create external table if not exists household_demographics(
 ,     hd_vehicle_count int
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/household_demographics';
+location '${LOCATION}/household_demographics'
+tblproperties ('serialization.null.format'='');
 
 -- Table<item (22 cols)>
 
@@ -540,7 +551,8 @@ create external table if not exists item(
 ,     i_product_name char(50)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/item';
+location '${LOCATION}/item'
+tblproperties ('serialization.null.format'='');
 
 -- Table<income_band (3 cols)>
 
@@ -578,7 +590,8 @@ create external table if not exists promotion(
 ,     p_discount_active char(1)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/promotion';
+location '${LOCATION}/promotion'
+tblproperties ('serialization.null.format'='');
 
 -- Table<reason (3 cols)>
 
@@ -589,7 +602,8 @@ create external table if not exists reason(
 ,     r_reason_desc char(100)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/reason';
+location '${LOCATION}/reason'
+tblproperties ('serialization.null.format'='');
 
 -- Table<ship_mode (6 cols)>
 
@@ -603,7 +617,8 @@ create external table if not exists ship_mode(
 ,     sm_contract char(20)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/ship_mode';
+location '${LOCATION}/ship_mode'
+tblproperties ('serialization.null.format'='');
 
 -- Table<time_dim (10 cols)>
 
@@ -621,5 +636,7 @@ create external table if not exists time_dim(
 ,     t_meal_time char(20)
 )
 row format delimited fields terminated by '|'
-location '${LOCATION}/time_dim';
+location '${LOCATION}/time_dim'
+tblproperties ('serialization.null.format'='');
+
 
