@@ -99,7 +99,7 @@ REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo $
 for t in ${DIMS}
 do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} --hivevar SOURCE=tpcds_text_${SCALE} \
+	    --hivevar DB=${DATABASE} --hivevar SOURCE=tpcds_text_${SCALE} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar REDUCERS=${REDUCERS} \
 	    --hivevar FILE=${FORMAT}"
@@ -110,7 +110,7 @@ done
 for t in ${FACTS}
 do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} \
+	    --hivevar DB=${DATABASE} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar SOURCE=tpcds_text_${SCALE} --hivevar BUCKETS=${BUCKETS} \
 	    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=${FORMAT}"
@@ -122,6 +122,6 @@ make -j 1 -f $LOAD_FILE
 
 
 echo "Loading constraints"
-runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE}"
+runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=${DATABASE}"
 
 echo "Data loaded into database ${DATABASE}."
