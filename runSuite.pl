@@ -25,7 +25,7 @@ if( $suite eq 'tpcds' ) {
 } # end if
 my @queries = glob '*.sql';
 
-my $db = { 
+my $db = {
 	'tpcds' => "tpcds_bin_partitioned_orc_$scale",
 	'tpch' => "tpch_flat_orc_$scale"
 };
@@ -36,7 +36,7 @@ for my $query ( @queries ) {
 	my $cmd="echo 'use $db->{${suite}}; source $query;' | hive -i testbench.settings 2>&1  | tee $query.log";
 #	my $cmd="cat $query.log";
 	#print $cmd ; exit;
-	
+
 	my $hiveStart = time();
 
 	my @hiveoutput=`$cmd`;
@@ -45,13 +45,16 @@ for my $query ( @queries ) {
 	my $hiveEnd = time();
 	my $hiveTime = $hiveEnd - $hiveStart;
 	foreach my $line ( @hiveoutput ) {
-		if( $line =~ /Time taken:\s+([\d\.]+)\s+seconds,\s+Fetched:\s+(\d+)\s+row/ ) {
-			print "$query,success,$hiveTime,$2\n"; 
-		} elsif( 
-			$line =~ /^FAILED: /
-			# || /Task failed!/ 
+		if( $line =~ /(([\d,])+|No) row(s)? selected \((([\d\.]+)\s+seconds)\)/ ) {
+			my $queryTime = $5;
+			my $numRows = $1 eq "No" ? 0 : $1;
+			$numRows =~ s/,//;
+			print "$query,success,$queryTime,$numRows\n";
+		} elsif(
+			$line =~ /^Error: /
+			# || /Task failed!/
 			) {
-			print "$query,failed,$hiveTime\n"; 
+			print "$query,failed,$hiveTime\n";
 		} # end if
 	} # end while
 } # end for
@@ -73,4 +76,3 @@ Description:
 USAGE
 	exit 1;
 }
-
