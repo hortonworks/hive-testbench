@@ -124,4 +124,7 @@ make -j 1 -f $LOAD_FILE
 echo "Loading constraints"
 runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=${DATABASE}"
 
+echo "Computing statistics"
+runcommand "$HIVE -f ddl-tpch/bin_partitioned/analyze.sql --hivevar DB=${DATABASE}"
+
 echo "Data loaded into database ${DATABASE}."
