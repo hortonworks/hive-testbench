@@ -1,0 +1,2 @@
+-- avoid caching results, useful if the benchmark is run multiple times
+set hive.query.results.cache.enabled=false;
