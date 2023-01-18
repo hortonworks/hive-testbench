@@ -62,7 +62,8 @@ echo "TPC-H text data generation complete."
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "Loading text data into external tables."
-runcommand "hive -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql -d DB=tpch_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
+
+beeline -n hive -u "jdbc:hive2://localhost:10000" -i settings/load-flat.sql -f ddl-tpch/bin_flat/alltables.sql --hivevar DB="tpch_text_${SCALE}" --hivevar LOCATION="${DIR}/${SCALE}"
 
 # Create the optimized tables.
 i=1
@@ -81,12 +82,7 @@ REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo $
 for t in ${TABLES}
 do
 	echo "Optimizing table $t ($i/$total)."
-	COMMAND="hive -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/${t}.sql \
-	    -d DB=${DATABASE} \
-	    -d SOURCE=tpch_text_${SCALE} -d BUCKETS=${BUCKETS} \
-            -d SCALE=${SCALE} -d REDUCERS=${REDUCERS} \
-	    -d FILE=orc"
-	runcommand "$COMMAND"
+  beeline -n hive -u "jdbc:hive2://localhost:10000" -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/${t}.sql --hivevar SCALE=${SCALE} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=orc --hivevar BUCKETS=${BUCKETS} --hivevar DB=${DATABASE} --hivevar SOURCE=tpch_text_${SCALE}
 	if [ $? -ne 0 ]; then
 		echo "Command failed, try 'export DEBUG_SCRIPT=ON' and re-running"
 		exit 1
@@ -94,6 +90,6 @@ do
 	i=`expr $i + 1`
 done
 
-hive -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/analyze.sql --database ${DATABASE}; 
+beeline -n hive -u "jdbc:hive2://localhost:10000/${DATABASE}" -i settings/load-${SCHEMA_TYPE}.sql -f ddl-tpch/bin_${SCHEMA_TYPE}/analyze.sql
 
 echo "Data loaded into database ${DATABASE}."
