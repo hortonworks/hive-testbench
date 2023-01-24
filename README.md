@@ -82,6 +82,21 @@ All of these steps should be carried out on your Hadoop cluster.
   	hive> use tpch_flat_orc_1000;
   	hive> source tpch_query1.sql;
   	```
+- Step 7: Run list queries.
+
+  Run all list for type with result example
+  | sample-queries-tpcds | query96.sql | 96 | 0 | OK|
+  | sample-queries-tpcds | query97.sql | 97 | 0 | OK|
+  | sample-queries-tpcds | query98.sql | 98 | 0 | OK|
+  | sample-queries-tpcds | query99.sql | 99 | 0 | OK|
+
+  ```
+  sh run_sql_all.sh sample-queries-tpcds tpcds_bin_partitioned_orc_100 
+  ```
+  
+  ```
+  sh run_sql_all.sh sample-queries-tpch ???
+  ```
 
 Feedback
 ========
