@@ -25,8 +25,7 @@ with ssr as
      date_dim,
      store
  where date_sk = d_date_sk
-       and d_date between cast('2000-08-19' as date) 
-                  and (cast('2000-08-19' as date) +  14 days)
+       and d_date between cast('2000-08-19' as date) and date_add('2000-08-19', 14)
        and store_sk = s_store_sk
  group by s_store_id)
  ,
