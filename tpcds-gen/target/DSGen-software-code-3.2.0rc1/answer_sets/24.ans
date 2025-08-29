@@ -1,0 +1,19 @@
+---------------------- OUTPUT Query 1
+
+C_LAST_NAME                    C_FIRST_NAME        S_STORE_NAME                                                                PAID
+------------------------------ -------------------- -------------------------------------------------- ------------------------------
+Martins                        Cara                bar                                                                        241.96
+Smallwood                      Rhonda              bar                                                                      3089.28
+Terry                          Sandra              bar                                                                        509.42
+
+
+---------------------- OUTPUT Query 2
+
+
+C_LAST_NAME                    C_FIRST_NAME        S_STORE_NAME                                                                PAID
+------------------------------ -------------------- -------------------------------------------------- ------------------------------
+Hamlin                        Heather              able                                                                      149.65
+Martin                        Harold              bar                                                                      5834.88
+Nall                          Mike                able                                                                        999.7
+Southern                      Jeannie              bar                                                                        446.31
+
