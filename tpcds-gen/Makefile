@@ -2,7 +2,7 @@
 all: target/lib/dsdgen.jar target/tpcds-gen-1.0-SNAPSHOT.jar
 
 target/tpcds-gen-1.0-SNAPSHOT.jar: $(shell find -name *.java) 
-	#mvn package
+	mvn package
 
 target/tpcds_kit.zip: tpcds_kit.zip
 	mkdir -p target/
