@@ -9,7 +9,7 @@
 #   FORMAT - Storage format: rcfile, orc, or parquet (default: orc)
 #   SPARK_VERSION - Spark version (e.g., "2.4.0" or "3.2.0") - used to determine event log directory (default: 3)
 #   SPARK_EVENT_LOG_DIR - Override event log directory (default: hdfs:///spark{version}-history)
-
+#
 function usage {
 	echo "Usage: tpcds-spark-setup.sh scale_factor [temp_directory]"
 	exit 1
