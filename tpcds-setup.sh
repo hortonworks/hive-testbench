@@ -82,6 +82,11 @@ if [ "X$FORMAT" = "X" ]; then
 fi
 if [ "X$STORAGE" = "XCEPH" ]; then
 	BIN_PARTITIONED_DIR=bin_partitioned_ceph
+	#if LOCATION_CEPH or CEPH_CREDENTIAL_PROVIDER_PATH is not set, fail the script
+	if [ "X$LOCATION_CEPH" = "X" || "X$CEPH_CREDENTIAL_PROVIDER_PATH" = "X" ]; then
+		echo "LOCATION_CEPH or CEPH_CREDENTIAL_PROVIDER_PATH is not set"
+		exit 1
+	fi
 	LOCATION=${LOCATION_CEPH}
 else
 	BIN_PARTITIONED_DIR=bin_partitioned
@@ -111,6 +116,7 @@ do
 	    --hivevar FILE=${FORMAT}"
 	if [ "X$STORAGE" = "XCEPH" ]; then
 		COMMAND="$COMMAND --hivevar CREDENTIAL_PROVIDER_PATH=${CEPH_CREDENTIAL_PROVIDER_PATH}"
+		COMMAND="$COMMAND --hivevar LOCATION=${LOCATION_CEPH}"
 	fi
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
@@ -125,6 +131,7 @@ do
 	    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=${FORMAT}"
 	if [ "X$STORAGE" = "XCEPH" ]; then
 		COMMAND="$COMMAND --hivevar CREDENTIAL_PROVIDER_PATH=${CEPH_CREDENTIAL_PROVIDER_PATH}"
+		COMMAND="$COMMAND --hivevar LOCATION=${LOCATION_CEPH}"
 	fi
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
