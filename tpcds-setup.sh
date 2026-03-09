@@ -80,6 +80,12 @@ runcommand "$HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --h
 if [ "X$FORMAT" = "X" ]; then
 	FORMAT=orc
 fi
+if [ "X$STORAGE" = "XCEPH" ]; then
+	BIN_PARTITIONED_DIR=bin_partitioned_ceph
+	LOCATION=${LOCATION_CEPH}
+else
+	BIN_PARTITIONED_DIR=bin_partitioned
+fi
 
 LOAD_FILE="load_${FORMAT}_${SCALE}.mk"
 SILENCE="2> /dev/null 1> /dev/null" 
@@ -98,22 +104,28 @@ REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo $
 # Populate the smaller tables.
 for t in ${DIMS}
 do
-	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
+	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/${BIN_PARTITIONED_DIR}/${t}.sql \
 	    --hivevar DB=${DATABASE} --hivevar SOURCE=tpcds_text_${SCALE} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar REDUCERS=${REDUCERS} \
 	    --hivevar FILE=${FORMAT}"
+	if [ "X$STORAGE" = "XCEPH" ]; then
+		COMMAND="$COMMAND --hivevar CREDENTIAL_PROVIDER_PATH=${CEPH_CREDENTIAL_PROVIDER_PATH}"
+	fi
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
 done
 
 for t in ${FACTS}
 do
-	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
+	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/${BIN_PARTITIONED_DIR}/${t}.sql \
 	    --hivevar DB=${DATABASE} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar SOURCE=tpcds_text_${SCALE} --hivevar BUCKETS=${BUCKETS} \
 	    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=${FORMAT}"
+	if [ "X$STORAGE" = "XCEPH" ]; then
+		COMMAND="$COMMAND --hivevar CREDENTIAL_PROVIDER_PATH=${CEPH_CREDENTIAL_PROVIDER_PATH}"
+	fi
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
 	i=`expr $i + 1`
 done
@@ -122,6 +134,6 @@ make -j 1 -f $LOAD_FILE
 
 
 echo "Loading constraints"
-runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=${DATABASE}"
+runcommand "$HIVE -f ddl-tpcds/${BIN_PARTITIONED_DIR}/add_constraints.sql --hivevar DB=${DATABASE}"
 
 echo "Data loaded into database ${DATABASE}."

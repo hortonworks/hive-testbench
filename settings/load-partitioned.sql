@@ -29,3 +29,6 @@ set hive.tez.min.partition.factor=0.01;
 -- set io.sort.mb=800;
 
 set hive.optimize.sort.dynamic.partition.threshold=0;
+
+set fs.s3a.security.credential.provider.path={CREDENTIAL_PROVIDER_PATH};
+set metaconf:fs.s3a.security.credential.provider.path={CREDENTIAL_PROVIDER_PATH};
